@@ -27,20 +27,20 @@
          </a>
          <ul class="menu-sub">
             <li class="menu-item" id="menu-managements-categories">
-               <a href="./categories.jsp" class="menu-link">
+               <a href="<%request.getContextPath();%>/admin/categories" class="menu-link">
                   <div data-i18n="Without menu">Categories</div>
                </a>
             </li>
             <li class="menu-item" id="menu-managements-products">
-               <a href="./products.jsp" class="menu-link">
+               <a href="<%request.getContextPath();%>/admin/products" class="menu-link">
                   <div data-i18n="Without navbar">Products</div>
                </a>
             </li>
             <li class="menu-item" id="menu-managements-orders">
-            <a href="./orders.jsp" class="menu-link">
-               <div data-i18n="Without navbar">Orders</div>
-            </a>
-         </li>
+               <a href="<%request.getContextPath();%>/admin/orders" class="menu-link">
+                  <div data-i18n="Without navbar">Orders</div>
+               </a>
+            </li>
          </ul>
       </li>
       <li class="menu-item" id="menu-account">

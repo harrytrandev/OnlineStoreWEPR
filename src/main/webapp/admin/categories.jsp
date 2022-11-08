@@ -28,53 +28,62 @@
         <!-- Content wrapper -->
         <div class="content-wrapper">
           <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Managements / </span>Categories</h4>
+            <h4 class="py-3 mb-4">
+              <a href="${pageContext.request.contextPath}/index.jsp">Managements > </a>
+              <span class="fw-bold">Categories</span>
+            </h4>
             <div class="card">
-              <h5 class="card-header">Categories</h5>
+              <h5 class="card-header d-flex justify-content-between">
+                <span>Categories</span>
+                <p class="text-${messageType}" style="font-size: 16px; font-weight: 400;">${message}</p>
+              </h5>
               <div class="table-responsive text-nowrap">
-                <table class="table table-hover">
+                <table class="table table-hover" style="table-layout: fixed;">
                   <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
+                  <tr>
+                    <th style="width: 5%;">Index</th>
+                    <th style="width: 25%;">Name</th>
+                    <th style="width: 50%; overflow: hidden; text-overflow: ellipsis;">Description</th>
+                    <th style="width: 10%;"></th>
+                    <th style="width: 10%;"></th>
+                  </tr>
                   </thead>
                   <tbody class="table-border-bottom-0">
+                  <c:forEach items="${categories}" var="category" varStatus="status">
                     <tr>
-                      <td>category01</td>
-                      <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>Tops</strong></td>
-                      <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, saepe?</td>
-                      <td><a href="./update-category.jsp">Change</a></td>
-                      <td><a href="#" class="text-danger">Delete</a></td>
+                      <td>${status.index + 1}</td>
+                      <td>
+                        <strong>${category.name}</strong>
+                      </td>
+                      <td style="overflow: hidden; text-overflow: ellipsis;">${category.description}</td>
+                      <td><a href="${pageContext.request.contextPath}/admin/edit-category?id=${category.id}">Change</a></td>
+                      <td>
+                        <form
+                            onsubmit="return confirm('Are you sure to delete this item?');"
+                            action="${pageContext.request.contextPath}/admin/delete-category"
+                            method="post"
+                        >
+                          <input type="hidden" name="id" value="${category.id}">
+                          <button
+                              class="text-danger"
+                              style="background-color: transparent; border: none;"
+                          >
+                            Delete
+                          </button>
+                        </form>
+                      </td>
                     </tr>
-                    <tr>
-                      <td>category02</td>
-                      <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>Outwears</strong></td>
-                      <td>Lorem ipsum dolor sit.</td>
-                      <td><a href="./update-category.jsp">Change</a></td>
-                      <td><a href="#" class="text-danger">Delete</a></td>
-                    </tr>
-                    <tr>
-                      <td>category03</td>
-                      <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>Bottoms</strong></td>
-                      <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis, eligendi nesciunt error nihil sed aliquam?</td>
-                      <td><a href="./update-category.jsp">Change</a></td>
-                      <td><a href="#" class="text-danger">Delete</a></td>
-                    </tr>
-                    <tr>
-                      <td>category04</td>
-                      <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>Accessories</strong></td>
-                      <td>Lorem ipsum dolor sit amet.</td>
-                      <td><a href="./update-category.jsp">Change</a></td>
-                      <td><a href="#" class="text-danger">Delete</a></td>
-                    </tr>
+                  </c:forEach>
                   </tbody>
                 </table>
                 <div class="d-flex justify-content-center my-3">
-                  <a href="./update-category.jsp" type="submit" class="btn btn-primary">Add new</a>
+                  <a
+                      href="${pageContext.request.contextPath}/admin/add-category"
+                      type="submit"
+                      class="btn btn-primary"
+                  >
+                    Add news
+                  </a>
                 </div>
               </div>
             </div>

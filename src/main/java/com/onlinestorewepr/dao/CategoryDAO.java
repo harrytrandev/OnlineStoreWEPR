@@ -4,6 +4,8 @@ import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -82,6 +84,25 @@ public class CategoryDAO {
       } catch (Exception e) {
          e.printStackTrace();
       }
+      return category;
+   }
+
+
+   public Category findByName(String name) {
+      Category category = null;
+
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "SELECT c FROM Category c WHERE c.name = :name";
+         Query query = session.createQuery(HQL);
+         query.setParameter("name", name);
+         List<Category> categories = query.getResultList();
+         if (!categories.isEmpty()) {
+            category = categories.get(0);
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
       return category;
    }
 }
