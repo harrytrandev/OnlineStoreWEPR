@@ -1,10 +1,12 @@
 package com.onlinestorewepr.dao;
 
+import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -83,6 +85,24 @@ public class ProductDAO {
       } catch (Exception e) {
          e.printStackTrace();
       }
+      return product;
+   }
+
+   public Product findByName(String name) {
+      Product product = null;
+
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "SELECT c FROM Product c WHERE c.name = :name";
+         Query query = session.createQuery(HQL);
+         query.setParameter("name", name);
+         List<Product> products = query.getResultList();
+         if (!products.isEmpty()) {
+            product = products.get(0);
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
       return product;
    }
 }
