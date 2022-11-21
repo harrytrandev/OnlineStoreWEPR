@@ -37,8 +37,13 @@
                </a>
             </li>
             <li class="menu-item" id="menu-managements-orders">
-               <a href="<%request.getContextPath();%>/admin/orders" class="menu-link">
+               <a href="<%request.getContextPath();%>/admin/list_order" class="menu-link">
                   <div data-i18n="Without navbar">Orders</div>
+               </a>
+            </li>
+            <li class="menu-item" id="menu-managements-account" >
+               <a href="<%request.getContextPath();%>/admin/account" class="menu-link">
+                  <div data-i18n="Without navbar">Account</div>
                </a>
             </li>
          </ul>

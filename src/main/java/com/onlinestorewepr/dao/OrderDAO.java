@@ -1,12 +1,16 @@
 package com.onlinestorewepr.dao;
 
+import com.onlinestorewepr.Main;
 import com.onlinestorewepr.entity.Order;
+import com.onlinestorewepr.entity.OrderItem;
 import com.onlinestorewepr.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO {
@@ -61,7 +65,7 @@ public class OrderDAO {
       }
    }
 
-   public List<Order> getAll() {
+   public static List<Order> getAll() {
       List<Order> orders = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -85,4 +89,25 @@ public class OrderDAO {
       }
       return order;
    }
+
+   public List getListProduct(int orderId)
+   {
+      List results = null;
+      Transaction transaction = null;
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         transaction = session.beginTransaction();
+//         Query query = session.createQuery("SELECT o.id, p.name FROM OrderItem o, Product p WHERE o.product.id = p.id and o.order.id = :orderId");
+         Query query = session.createQuery("FROM OrderItem o WHERE o.order.id = :orderId");
+         query.setParameter("orderId", orderId);
+         results = query.getResultList();
+         transaction.commit();
+      } catch (Exception e) {
+         e.printStackTrace();
+         if (transaction != null) {
+            transaction.rollback();
+         }
+      }
+      return results;
+   }
+
 }
