@@ -114,7 +114,6 @@ public class CategoryService {
         return (Integer.compare(compareValue, 0));
       });
     }
-
     return categories;
   }
 }

@@ -51,7 +51,6 @@ public class CartDAO {
          if (cart != null) {
             session.delete(cart);
          }
-
          transaction.commit();
       } catch (Exception e) {
          e.printStackTrace();
