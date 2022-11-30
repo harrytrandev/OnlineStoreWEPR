@@ -263,13 +263,10 @@
          </div>
       </div>
       <div class="row">
-         <c:forEach var="i" begin="0" end="3">
-<%--            <c:if test="${products[i].name != ''}">
-              <h2>rỗng</h2>
-            </c:if>--%>
+         <c:forEach items="${products}" var="p">
             <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
                <div class="product__item">
-                  <div class="product__item__pic set-bg" data-setbg="${products[i].image}">
+                  <div class="product__item__pic set-bg" data-setbg="${p.image}">
                      <span class="label">New</span>
                      <ul class="product__hover">
                         <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
@@ -278,7 +275,7 @@
                      </ul>
                   </div>
                   <div class="product__item__text">
-                     <h6>${products[i].name}</h6>
+                     <h6>${p.name}</h6>
                      <a href="#" class="add-cart">+ Add To Cart</a>
                      <div class="rating">
                         <i class="fa fa-star-o"></i>
@@ -287,7 +284,7 @@
                         <i class="fa fa-star-o"></i>
                         <i class="fa fa-star-o"></i>
                      </div>
-                     <h5>${products[i].price}</h5>
+                     <h5>${p.price}</h5>
                      <div class="product__color__select">
                         <label for="pc-1">
                            <input type="radio" id="pc-1">

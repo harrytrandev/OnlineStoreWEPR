@@ -21,7 +21,7 @@ public class ProductDetail extends HttpServlet {
     int categoryID = Integer.parseInt(req.getParameter("CategoryID"));
     ProductService productService = new ProductService();
     Product product = productService.getProduct(id);
-    List<Product> products = productService.getAllProdcutbyCategory(categoryID);
+    List<Product> products = productService.get4ProdcutbyCategory(categoryID);
     req.setAttribute("product",product );
     req.setAttribute("products", products);
     for(Product o:products){

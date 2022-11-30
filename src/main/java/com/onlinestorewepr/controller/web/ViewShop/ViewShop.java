@@ -1,5 +1,6 @@
 package com.onlinestorewepr.controller.web.ViewShop;
 
+import com.onlinestorewepr.dao.ProductDAO;
 import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Product;
 import com.onlinestorewepr.service.CategoryService;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ViewShop extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    //CurrentPage
+    String xpage =req.getParameter("page");
     CategoryService categoryService = new CategoryService();
     ProductService productService = new ProductService();
    /* int categoryID = Integer.parseInt(req.getParameter("CategoryID"));*/
@@ -24,7 +27,18 @@ public class ViewShop extends HttpServlet {
     List<Product> products;
     List<String> brands = productService.getBrand();
     List<String> sizes = productService.getSize();
-    if((req.getParameter("CategoryID")) == null || (req.getParameter("CategoryID")).equals("")){
+    List<String> colors = productService.getColor();
+    ProductDAO productdao = new ProductDAO();
+    int CategoryID = 0;
+    if((req.getParameter("CategoryID")) != null){
+      CategoryID= Integer.parseInt(req.getParameter("CategoryID"));
+    }
+    products = productService.filter(req.getParameter("sortPrice"), CategoryID,req.getParameter("brand"),req.getParameter("price"),req.getParameter("size"));
+    if ((req.getParameter("txtSearch")) != null) {
+      System.out.print(req.getParameter("txtSearch"));
+      products = productService.getAllProdcutbyName(req.getParameter("txtSearch"));
+    }
+    /*if((req.getParameter("CategoryID")) == null || (req.getParameter("CategoryID")).equals("")){
       if ((req.getParameter("brand")) != null){
         System.out.print(2);
         products = productService.getAllProdcutbyBrand(req.getParameter("brand"));
@@ -37,17 +51,30 @@ public class ViewShop extends HttpServlet {
         products = productService.getAllProducts();
         System.out.print(5);
       }
-
-
     }
     else{
       products = productService.getAllProdcutbyCategory(Integer.parseInt(req.getParameter("CategoryID")));
+    }*/
+//paging
+    int page,numberItem = 6,start,end;
+    int numberPage = (products.size()%numberItem==0?(products.size()/numberItem):((products.size()/numberItem)+1));
+    if(xpage == null){
+      page = 1;
+    }else {
+      page = Integer.parseInt(xpage);
     }
+    start=(page-1)*numberItem;
+    end = Math.min(products.size(),page*numberItem);
+    products = productdao.getListByPage(products,start,end);
+
+    req.setAttribute("page",page);
+    req.setAttribute("numberPage",numberPage);
 
     req.setAttribute("categories", categories);
     req.setAttribute("products", products);
     req.setAttribute("brands", brands);
     req.setAttribute("sizes", sizes);
+    req.setAttribute("colors", colors);
     req.getRequestDispatcher("/web/shop.jsp").forward(req, resp);
   }
 

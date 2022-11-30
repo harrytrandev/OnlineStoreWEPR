@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO {
@@ -106,56 +107,48 @@ public class ProductDAO {
       return product;
    }
 //Lấy tất cả sản phẩm có cùng ID category
-    public List<Product> getbyCategory(int CategoryID) {
+    public List<Product> getTopbyCategory(int CategoryID) {
       List<Product> products = null;
 
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          String HQL = "SELECT c FROM Product c WHERE category.id = :CategoryID";
          Query query = session.createQuery(HQL);
          query.setParameter("CategoryID", CategoryID);
-         products = query.getResultList();
-
-         /*products = query.setMaxResults(1).getResultList();*/
-
+         products = query.setMaxResults(4).getResultList();
       } catch (Exception e) {
          e.printStackTrace();
       }
 
       return products;
    }
-  /* public List<Product> getbyCategory(int[] CategoryID) {
+
+   public List<Product> filterProduct(String sortPrice, int CategoryID, String brand,String price, String size) {
       List<Product> products = null;
 
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-         String HQL = "SELECT c FROM Product c WHERE category.id = :CategoryID";
-         Query query = session.createQuery(HQL);
-         for (int i = 0;i< CategoryID.length;i++){
-            query.setParameter("CategoryID", CategoryID[i]);
-            HQL = HQL + "or category.id = :CategoryID";
+         String HQL = "FROM  Product c where c.name!=null";
+         Query query;
+         if(CategoryID != 0){
+            HQL = HQL + " and category.id = :CategoryID";
          }
+         if (brand !=null) {
+            HQL = HQL + " and c.brand = :brand";
 
+         }
+         if (size != null) {
+            HQL = HQL + " and c.size = :size";
+         }
+         query = session.createQuery(HQL);
+         if(CategoryID != 0){
+            query.setParameter("CategoryID", CategoryID);
+         }
+         if (brand !=null) {
+            query.setParameter("brand", brand);
+         }
+         if (size != null) {
+            query.setParameter("size", size);
+         }
          products = query.getResultList();
-*//*
-         products = query.setMaxResults(1).getResultList();
-*//*
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-
-      return products;
-   }*/
-   //Lấy tất cả sản phẩm có cùng brand
-   public List<Product> getbyBrand(String brand) {
-      List<Product> products = null;
-
-      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-         String HQL = "SELECT c FROM Product c WHERE c.brand = :brand";
-         Query query = session.createQuery(HQL);
-         query.setParameter("brand", brand);
-         products = query.getResultList();
-/*
-         products = query.setMaxResults(1).getResultList();
-*/
       } catch (Exception e) {
          e.printStackTrace();
       }
@@ -196,6 +189,24 @@ public class ProductDAO {
 
       return size;
    }
+
+   /*get color*/
+   public List<String> getColor() {
+      List<Product> products = null;
+      List<String> color = null;
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "select distinct c.color from Product c";
+         Query query = session.createQuery(HQL);
+         color = query.getResultList();
+/*
+         products = query.setMaxResults(1).getResultList();
+*/
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      return color;
+   }
    /*Lọc sản phẩm theo tên*/
    public List<Product> searchByName(String txtSearch) {
       List<Product> products = null;
@@ -215,12 +226,21 @@ public class ProductDAO {
 
       return products;
    }
-   public static void main(String[] args) {
-      ProductDAO donHangDAO = new ProductDAO();
-      List<Product> products = donHangDAO.getbyCategory(1);
-      for (Product p : products) {
-         System.out.println(p.getName());
+/*phaan trang*/
+   public List<Product> getListByPage(List<Product> list, int start, int end) {
+      ArrayList<Product> products = new ArrayList<>();
+      for(int i = start;i<end;i++){
+         products.add(list.get(i));
       }
+      return products;
    }
+  public static void main(String[] args) {
+     ProductDAO donHangDAO = new ProductDAO();
+     List<Product> products = donHangDAO.searchByName("dep");
+     for (Product p : products) {
+        System.out.println(p.getName());
+     }
+  }
+
 
 }

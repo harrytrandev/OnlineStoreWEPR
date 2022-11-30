@@ -112,10 +112,10 @@ public class ProductService {
 
     return products;
   }
-  public List<Product> getAllProdcutbyCategory(int CategoryID) {
+  public List<Product> get4ProdcutbyCategory(int CategoryID) {
     List<Product> products = null;
 
-    products = productDAO.getbyCategory(CategoryID);
+    products = productDAO.getTopbyCategory(CategoryID);
 
     if (products != null) {
       products.sort((o1, o2) -> {
@@ -127,10 +127,23 @@ public class ProductService {
     return products;
   }
 
+  public List<Product> filter(String sortPrice, int CategoryID, String brand,String price, String size) {
+    List<Product> products = null;
+
+    products = productDAO.filterProduct(sortPrice,CategoryID,brand,price,size);
+    if (products != null) {
+      products.sort((o1, o2) -> {
+        int compareValue = o1.getName().compareTo(o2.getName());
+        return (Integer.compare(compareValue, 0));
+      });
+    }
+    return products;
+  }
 
 
 
-  public List<Product> getAllProdcutbyBrand(String brand) {
+
+  /*public List<Product> getAllProdcutbyBrand(String brand) {
     List<Product> products = null;
 
     products = productDAO.getbyBrand(brand);
@@ -144,7 +157,7 @@ public class ProductService {
 
     return products;
   }
-
+*/
   public List<String> getBrand() {
     List<String> brands = null;
     brands = productDAO.getBrand();
@@ -155,6 +168,12 @@ public class ProductService {
     List<String> sizes = null;
     sizes = productDAO.getSize();
     return sizes;
+  }
+
+  public List<String> getColor() {
+    List<String> colors = null;
+    colors = productDAO.getColor();
+    return colors;
   }
   public List<Product> getAllProdcutbyName(String txtSearch) {
     List<Product> products = null;
