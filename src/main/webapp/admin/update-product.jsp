@@ -31,7 +31,11 @@
         <!-- Content -->
 
         <div class="container-xxl flex-grow-1 container-p-y">
-          <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Managements/Products/</span> Details</h4>
+          <h4 class="py-3 mb-4">
+            <a href="${pageContext.request.contextPath}/admin">Managements > </a>
+            <a href="${pageContext.request.contextPath}/admin/products">Products > </a>
+            <span class="fw-bold">Details</span>
+          </h4>
 
           <!-- Basic Layout & Basic with Icons -->
           <div class="row">
@@ -39,38 +43,112 @@
             <div class="col-xxl">
               <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                  <h5 class="mb-0">Change <strong>MaleFashion Hoodie</strong> Details</h5>
-                  <a href="./products.jsp" class="btn btn-outline-primary">Back</a>
+                  <h5 class="mb-0">Update <strong>MaleFashion Hoodie</strong> Details</h5>
+                  <a href="${pageContext.request.contextPath}/admin/products" class="btn btn-outline-primary">Back</a>
                 </div>
                 <div class="card-body">
-                  <form>
-                    <!--
-                       <th>ID</th>
-                       <th>Category</th>
-                       <th>Name</th>
-                    -->
+                  <form method="post" action="${pageContext.request.contextPath}/admin/${action}-product" enctype="multipart/form-data">
                     <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label" for="product-id">ID</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="product-id" placeholder="ID" />
+                        <input class="form-control" id="id" name="id" placeholder="ID" type="hidden" value="${product.id}"/>
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label" for="product-category">Category</label>
+                      <label class="col-sm-2 col-form-label" for="category-id">Category</label>
                       <div class="col-sm-10">
-                        <select id="product-category" class="form-select">
-                          <option value="1">Tops</option>
-                          <option value="2">Outwears</option>
-                          <option value="3">Bottoms</option>
-                          <option value="3">Accessories</option>
+                        <select required id="category-id" name="category-id" class="form-select">
+                          <c:forEach var="category" items="${categories}">
+                            <option
+                              ${product.category.id == category ? "selected" : ""}
+                                value="${category.id}"
+                            >
+                                ${category.name}
+                            </option>
+                          </c:forEach>
                         </select>
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label" for="product-name">Name</label>
+                      <label class="col-sm-2 col-form-label" for="name">Name</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="product-name" placeholder="Name"/>
+                        <input required type="text" name="name" class="form-control" id="name" placeholder="Name" value="${product.name}"/>
                       </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="image">Images</label>
+                      <div class="col-sm-10">
+                        <input
+                            accept="image/png, image/gif, image/jpeg"
+                            class="form-control"
+                            id="image"
+                            name="image"
+                            type="file"
+                            ${action == "add" ? "required" : ""}
+                        />
+
+                          <img
+                            alt="Preview Product Image"
+                            class="img-thumbnail mt-3"
+                            id="preview-img"
+                            style="width: 200px;"
+                            src="${product != null ? product.image : "/assets/img/default-product-img.png"}"
+                          >
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="category-description">Description</label>
+                      <div class="col-sm-10">
+                            <textarea
+                                aria-label="Hi, Do you have a moment to talk Joe?"
+                                aria-describedby="basic-icon-default-message2"
+                                class="form-control"
+                                id="category-description"
+                                name="description"
+                                placeholder="Enter description"
+                                required
+                            >${product.description}</textarea>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="price">Price</label>
+                      <div class="col-sm-10">
+                        <input required type="number" name ="price" class="form-control" id="price" placeholder="Price" value="${product.price}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="discount">Discount</label>
+                      <div class="col-sm-10">
+                        <input required type="number" name ="discount" class="form-control" id="discount" placeholder="Discount" value="${product.discount}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="quantity">Quantity</label>
+                      <div class="col-sm-10">
+                        <input required type="number" name ="quantity" class="form-control" id="quantity" placeholder="Quantity" value="${product.quantity}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="size">Size</label>
+                      <div class="col-sm-10">
+                        <input required type="text" name ="size" class="form-control" id="size" placeholder="Size" value="${product.size}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="color">Color</label>
+                      <div class="col-sm-10">
+                        <input required type="text" name ="color" class="form-control" id="color" placeholder="Color" value="${product.color}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="brand">Brand</label>
+                      <div class="col-sm-10">
+                        <input required type="text" name ="brand" class="form-control" id="brand" placeholder="Brand" value="${product.brand}"/>
+                      </div>
+                      <c:if test="${message != null && !message.isEmpty()}">
+                        <div class="col-sm-12 d-flex justify-content-end my-3">
+                          <p class="text-${messageType}">${message}</p>
+                        </div>
+                      </c:if>
                     </div>
                     <div class="row justify-content-end">
                       <div class="col-sm-10" style="text-align: end;">
@@ -114,10 +192,28 @@
 <!-- Main JS -->
 <script src="./assets/js/main.js"></script>
 
-<!-- Active Menu Item -->
 <script>
+  // Active Menu Item
   document.getElementById('menu-managements').classList.add('active', 'open')
   document.getElementById('menu-managements-products').classList.add('active')
+
+  // Press Enter to submit form
+  document.getElementById('brand').addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault()
+        document.querySelector('button[type="submit"]').click()
+    }
+  })
+
+  // Preview image before upload
+  const imgInput = document.getElementById("image")
+  const previewImage = document.getElementById("preview-img")
+  imgInput.onchange = (evt) => {
+    const [file] = imgInput.files
+    if (file) {
+      previewImage.src = URL.createObjectURL(file)
+    }
+  }
 </script>
 </body>
 </html>

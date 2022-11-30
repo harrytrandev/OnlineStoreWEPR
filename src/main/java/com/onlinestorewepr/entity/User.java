@@ -16,6 +16,8 @@ public class User {
    @Column
    private String name;
    @Column
+   private String image;
+   @Column
    private String phone;
    @Column
    private String gender;
@@ -29,6 +31,10 @@ public class User {
    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private List<Order> orders;
 
+   public User() {
+
+   }
+
    public String getUsername() {
       return username;
    }
@@ -39,6 +45,14 @@ public class User {
 
    public String getPassword() {
       return password;
+   }
+
+   public String getImage() {
+      return image;
+   }
+
+   public void setImage(String image) {
+      this.image = image;
    }
 
    public void setPassword(String password) {

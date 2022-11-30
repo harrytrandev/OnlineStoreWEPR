@@ -1,17 +1,25 @@
 package com.onlinestorewepr;
 
-import com.onlinestorewepr.entity.Category;
-import com.onlinestorewepr.service.CategoryService;
-
-import java.util.List;
+import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.User;
+//import com.onlinestorewepr.model.User;
+import org.hibernate.Session;
+import com.onlinestorewepr.util.HibernateUtil;
+import org.hibernate.Transaction;
 
 public class Main {
   public static void main(String[] args) {
-    CategoryService categoryService = new CategoryService();
-    List<Category> categories = categoryService.getAllCategories();
-    for (Category category : categories) {
-      System.out.println("Name: " + category.getName());
-      System.out.println("Products: " + category.getProducts());
-    }
+    UserDAO userDAO = new UserDAO();
+    User user = new User();
+
+    user.setName("ma33");
+    user.setAddress("Binh Dinh");
+    user.setAdmin(false);
+    user.setGender("Nam");
+    user.setUsername("admin");
+    user.setPassword("1234526");
+    user.setPhone("03726396211");
+
+    userDAO.insert(user);
   }
 }
