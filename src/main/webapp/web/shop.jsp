@@ -53,11 +53,11 @@
 <section class="shop spad">
    <div class="container">
       <div class="row">
-         <div class="col-lg-3">
+         <%--<div class="col-lg-3">
             <div class="shop__sidebar">
                <div class="shop__sidebar__search">
-                  <form action="#">
-                     <input type="text" placeholder="Search...">
+                  <form action="" method="get">
+                     <input name="txtSearch" type="text" placeholder="Search...">
                      <button type="submit"><span class="icon_search"></span></button>
                   </form>
                </div>
@@ -72,7 +72,7 @@
                               <div class="shop__sidebar__categories">
                                  <ul class="nice-scroll">
                                     <c:forEach items="${categories}" var="c">
-                                       <li><a href="#">${c.name}</a></li>
+                                       <li><a href="?CategoryID=${c.id}">${c.name}</a></li>
                                     </c:forEach>
                                  </ul>
                               </div>
@@ -87,10 +87,9 @@
                            <div class="card-body">
                               <div class="shop__sidebar__brand">
                                  <ul>
-                                    <li><a href="#">Louis Vuitton</a></li>
-                                    <li><a href="#">Chanel</a></li>
-                                    <li><a href="#">Hermes</a></li>
-                                    <li><a href="#">Gucci</a></li>
+                                    <c:forEach items="${brands}" var="b">
+                                       <li><a href="?brand=${b}">${b}</a></li>
+                                    </c:forEach>
                                  </ul>
                               </div>
                            </div>
@@ -122,30 +121,11 @@
                         <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
                            <div class="card-body">
                               <div class="shop__sidebar__size">
-                                 <label for="xs">xs
-                                    <input type="radio" id="xs">
-                                 </label>
-                                 <label for="sm">s
-                                    <input type="radio" id="sm">
-                                 </label>
-                                 <label for="md">m
-                                    <input type="radio" id="md">
-                                 </label>
-                                 <label for="xl">xl
-                                    <input type="radio" id="xl">
-                                 </label>
-                                 <label for="2xl">2xl
-                                    <input type="radio" id="2xl">
-                                 </label>
-                                 <label for="xxl">xxl
-                                    <input type="radio" id="xxl">
-                                 </label>
-                                 <label for="3xl">3xl
-                                    <input type="radio" id="3xl">
-                                 </label>
-                                 <label for="4xl">4xl
-                                    <input type="radio" id="4xl">
-                                 </label>
+                                 <c:forEach items="${sizes}" var="s">
+                                    <label for="${s}">${s}
+                                       <input type="radio" id="${s}">
+                                    </label>
+                                 </c:forEach>
                               </div>
                            </div>
                         </div>
@@ -188,28 +168,135 @@
                            </div>
                         </div>
                      </div>
-                     <div class="card">
-                        <div class="card-heading">
-                           <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
-                        </div>
-                        <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
-                           <div class="card-body">
-                              <div class="shop__sidebar__tags">
-                                 <a href="#">Product</a>
-                                 <a href="#">Bags</a>
-                                 <a href="#">Shoes</a>
-                                 <a href="#">Fashio</a>
-                                 <a href="#">Clothing</a>
-                                 <a href="#">Hats</a>
-                                 <a href="#">Accessories</a>
+                  </div>
+               </div>
+            </div>
+         </div>--%>
+         <div class="col-lg-3">
+               <div class="shop__sidebar">
+                  <div class="shop__sidebar__search">
+                     <form action="" method="get">
+                        <input name="txtSearch" type="text" placeholder="Search...">
+                        <button type="submit"><span class="icon_search"></span></button>
+                     </form>
+                  </div>
+                  <div class="shop__sidebar__accordion">
+                     <div class="accordion" id="accordionExample">
+                        <form action="">
+                           <div class="card">
+                              <div class="card-heading">
+                                 <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                              </div>
+                              <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    <div class="shop__sidebar__categories">
+                                       <ul class="nice-scroll">
+                                          <c:forEach items="${categories}" var="c">
+                                             <input type="checkbox" id="category" name="CategoryID" value="${c.id}">
+                                             <label for="category"> ${c.name}</label><br>
+                                             <%--<li><a href="?CategoryID=${c.id}">${c.name}</a></li>--%>
+                                          </c:forEach>
+                                       </ul>
+                                    </div>
+                                 </div>
                               </div>
                            </div>
-                        </div>
+                           <div class="card">
+                              <div class="card-heading">
+                                 <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
+                              </div>
+                              <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    <div class="shop__sidebar__brand">
+                                       <ul>
+                                          <c:forEach items="${brands}" var="b">
+                                             <input type="checkbox" id="brand" name="brand" value="${b}">
+                                             <label for="brand"> ${b}</label><br>
+                                          </c:forEach>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="card">
+                              <div class="card-heading">
+                                 <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
+                              </div>
+                              <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    <div class="shop__sidebar__price">
+                                       <ul>
+                                          <input type="checkbox" id="price1" name="price" value="1">
+                                          <label for="price1">$0.00 - $100.00</label><br>
+                                          <input type="checkbox" id="price2" name="price" value="2">
+                                          <label for="price2">$100.00 - $200.00</label><br>
+                                          <input type="checkbox" id="price3" name="price" value="3">
+                                          <label for="price3">$200.00 - ...</label><br>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="card">
+                              <div class="card-heading">
+                                 <a data-toggle="collapse" data-target="#collapseFour">Size</a>
+                              </div>
+                              <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    <div class="shop__sidebar__size">
+                                       <c:forEach items="${sizes}" var="s">
+                                          <label for="${s}">${s}
+                                             <input type="checkbox" id="${s}" name="size" value="${s}">
+                                          </label>
+                                       </c:forEach>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="card">
+                              <div class="card-heading">
+                                 <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
+                              </div>
+                              <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
+                                 <div class="card-body">
+                                    <div class="shop__sidebar__color">
+                                       <label class="c-1" for="sp-1">
+                                          <input type="checkbox" id="sp-1">
+                                       </label>
+                                       <label class="c-2" for="sp-2">
+                                          <input type="checkbox" id="sp-2">
+                                       </label>
+                                       <label class="c-3" for="sp-3">
+                                          <input type="checkbox" id="sp-3">
+                                       </label>
+                                       <label class="c-4" for="sp-4">
+                                          <input type="checkbox" id="sp-4">
+                                       </label>
+                                       <label class="c-5" for="sp-5">
+                                          <input type="checkbox" id="sp-5">
+                                       </label>
+                                       <label class="c-6" for="sp-6">
+                                          <input type="checkbox" id="sp-6">
+                                       </label>
+                                       <label class="c-7" for="sp-7">
+                                          <input type="checkbox" id="sp-7">
+                                       </label>
+                                       <label class="c-8" for="sp-8">
+                                          <input type="checkbox" id="sp-8">
+                                       </label>
+                                       <label class="c-9" for="sp-9">
+                                          <input type="checkbox" id="sp-9">
+                                       </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <input type="submit" value="Submit">
+                        </form>
                      </div>
                   </div>
                </div>
             </div>
-         </div>
          <div class="col-lg-9">
             <div class="shop__product__option">
                <div class="row">
@@ -231,16 +318,19 @@
                </div>
             </div>
             <div class="row">
-               <c:forEach items="products" var="l">
+               <c:forEach items="${products}" var="l">
                   <div class="col-lg-4 col-md-6 col-sm-6">
                      <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="./assets/img/product/product-2.jpg">
-                           <ul class="product__hover">
+                        <div class="product__item__pic set-bg" <%--data-setbg="${l.image}"--%>>
+                            <a href="shop-details?id=${l.id}&CategoryID=${l.category.id}">
+                                <img src="${l.image}" alt="">
+                            </a>
+                           <%--<ul class="product__hover">
                               <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
                               <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a>
                               </li>
                               <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
-                           </ul>
+                           </ul>--%>
                         </div>
                         <div class="product__item__text">
                            <h6>${l.name}</h6>
@@ -253,17 +343,6 @@
                               <i class="fa fa-star-o"></i>
                            </div>
                            <h5>${l.price}</h5>
-                           <div class="product__color__select">
-                              <label for="pc-4">
-                                 <input type="radio" id="pc-4">
-                              </label>
-                              <label class="active black" for="pc-5">
-                                 <input type="radio" id="pc-5">
-                              </label>
-                              <label class="grey" for="pc-6">
-                                 <input type="radio" id="pc-6">
-                              </label>
-                           </div>
                         </div>
                      </div>
                   </div>
@@ -296,7 +375,7 @@
    <div class="h-100 d-flex align-items-center justify-content-center">
       <div class="search-close-switch">+</div>
       <form class="search-model-form">
-         <input type="text" id="search-input" placeholder="Search here.....">
+         <input type="text" name="txtSearch" id="search-input" placeholder="Search here.....">
       </form>
    </div>
 </div>

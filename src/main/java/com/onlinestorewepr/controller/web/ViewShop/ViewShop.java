@@ -19,12 +19,35 @@ public class ViewShop extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     CategoryService categoryService = new CategoryService();
     ProductService productService = new ProductService();
-
+   /* int categoryID = Integer.parseInt(req.getParameter("CategoryID"));*/
     List<Category> categories = categoryService.getAllCategories();
-    List<Product> products = productService.getAllProducts();
+    List<Product> products;
+    List<String> brands = productService.getBrand();
+    List<String> sizes = productService.getSize();
+    if((req.getParameter("CategoryID")) == null || (req.getParameter("CategoryID")).equals("")){
+      if ((req.getParameter("brand")) != null){
+        System.out.print(2);
+        products = productService.getAllProdcutbyBrand(req.getParameter("brand"));
+      }
+      else if ((req.getParameter("txtSearch")) != null) {
+        System.out.print(req.getParameter("txtSearch"));
+        products = productService.getAllProdcutbyName(req.getParameter("txtSearch"));
+      }
+      else {
+        products = productService.getAllProducts();
+        System.out.print(5);
+      }
+
+
+    }
+    else{
+      products = productService.getAllProdcutbyCategory(Integer.parseInt(req.getParameter("CategoryID")));
+    }
 
     req.setAttribute("categories", categories);
     req.setAttribute("products", products);
+    req.setAttribute("brands", brands);
+    req.setAttribute("sizes", sizes);
     req.getRequestDispatcher("/web/shop.jsp").forward(req, resp);
   }
 

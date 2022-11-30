@@ -112,4 +112,62 @@ public class ProductService {
 
     return products;
   }
+  public List<Product> getAllProdcutbyCategory(int CategoryID) {
+    List<Product> products = null;
+
+    products = productDAO.getbyCategory(CategoryID);
+
+    if (products != null) {
+      products.sort((o1, o2) -> {
+        int compareValue = o1.getName().compareTo(o2.getName());
+        return (Integer.compare(compareValue, 0));
+      });
+    }
+
+    return products;
+  }
+
+
+
+
+  public List<Product> getAllProdcutbyBrand(String brand) {
+    List<Product> products = null;
+
+    products = productDAO.getbyBrand(brand);
+
+    if (products != null) {
+      products.sort((o1, o2) -> {
+        int compareValue = o1.getName().compareTo(o2.getName());
+        return (Integer.compare(compareValue, 0));
+      });
+    }
+
+    return products;
+  }
+
+  public List<String> getBrand() {
+    List<String> brands = null;
+    brands = productDAO.getBrand();
+    return brands;
+  }
+
+  public List<String> getSize() {
+    List<String> sizes = null;
+    sizes = productDAO.getSize();
+    return sizes;
+  }
+  public List<Product> getAllProdcutbyName(String txtSearch) {
+    List<Product> products = null;
+    System.out.println(txtSearch);
+    products = productDAO.searchByName(txtSearch);
+
+    if (products != null) {
+      products.sort((o1, o2) -> {
+        int compareValue = o1.getName().compareTo(o2.getName());
+        return (Integer.compare(compareValue, 0));
+      });
+    }
+
+    return products;
+  }
 }
