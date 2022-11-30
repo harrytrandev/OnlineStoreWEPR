@@ -74,12 +74,10 @@ public class UserDAO {
       return users;
    }
 
-   public User get(int id) {
+   public User get(String username) {
       User user = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-         user = session.get(User.class, id);
-
+         user = session.get(User.class, username);
       } catch (Exception e) {
          e.printStackTrace();
       }
