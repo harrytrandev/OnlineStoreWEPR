@@ -83,4 +83,14 @@ public class UserDAO {
       }
       return user;
    }
+   public User findUserCreated(String username){
+      User user = null;
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         user = session.get(User.class, username);
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return user;
+   }
 }
