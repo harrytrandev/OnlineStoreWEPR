@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:url value="/" var="root"/>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -182,7 +184,7 @@
                   </div>
                   <div class="shop__sidebar__accordion">
                      <div class="accordion" id="accordionExample">
-                        <form action="">
+                        <form action="" id="myForm">
                            <div class="card">
                               <div class="card-heading">
                                  <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
@@ -191,9 +193,9 @@
                                  <div class="card-body">
                                     <div class="shop__sidebar__price">
                                        <ul>
-                                          <input type="radio" id="Sprice1" name="sortPrice" value="1">
+                                          <input type="radio" id="Sprice1" name="sortPrice" value="1" onchange="submitForm()" ${sortPrice == '1' ?'checked':''}>
                                           <label for="Sprice1">Thấp đến cao</label><br>
-                                          <input type="radio" id="Sprice2" name="sortPrice" value="2">
+                                          <input type="radio" id="Sprice2" name="sortPrice" value="-1" onchange="submitForm()" ${sortPrice == '-1' ?'checked':''}>
                                           <label for="Sprice2">Cao đến thấp</label><br>
 
                                        </ul>
@@ -210,7 +212,7 @@
                                     <div class="shop__sidebar__categories">
                                        <ul class="nice-scroll">
                                           <c:forEach items="${categories}" var="c">
-                                             <input type="radio" id="category" name="CategoryID" value="${c.id}">
+                                             <input type="radio" id="category" name="CategoryID" value="${c.id}" onchange="submitForm()" ${CategoryID == c.id ?'checked':''}>
                                              <label for="category"> ${c.name}</label><br>
                                              <%--<li><a href="?CategoryID=${c.id}">${c.name}</a></li>--%>
                                           </c:forEach>
@@ -228,7 +230,7 @@
                                     <div class="shop__sidebar__brand">
                                        <ul>
                                           <c:forEach items="${brands}" var="b">
-                                             <input type="radio" id="brand" name="brand" value="${b}">
+                                             <input type="radio" id="brand" name="brand" value="${b}" onchange="submitForm()" ${brand == b ?'checked':''}>
                                              <label for="brand"> ${b}</label><br>
                                           </c:forEach>
                                        </ul>
@@ -244,11 +246,11 @@
                                  <div class="card-body">
                                     <div class="shop__sidebar__price">
                                        <ul>
-                                          <input type="radio" id="price1" name="price" value="1">
+                                          <input type="radio" id="price1" name="price" value="1" onchange="submitForm()" ${price == '1' ?'checked':''}>
                                           <label for="price1">$0.00 - $100.00</label><br>
-                                          <input type="radio" id="price2" name="price" value="2">
+                                          <input type="radio" id="price2" name="price" value="2" onchange="submitForm()" ${price == '2' ?'checked':''}>
                                           <label for="price2">$100.00 - $200.00</label><br>
-                                          <input type="radio" id="price3" name="price" value="3">
+                                          <input type="radio" id="price3" name="price" value="3" onchange="submitForm()" ${price == '3' ?'checked':''}>
                                           <label for="price3">$200.00 - ...</label><br>
                                        </ul>
                                     </div>
@@ -264,7 +266,7 @@
                                     <div class="shop__sidebar__size">
                                        <c:forEach items="${sizes}" var="s">
                                           <label for="${s}">${s}
-                                             <input type="radio" id="${s}" name="size" value="${s}">
+                                             <input type="radio" id="${s}" name="size" value="${s}" onchange="submitForm()" ${size == s ?'checked':''}>
                                           </label>
                                        </c:forEach>
                                     </div>
@@ -280,41 +282,14 @@
                                     <div class="shop__sidebar__color">
                                        <c:forEach items="${colors}" var="c">
                                           <label class="${c}">
-                                             <input type="radio" name="colors" value="${c}">
+                                             <input type="radio" name="color" value="${c}" onchange="submitForm()" ${color == c ?'checked':''}>
                                           </label>
                                        </c:forEach>
-                                       <%--<label class="c-1" for="sp-1">
-                                          <input type="radio" id="sp-1">
-                                       </label>
-                                       <label class="c-2" for="sp-2">
-                                          <input type="radio" id="sp-2">
-                                       </label>
-                                       <label class="c-3" for="sp-3">
-                                          <input type="radio" id="sp-3">
-                                       </label>
-                                       <label class="c-4" for="sp-4">
-                                          <input type="radio" id="sp-4">
-                                       </label>
-                                       <label class="c-5" for="sp-5">
-                                          <input type="radio" id="sp-5">
-                                       </label>
-                                       <label class="c-6" for="sp-6">
-                                          <input type="radio" id="sp-6">
-                                       </label>
-                                       <label class="c-7" for="sp-7">
-                                          <input type="radio" id="sp-7">
-                                       </label>
-                                       <label class="c-8" for="sp-8">
-                                          <input type="radio" id="sp-8">
-                                       </label>
-                                       <label class="c-9" for="sp-9">
-                                          <input type="radio" id="sp-9">
-                                       </label>--%>
                                     </div>
                                  </div>
                               </div>
                            </div>
-                           <input type="submit" value="Submit">
+                           <a href="${root}web/shop">delete filter</a>
                         </form>
                      </div>
                   </div>
@@ -328,16 +303,6 @@
                         <p>Showing 1–12 of 126 results</p>
                      </div>
                   </div>
-                  <%--<div class="col-lg-6 col-md-6 col-sm-6">
-                     <div class="shop__product__option__right">
-                        <p>Sort by Price:</p>
-                        <select>
-                           <option value="">Low To High</option>
-                           <option value="">$0 - $55</option>
-                           <option value="">$55 - $100</option>
-                        </select>
-                     </div>
-                  </div>--%>
                </div>
             </div>
             <div class="row">
@@ -348,12 +313,6 @@
                             <a href="shop-details?id=${l.id}&CategoryID=${l.category.id}">
                                 <img src="${l.image}" alt="">
                             </a>
-                           <%--<ul class="product__hover">
-                              <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
-                              <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                              </li>
-                              <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
-                           </ul>--%>
                         </div>
                         <div class="product__item__text">
                            <h6>${l.name}</h6>
@@ -370,13 +329,13 @@
                      </div>
                   </div>
                </c:forEach>
-
             </div>
             <div class="row">
                <div class="col-lg-12">
                   <div class="product__pagination">
                      <c:forEach begin="${1}" end="${numberPage}" var="i">
-                        <a ${i == page?'class="active"':""} href="<%=request.getContextPath()%>/ViewProductController?price=${1}&txtSearch=${txtSearch}&categoryID=${categoryID}&sort=${sort}&page=${i}">${i}</a>
+                        <c:if test="${i}=="></c:if>
+                        <a ${i == page?'class="active"':""} href="?${slug}&page=${i}">${i}</a>
                      </c:forEach>
                   </div>
                </div>
@@ -405,6 +364,13 @@
 <!-- Active menu -->
 <script>
     document.getElementById('menu-shop').classList.add('active')
+</script>
+
+
+<script>
+   function submitForm(){
+      document.getElementById("myForm").submit();
+   }
 </script>
 
 <!-- Js Plugins -->

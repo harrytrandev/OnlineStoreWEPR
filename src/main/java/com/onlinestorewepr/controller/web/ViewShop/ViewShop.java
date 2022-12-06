@@ -30,31 +30,27 @@ public class ViewShop extends HttpServlet {
     List<String> colors = productService.getColor();
     ProductDAO productdao = new ProductDAO();
     int CategoryID = 0;
+    int sortPrice  = 0;
+    int price  = 0;
+
     if((req.getParameter("CategoryID")) != null){
       CategoryID= Integer.parseInt(req.getParameter("CategoryID"));
     }
-    products = productService.filter(req.getParameter("sortPrice"), CategoryID,req.getParameter("brand"),req.getParameter("price"),req.getParameter("size"));
+    if((req.getParameter("sortPrice")) != null){
+      sortPrice= Integer.parseInt(req.getParameter("sortPrice"));
+    }
+    if((req.getParameter("price")) != null){
+      price= Integer.parseInt(req.getParameter("price"));
+    }
+    String brand = req.getParameter("brand");
+    String size = req.getParameter("size");
+    String color = req.getParameter("color");
+    products = productService.filter(CategoryID,req.getParameter("brand"), price ,req.getParameter("size"), req.getParameter("color"), sortPrice);
     if ((req.getParameter("txtSearch")) != null) {
       System.out.print(req.getParameter("txtSearch"));
       products = productService.getAllProdcutbyName(req.getParameter("txtSearch"));
     }
-    /*if((req.getParameter("CategoryID")) == null || (req.getParameter("CategoryID")).equals("")){
-      if ((req.getParameter("brand")) != null){
-        System.out.print(2);
-        products = productService.getAllProdcutbyBrand(req.getParameter("brand"));
-      }
-      else if ((req.getParameter("txtSearch")) != null) {
-        System.out.print(req.getParameter("txtSearch"));
-        products = productService.getAllProdcutbyName(req.getParameter("txtSearch"));
-      }
-      else {
-        products = productService.getAllProducts();
-        System.out.print(5);
-      }
-    }
-    else{
-      products = productService.getAllProdcutbyCategory(Integer.parseInt(req.getParameter("CategoryID")));
-    }*/
+
 //paging
     int page,numberItem = 6,start,end;
     int numberPage = (products.size()%numberItem==0?(products.size()/numberItem):((products.size()/numberItem)+1));
@@ -67,15 +63,37 @@ public class ViewShop extends HttpServlet {
     end = Math.min(products.size(),page*numberItem);
     products = productdao.getListByPage(products,start,end);
 
-    req.setAttribute("page",page);
-    req.setAttribute("numberPage",numberPage);
 
+    String slug = req.getQueryString();
+
+    if(slug!=null){
+      int x = slug.length();
+      System.out.println(x);
+      if(slug.contains("&page=")==true)
+      {
+        StringBuffer sb = new StringBuffer(slug);
+        sb.delete(x-7,x);
+        slug =sb.toString();
+      }
+    }
+
+    req.setAttribute("page",page);
+    req.setAttribute("price",price);
+    req.setAttribute("sortPrice",sortPrice);
+    req.setAttribute("CategoryID",CategoryID);
+    req.setAttribute("sortPrice",sortPrice);
+    req.setAttribute("numberPage",numberPage);
     req.setAttribute("categories", categories);
     req.setAttribute("products", products);
     req.setAttribute("brands", brands);
+    req.setAttribute("brand", brand);
     req.setAttribute("sizes", sizes);
+    req.setAttribute("size", size);
     req.setAttribute("colors", colors);
+    req.setAttribute("color", color);
+    req.setAttribute("slug", slug);
     req.getRequestDispatcher("/web/shop.jsp").forward(req, resp);
+
   }
 
   @Override

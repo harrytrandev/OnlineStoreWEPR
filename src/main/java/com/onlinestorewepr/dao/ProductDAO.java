@@ -9,8 +9,10 @@ import org.hibernate.Transaction;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.URL;
 
 public class ProductDAO {
    public void insert(Product product) {
@@ -109,7 +111,6 @@ public class ProductDAO {
 //Lấy tất cả sản phẩm có cùng ID category
     public List<Product> getTopbyCategory(int CategoryID) {
       List<Product> products = null;
-
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          String HQL = "SELECT c FROM Product c WHERE category.id = :CategoryID";
          Query query = session.createQuery(HQL);
@@ -122,7 +123,7 @@ public class ProductDAO {
       return products;
    }
 
-   public List<Product> filterProduct(String sortPrice, int CategoryID, String brand,String price, String size) {
+   public List<Product> filterProduct(int CategoryID, String brand,int price, String size, String color, int sortPrice) {
       List<Product> products = null;
 
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -133,11 +134,35 @@ public class ProductDAO {
          }
          if (brand !=null) {
             HQL = HQL + " and c.brand = :brand";
-
          }
          if (size != null) {
             HQL = HQL + " and c.size = :size";
          }
+         if (color != null) {
+            HQL = HQL + " and c.color = :color";
+         }
+
+         if (price != 0) {
+            if (price == 1){
+               HQL = HQL + " and c.price <= 100000";
+            }
+            else if(price == 2){
+               HQL = HQL + " and c.price >= 100000 and c.price <= 200000";
+            }
+            else {
+               HQL = HQL + " and c.price >= 200000";
+            }
+         }
+
+         if (sortPrice != 0) {
+            if (sortPrice == 1){
+               HQL = HQL + " ORDER BY c.price";
+            }
+            else{
+               HQL = HQL + " ORDER BY c.price desc";
+            }
+         }
+
          query = session.createQuery(HQL);
          if(CategoryID != 0){
             query.setParameter("CategoryID", CategoryID);
@@ -147,6 +172,9 @@ public class ProductDAO {
          }
          if (size != null) {
             query.setParameter("size", size);
+         }
+         if (color != null) {
+            query.setParameter("color", color);
          }
          products = query.getResultList();
       } catch (Exception e) {
@@ -163,9 +191,6 @@ public class ProductDAO {
          String HQL = "select distinct c.brand from Product c";
          Query query = session.createQuery(HQL);
          brand = query.getResultList();
-/*
-         products = query.setMaxResults(1).getResultList();
-*/
       } catch (Exception e) {
          e.printStackTrace();
       }
@@ -174,15 +199,11 @@ public class ProductDAO {
    }
    /*lấy các size*/
    public List<String> getSize() {
-      List<Product> products = null;
       List<String> size = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          String HQL = "select distinct c.size from Product c";
          Query query = session.createQuery(HQL);
          size = query.getResultList();
-/*
-         products = query.setMaxResults(1).getResultList();
-*/
       } catch (Exception e) {
          e.printStackTrace();
       }
@@ -192,34 +213,38 @@ public class ProductDAO {
 
    /*get color*/
    public List<String> getColor() {
-      List<Product> products = null;
       List<String> color = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          String HQL = "select distinct c.color from Product c";
          Query query = session.createQuery(HQL);
          color = query.getResultList();
-/*
-         products = query.setMaxResults(1).getResultList();
-*/
       } catch (Exception e) {
          e.printStackTrace();
       }
 
       return color;
    }
+
+   public List<Product> getNewArrivals() {
+      List<Product> products = null;
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "FROM  Product c order by c.id desc";
+         Query query = session.createQuery(HQL);
+         products = query.setMaxResults(8).getResultList();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      return products;
+   }
    /*Lọc sản phẩm theo tên*/
    public List<Product> searchByName(String txtSearch) {
       List<Product> products = null;
-      System.out.println(txtSearch);
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          String HQL = "SELECT c FROM Product c WHERE c.name LIKE :txtSearch";
          Query query = session.createQuery(HQL);
          query.setParameter("txtSearch", "%"+txtSearch+"%");
          products = query.getResultList();
-         System.out.println(products);
-/*
-         products = query.setMaxResults(1).getResultList();
-*/
       } catch (Exception e) {
          e.printStackTrace();
       }
@@ -234,13 +259,15 @@ public class ProductDAO {
       }
       return products;
    }
-  public static void main(String[] args) {
+
+    public static void main(String[] args) {
      ProductDAO donHangDAO = new ProductDAO();
-     List<Product> products = donHangDAO.searchByName("dep");
+
+     List<Product> products = donHangDAO.filterProduct(0,"",0,"","", 1);
+     System.out.println(products.size());
      for (Product p : products) {
-        System.out.println(p.getName());
+        System.out.println(p.getPrice());
      }
   }
-
 
 }

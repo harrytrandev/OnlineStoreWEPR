@@ -1,6 +1,8 @@
-package com.onlinestorewepr.controller.admin.product;
+package com.onlinestorewepr.controller.web.ViewShop;
 
+import com.onlinestorewepr.dao.ProductDAO;
 import com.onlinestorewepr.entity.Product;
+import com.onlinestorewepr.service.CategoryService;
 import com.onlinestorewepr.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -11,18 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/admin/products")
-public class ProductsServlet extends HttpServlet {
+@WebServlet("/web/web")
+public class Shop extends HttpServlet {
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    doGet(req, resp);
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    List<Product> products;
+    ProductService productService = new ProductService();
+    products = productService.get8ProdcutNew();
+    req.setAttribute("products", products);
+    req.getRequestDispatcher("/web/index.jsp").forward(req, resp);
+
   }
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    ProductService productService = new ProductService();
-    List<Product> products = productService.getAllProducts();
-    req.setAttribute("products", products);
-    req.getRequestDispatcher("/admin/products.jsp").forward(req, resp);
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    super.doPost(req, resp);
   }
 }

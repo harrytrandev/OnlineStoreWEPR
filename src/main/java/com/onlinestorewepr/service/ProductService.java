@@ -98,25 +98,10 @@ public class ProductService {
     return productDAO.get(id);
   }
 
-  public List<Product> getAllProducts() {
-    List<Product> products = null;
 
-    products = productDAO.getAll();
-
-    if (products != null) {
-      products.sort((o1, o2) -> {
-        int compareValue = o1.getName().compareTo(o2.getName());
-        return (Integer.compare(compareValue, 0));
-      });
-    }
-
-    return products;
-  }
   public List<Product> get4ProdcutbyCategory(int CategoryID) {
     List<Product> products = null;
-
     products = productDAO.getTopbyCategory(CategoryID);
-
     if (products != null) {
       products.sort((o1, o2) -> {
         int compareValue = o1.getName().compareTo(o2.getName());
@@ -126,12 +111,17 @@ public class ProductService {
 
     return products;
   }
-
-  public List<Product> filter(String sortPrice, int CategoryID, String brand,String price, String size) {
+/*Lấy 4 sản phẩm mới nhất*/
+  public List<Product> get8ProdcutNew() {
+    List<Product> products = null;
+    products = productDAO.getNewArrivals();
+    return products;
+  }
+  public List<Product> filter(int CategoryID, String brand,int price, String size, String color,  int sortPrice) {
     List<Product> products = null;
 
-    products = productDAO.filterProduct(sortPrice,CategoryID,brand,price,size);
-    if (products != null) {
+    products = productDAO.filterProduct(CategoryID,brand,price,size, color, sortPrice);
+    if (products != null & sortPrice==0) {
       products.sort((o1, o2) -> {
         int compareValue = o1.getName().compareTo(o2.getName());
         return (Integer.compare(compareValue, 0));
@@ -140,24 +130,6 @@ public class ProductService {
     return products;
   }
 
-
-
-
-  /*public List<Product> getAllProdcutbyBrand(String brand) {
-    List<Product> products = null;
-
-    products = productDAO.getbyBrand(brand);
-
-    if (products != null) {
-      products.sort((o1, o2) -> {
-        int compareValue = o1.getName().compareTo(o2.getName());
-        return (Integer.compare(compareValue, 0));
-      });
-    }
-
-    return products;
-  }
-*/
   public List<String> getBrand() {
     List<String> brands = null;
     brands = productDAO.getBrand();
@@ -170,11 +142,13 @@ public class ProductService {
     return sizes;
   }
 
+
   public List<String> getColor() {
     List<String> colors = null;
     colors = productDAO.getColor();
     return colors;
   }
+
   public List<Product> getAllProdcutbyName(String txtSearch) {
     List<Product> products = null;
     System.out.println(txtSearch);
@@ -186,7 +160,6 @@ public class ProductService {
         return (Integer.compare(compareValue, 0));
       });
     }
-
     return products;
   }
 }
