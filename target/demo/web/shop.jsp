@@ -273,22 +273,6 @@
                                  </div>
                               </div>
                            </div>
-                           <div class="card">
-                              <div class="card-heading">
-                                 <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
-                              </div>
-                              <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                 <div class="card-body">
-                                    <div class="shop__sidebar__color">
-                                       <c:forEach items="${colors}" var="c">
-                                          <label class="${c}">
-                                             <input type="radio" name="color" value="${c}" onchange="submitForm()" ${color == c ?'checked':''}>
-                                          </label>
-                                       </c:forEach>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
                            <a href="${root}web/shop" class="del-filter">Delete Filter</a>
                         </form>
                      </div>
@@ -316,14 +300,9 @@
                         </div>
                         <div class="product__item__text">
                            <h6>${l.name}</h6>
-                           <a href="#" class="add-cart">+ Add To Cart</a>
-                           <div class="rating">
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                              <i class="fa fa-star-o"></i>
-                           </div>
+
+                           <a href="shop-details?id=${l.id}&CategoryID=${l.category.id}" class="add-cart">View Product Detail</a>
+
                            <h5>${l.price}</h5>
                         </div>
                      </div>

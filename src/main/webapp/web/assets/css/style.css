@@ -3865,3 +3865,16 @@ ol {
 		height: 250px;
 	}
 }
+
+/*css nut delete filter*/
+.del-filter{
+	background: #007bff;
+	color: #fff;
+	padding: 10px 0;
+	border-radius: 6px;
+	display: flex;
+	justify-content: center;
+}
+.del-filter:hover{
+	background: red;
+}

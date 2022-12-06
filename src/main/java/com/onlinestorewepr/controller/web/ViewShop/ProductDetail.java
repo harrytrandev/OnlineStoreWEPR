@@ -17,17 +17,8 @@ import java.util.List;
 public class ProductDetail extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    int id = Integer.parseInt(req.getParameter("id"));
-    int categoryID = Integer.parseInt(req.getParameter("CategoryID"));
-    ProductService productService = new ProductService();
-    Product product = productService.getProduct(id);
-    List<Product> products = productService.get4ProdcutbyCategory(categoryID);
-    req.setAttribute("product",product );
-    req.setAttribute("products", products);
-    for(Product o:products){
-      System.out.println(o.getName());
-    }
-    req.getRequestDispatcher("/web/shop-details.jsp").forward(req, resp);
+    ProductService productService = new ProductService(req, resp);
+    productService.getProductDetail();
   }
 
   @Override

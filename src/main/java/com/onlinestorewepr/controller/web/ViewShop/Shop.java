@@ -18,7 +18,7 @@ public class Shop extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     List<Product> products;
-    ProductService productService = new ProductService();
+    ProductService productService = new ProductService(req, resp);
     products = productService.get8ProdcutNew();
     req.setAttribute("products", products);
     req.getRequestDispatcher("/web/index.jsp").forward(req, resp);

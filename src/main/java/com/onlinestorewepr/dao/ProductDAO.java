@@ -123,12 +123,13 @@ public class ProductDAO {
       return products;
    }
 
-   public List<Product> filterProduct(int CategoryID, String brand,int price, String size, String color, int sortPrice) {
+   public List<Product> filterProduct(int CategoryID, String brand,int price, String size, int sortPrice) {
       List<Product> products = null;
 
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          String HQL = "FROM  Product c where c.name!=null";
          Query query;
+
          if(CategoryID != 0){
             HQL = HQL + " and category.id = :CategoryID";
          }
@@ -137,9 +138,6 @@ public class ProductDAO {
          }
          if (size != null) {
             HQL = HQL + " and c.size = :size";
-         }
-         if (color != null) {
-            HQL = HQL + " and c.color = :color";
          }
 
          if (price != 0) {
@@ -173,9 +171,7 @@ public class ProductDAO {
          if (size != null) {
             query.setParameter("size", size);
          }
-         if (color != null) {
-            query.setParameter("color", color);
-         }
+
          products = query.getResultList();
       } catch (Exception e) {
          e.printStackTrace();
@@ -263,7 +259,7 @@ public class ProductDAO {
     public static void main(String[] args) {
      ProductDAO donHangDAO = new ProductDAO();
 
-     List<Product> products = donHangDAO.filterProduct(0,"",0,"","", 1);
+     List<Product> products = donHangDAO.filterProduct(0,"",0,"",1);
      System.out.println(products.size());
      for (Product p : products) {
         System.out.println(p.getPrice());
