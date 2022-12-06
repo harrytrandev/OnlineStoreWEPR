@@ -62,33 +62,36 @@
       <div class="container">
          <div class="row d-flex justify-content-center">
             <div class="col-lg-8">
-               <div class="product__details__text">
-                  <h4>${p.name}</h4>
-                  <h3>${p.price-p.discount} <span>${p.price}</span></h3>
-                  <div class="product__details__option">
-                     <div class="product__details__option__size">
-                        <span>Size:</span>
-                        <label for="${p.size}">${p.size}
-                           <input type="radio" id="${p.size}">
-                        </label>
+               <form action="${pageContext.request.contextPath}/web/buy" method="post">
+                  <div class="product__details__text">
+                     <input name="ProductId" value="${p.id}" hidden>
+                     <h4>${p.name}</h4>
+                     <h3>${p.price-p.discount} <span>${p.price}</span></h3>
+                     <div class="product__details__option">
+                        <div class="product__details__option__size">
+                           <span>Size:</span>
+                           <label for="${p.size}">${p.size}
+                              <input type="radio" id="${p.size}">
+                           </label>
 
-                     </div>
-                     <div class="product__details__option__color">
-                        <span>Color:</span>
-                        <label class="${p.color}" for="sp-1">
-                           <input type="radio" id="sp-1">
-                        </label>
-                     </div>
-                  </div>
-                  <div class="product__details__cart__option">
-                     <div class="quantity">
-                        <div class="pro-qty">
-                           <input type="text" value="1">
+                        </div>
+                        <div class="product__details__option__color">
+                           <span>Color:</span>
+                           <label class="${p.color}" for="sp-1">
+                              <input type="radio" id="sp-1">
+                           </label>
                         </div>
                      </div>
-                     <a href="#" class="primary-btn">add to cart</a>
+                     <div class="product__details__cart__option">
+                        <div class="quantity">
+                           <div class="pro-qty">
+                              <input name="quantity" type="text" value="1">
+                           </div>
+                        </div>
+                        <button type="submit" class="primary-btn">add to cart</button>
+                     </div>
                   </div>
-               </div>
+               </form>
             </div>
          </div>
          <div class="row">

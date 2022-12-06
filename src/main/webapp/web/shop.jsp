@@ -289,7 +289,7 @@
                                  </div>
                               </div>
                            </div>
-                           <a href="${root}web/shop">delete filter</a>
+                           <a href="${root}web/shop" class="del-filter">Delete Filter</a>
                         </form>
                      </div>
                   </div>
