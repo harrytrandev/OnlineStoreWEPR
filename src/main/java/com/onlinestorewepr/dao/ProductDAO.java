@@ -88,6 +88,12 @@ public class ProductDAO {
       return product;
    }
 
+   public static void main(String[] args) {
+      ProductDAO productDAO = new ProductDAO();
+      Product product = productDAO.get(1);
+      System.out.println(product.getQuantity());
+   }
+
    public Product findByName(String name) {
       Product product = null;
 

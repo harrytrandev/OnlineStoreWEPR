@@ -16,6 +16,6 @@ public class EditOder extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         OrderService orderService = new OrderService(request, response);
-        orderService.updateService();
+        orderService.editOrder();
     }
 }

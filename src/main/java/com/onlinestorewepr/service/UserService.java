@@ -24,21 +24,12 @@ public class UserService {
     }
 
     public void listAll() throws ServletException, IOException {
-        listAll(null);
-    }
-    public void listAll(String message) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-//        List<Order> listOrder = orderDAO.getAll();
         List<User> userList = userDAO.getAll();
         request.setAttribute("userList", userList);
-        if (message != null) {
-            request.setAttribute("message", message);
-        }
         request.getRequestDispatcher("account.jsp").forward(request, response);
     }
 
     public void getUser(String username) throws ServletException, IOException {
-        System.out.println("loi");
         User user = userDAO.get(username);
         System.out.println(user.getName());
         request.setAttribute("user", user);

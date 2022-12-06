@@ -2,11 +2,14 @@ package com.onlinestorewepr.dao;
 
 import com.onlinestorewepr.entity.CartItem;
 import com.onlinestorewepr.util.HibernateUtil;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartItemDAO {
@@ -85,4 +88,19 @@ public class CartItemDAO {
       }
       return cartItem;
    }
+
+   public List<CartItem> getList(int id){
+      Transaction transaction = null;
+      List<CartItem> cartItems = new ArrayList<>();
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         transaction = session.beginTransaction();
+         String hql = "Select c From CartItem as c Where c.cart.id = :id";
+         //cartItems = (List<CartItem>)session.createSQLQuery("hql").setParameter("id", id).addEntity(CartItem.class).list();
+         cartItems = session.createQuery(hql).setParameter("id", id).getResultList();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return cartItems;
+   }
+
 }

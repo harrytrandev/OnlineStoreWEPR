@@ -41,7 +41,6 @@
                                     <th>PHONE</th>
                                     <th>ADDRESS</th>
                                     <th>DATE</th>
-                                    <th>TOTAL</th>
                                     <th>PAYMENT</th>
                                     <th>STATUS</th>
                                     <th></th>
@@ -49,16 +48,36 @@
                                 </thead>
                                 <c:forEach var="order" items="${listOrder}" varStatus="status">
                                     <tr>
-                                        <form action = "UpdateOder">
-                                            <td name = "id">${order.id}</td>
+                                        <form action = "update-order" method="get">
+                                            <input name="id" value="${order.id}" hidden>
+                                            <td>${order.id}</td>
                                             <td>${order.name}</td>
                                             <td>${order.phone}</td>
                                             <td>${order.address}</td>
                                             <td>${order.created}</td>
-                                            <td>${order.total}</td>
                                             <td>${order.payment}</td>
-                                            <td ><span class="badge bg-label-success me-1">${order.status}</span></td>
-                                            <td><a href="./update-order?id=${order.id}" >Change</a></td>
+                                            <c:if test="${order.status == 'Cancelled'}">
+                                                <td ><span class="badge bg-label-danger me-1">${order.status}</span></td>
+                                            </c:if>
+                                            <c:if test="${order.status == 'Delivered'}">
+                                                <td ><span class="badge bg-label-success me-1">${order.status}</span></td>
+                                            </c:if>
+                                            <c:if test="${order.status == 'Delivering'}">
+                                                <td ><span class="badge bg-label-info me-1">${order.status}</span></td>
+                                            </c:if>
+                                            <c:if test="${order.status == 'Paid'}">
+                                                <td ><span class="badge bg-label-primary me-1">${order.status}</span></td>
+                                            </c:if>
+                                            <c:if test="${order.status == 'Created'}">
+                                                <td ><span class="badge bg-label-info me-1">${order.status}</span></td>
+                                            </c:if>
+
+                                            <c:if test="${order.status != 'Cancelled'}">
+                                            <td><a><button class="badge bg-label-success me-1" style="border: 2px hidden;" type="submit">Change</button></a></td>
+                                            </c:if>
+                                            <c:if test="${order.status == 'Cancelled'}">
+                                                <td><a>Not Change</a></td>
+                                            </c:if>
                                         </form>
                                     </tr>
                                 </c:forEach>

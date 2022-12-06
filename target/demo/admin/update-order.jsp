@@ -37,7 +37,7 @@
               <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
                   <h5 class="mb-0">Update Orders Details</h5>
-                  <a href="./orders" class="btn btn-outline-primary">Back</a>
+                  <a href="${pageContext.request.contextPath}/admin/list_order" class="btn btn-outline-primary">Back</a>
                 </div>
                 <div class="card-body">
                   <form action="EditOder" method="get">
@@ -86,12 +86,13 @@
                             </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                            <c:forEach var="products" items="${getListProduct}" varStatus="status">
+                            <c:forEach var="orderItem" items="${orderItemList}" varStatus="status">
                               <tr>
-                                <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>${products.product.id}</strong></td>
-                                <td><strong>${products.price}</strong></td>
-                                <td><strong class="ms-4">${products.quantity}</strong></td>
-                                <td><strong>${products.price * products.quantity}</strong></td>
+                                <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>${orderItem.product.name}</strong></td>
+<%--                                <c:if test="${products.}"--%>
+                                <td><strong>${orderItem.price}</strong></td>
+                                <td><strong class="ms-4">${orderItem.quantity}</strong></td>
+                                <td><strong>${orderItem.price * orderItem.quantity}</strong></td>
                               </tr>
                             </c:forEach>
                             </tbody>
@@ -108,20 +109,26 @@
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Note</label>
                       <div class="col-sm-10">
-                        <span class="form-control">${order.note}</span>
+<%--                        <input class="form-control" name="note" value="${order.note}" />--%>
+                            <span class="form-control">${order.note}</span>
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label for="order-status" class="col-sm-2 col-form-label">Status</label>
                       <div class="col-sm-10" name="status_name">
                         <select id="order-status" class="form-select" name="status">
-<%--                          <option value="${order.status}" selected disabled hidden>${order.status}</option>--%>
-                          <option value="Pending">Pending</option>
-                          <option value="Delivering">Delivering</option>
-                          <option value="Delivered">Delivered</option>
-                          <option value="Cancelled">Cancelled</option>
+                          <option value="Created" <c:if test = "${order.status =='Created'}"> selected</c:if>>Created</option>
+                          <option value="Paid" <c:if test = "${order.status =='Paid'}"> selected</c:if>>Paid</option>
+                          <option value="Delivering" <c:if test = "${order.status =='Delivering'}"> selected</c:if>>Delivering</option>
+                          <option value="Delivered" <c:if test = "${order.status =='Delivered'}"> selected</c:if>>Delivered</option>
+                          <option value="Cancelled" <c:if test = "${order.status =='Cancelled'}"> selected</c:if>>Cancelled</option>
                         </select>
                       </div>
+                      <c:if test="${not empty message}">
+                        <div class="col-sm-12 d-flex justify-content-end my-3">
+                          <p class="text-success">Order's info was changed successfully!</p>
+                        </div>
+                      </c:if>
                     </div>
                     <div class="row justify-content-end">
                       <div class="col-sm-10" style="text-align: end;">

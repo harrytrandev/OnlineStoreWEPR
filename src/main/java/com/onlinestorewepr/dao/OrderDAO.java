@@ -90,13 +90,12 @@ public class OrderDAO {
       return order;
    }
 
-   public List getListProduct(int orderId)
+   public List getListOrderItem(int orderId)
    {
       List results = null;
       Transaction transaction = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          transaction = session.beginTransaction();
-//         Query query = session.createQuery("SELECT o.id, p.name FROM OrderItem o, Product p WHERE o.product.id = p.id and o.order.id = :orderId");
          Query query = session.createQuery("FROM OrderItem o WHERE o.order.id = :orderId");
          query.setParameter("orderId", orderId);
          results = query.getResultList();

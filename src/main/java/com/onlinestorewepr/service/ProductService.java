@@ -1,10 +1,17 @@
 package com.onlinestorewepr.service;
 
+import com.onlinestorewepr.Main;
+import com.onlinestorewepr.dao.CartItemDAO;
 import com.onlinestorewepr.dao.CategoryDAO;
 import com.onlinestorewepr.dao.ProductDAO;
+import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.CartItem;
 import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Product;
+import com.onlinestorewepr.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -112,4 +119,21 @@ public class ProductService {
 
     return products;
   }
+  public List<CartItem> getListProduct( String username){
+    HttpServletResponse response = null;
+    HttpServletRequest request = null;
+    List<Product> products = null;
+    UserDAO userDAO = new UserDAO();
+    User user = userDAO.get(username);
+    CartItemService cartItemService = new CartItemService(request,response);
+    List<CartItem> cartItems = cartItemService.getListCartItem(user.getCart().getId());
+    return  cartItems;
+//    for(CartItem cartItem : cartItems){
+//      System.out.println(cartItem.getProduct().getName());
+//    }
+
+  }
+
+
+
 }
