@@ -135,8 +135,8 @@
 <!-- Page JS -->
 <!-- Active Menu Item -->
 <script>
-    document.getElementById('menu-managements').classList.add('active', 'open')
-    document.getElementById('menu-managements-products').classList.add('active')
+  document.getElementById('menu-managements').classList.add('active', 'open')
+  document.getElementById('menu-managements-products').classList.add('active')
 </script>
 </body>
 </html>

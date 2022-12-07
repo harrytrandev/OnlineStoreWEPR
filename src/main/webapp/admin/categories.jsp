@@ -98,9 +98,9 @@
 <script src="${pageContext.request.contextPath}/admin/assets/js/main.js"></script>
 
 <script>
-    // Active menu
-    document.getElementById('menu-managements').classList.add('active', 'open')
-    document.getElementById('menu-managements-categories').classList.add('active')
+  // Active menu
+  document.getElementById('menu-managements').classList.add('active', 'open')
+  document.getElementById('menu-managements-categories').classList.add('active')
 </script>
 </body>
 </html>

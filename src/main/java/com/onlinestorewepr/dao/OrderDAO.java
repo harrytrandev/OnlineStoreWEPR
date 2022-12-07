@@ -1,8 +1,6 @@
 package com.onlinestorewepr.dao;
 
-import com.onlinestorewepr.Main;
 import com.onlinestorewepr.entity.Order;
-import com.onlinestorewepr.entity.OrderItem;
 import com.onlinestorewepr.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,7 +8,6 @@ import org.hibernate.Transaction;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO {

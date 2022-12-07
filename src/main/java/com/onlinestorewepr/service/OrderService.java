@@ -67,7 +67,7 @@ public class OrderService {
         }
         orderDAO.update(order);
         if(status.equals("Cancelled")){
-            response.sendRedirect("/admin/list_order");
+            response.sendRedirect("/admin/order");
         }
         else {
             //request.setAttribute("message", );

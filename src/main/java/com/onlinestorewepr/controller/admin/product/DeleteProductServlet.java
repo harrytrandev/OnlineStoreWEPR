@@ -13,7 +13,8 @@ import java.io.IOException;
 public class DeleteProductServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    ProductService productBUS = new ProductService(req, resp);
-    productBUS.DeleteProduct();
+    ProductService productService = new ProductService(req, resp);
+    productService.DeleteProduct();
   }
 }
+

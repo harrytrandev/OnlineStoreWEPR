@@ -4,17 +4,6 @@
 <html lang="zxx">
 
 <head>
-   <style>
-   .quantity-style{
-   text-align: center;
-   min-width: 38px;
-   max-width: 38px;
-   }
-
-   .quantity-wrapper{
-   width: 38px;
-   }
-   </style>
    <meta charset="UTF-8">
    <meta name="description" content="Male_Fashion Template">
    <meta name="keywords" content="Male_Fashion, unica, creative, html">
@@ -23,8 +12,7 @@
    <title>Male-Fashion | Template</title>
 
    <!-- Google Font -->
-   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-         rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
    <!-- Css Styles -->
    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/bootstrap.min.css" type="text/css">
@@ -36,12 +24,26 @@
    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/slicknav.min.css" type="text/css">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/style.css" type="text/css">
 
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   <link rel="stylesheet"
-         href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/4.7.0/css/font-awesome.min.css">
+   <style>
+      input.line-quantity {
+         font-size: 17px !important;
+         font-weight: 700;
+      }
+      input[type=number] {
+         height: 30px;
+      }
 
+      input[type=number]:hover::-webkit-inner-spin-button {
+         width: 14px;
+         height: 30px;
+      }
+
+      td input[type="checkbox"] {
+         margin-right: 24px;
+         transform: scale(1.5);
+         accent-color: #333333;
+      }
+   </style>
 </head>
 
 <body>
@@ -97,38 +99,38 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <c:forEach items="${cartItems}" var="cartItems">
-                     <tr data-cartitem-id="${cartItems.id}" data-product-id="${cartItems.product.id}" data-max-quantity="${cartItems.product.quantity}" data-price="${cartItems.product.price}" data-discount="${cartItems.product.discount}" data-quantity="${cartItems.quantity}">
-                     <td><input type="checkbox" class="line-choose" id=""></td>
+                  <c:forEach items="${cartItems}" var="cartItem">
+                     <tr data-cartitem-id="${cartItem.id}" data-product-id="${cartItem.product.id}" data-max-quantity="${cartItem.product.quantity}" data-price="${cartItem.product.price}" data-discount="${cartItem.product.discount}" data-quantity="${cartItem.quantity}">
+                     <td class="mr-4"><input type="checkbox" class="line-choose" id=""></td>
                      <td class="product__cart__item">
                         <div class="product__cart__item__pic">
                            <img width="105px" src="${cartItem.product.image}" alt="cartItemPicture">
                         </div>
                         <div class="product__cart__item__text">
-                           <h6>${cartItems.product.name}</h6>
-                           <h6>${cartItems.product.color} ${cartItems.product.size}</h6>
-                           <c:if test="${cartItems.product.discount != 0}">
-                              <span style="font-size: 18px; font-weight: 700;">${cartItems.product.discount}đ</span>
-                              <span style="text-decoration: line-through; color: gray;">${cartItems.product.price}đ</span>
+                           <h6>${cartItem.product.name}</h6>
+                           <h6>${cartItem.product.color} ${cartItem.product.size}</h6>
+                           <c:if test="${cartItem.product.discount != 0}">
+                              <span style="font-size: 18px; font-weight: 700;">${cartItem.product.discount}đ</span>
+                              <span style="text-decoration: line-through; color: gray;">${cartItem.product.price}đ</span>
                            </c:if>
-                           <c:if test="${cartItems.product.discount == 0}">
-                              <h5>${cartItems.product.price}đ</h5>
+                           <c:if test="${cartItem.product.discount == 0}">
+                              <h5>${cartItem.product.price}đ</h5>
                            </c:if>
-<%--                           <h5>${cartItems.product.price}</h5>--%>
+<%--                           <h5>${cartItem.product.price}</h5>--%>
                         </div>
                      </td>
 
                      <td class="quantity__item">
                         <div class="quantity">
                            <div > <%--pro-qty-2--%>
-                              <span  class="fa fa-angle-left dec qtybtn" onclick="decrement(${cartItems.id},${cartItems.quantity})" ></span>
-                              <input class="line-quantity" value="${cartItems.quantity}" name="quantity" readonly style="width: 50px;border: none;text-align: center;color: #111111;font-size: 16px;">
-                              <span class="fa fa-angle-right inc qtybtn" onclick="increment(${cartItems.id},${cartItems.quantity})"></span>
+                              <span style="cursor: pointer;" class="fa fa-angle-left dec qtybtn" onclick="decrement(${cartItem.id},${cartItem.quantity})" ></span>
+                              <input class="line-quantity" value="${cartItem.quantity}" name="quantity" readonly style="width: 50px;border: none;text-align: center;color: #111111;font-size: 16px;">
+                              <span style="cursor: pointer;" class="fa fa-angle-right inc qtybtn" onclick="increment(${cartItem.id},${cartItem.quantity})"></span>
                            </div>
                         </div>
                      </td>
-                     <td class="cart__price">${cartItems.product.discount == 0 ? cartItems.product.price * cartItems.quantity : cartItems.product.discount * cartItems.quantity} đ</td>
-                     <td class="cart__close "><a onclick="deleteBtns(${cartItems.id})"><i class="fa fa-close"></i></a></td>
+                     <td class="cart__price">${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity} đ</td>
+                     <td class="cart__close "><a onclick="deleteBtns(${cartItem.id})"><i class="fa fa-close"></i></a></td>
                   </tr>
                   </c:forEach>
                   </tbody>
@@ -150,10 +152,7 @@
                   <li id="discount">Discount <span style="font-size: 14px; font-weight: 600; color: gray; text-decoration: line-through;">0</span></li>
                   <li id="total">Total <span>0</span></li>
                </ul>
-               <form id="checkout" action="${pageContext.request.contextPath}/checkout" method="post">
-                  <%--            <input type="hidden" name="data">--%>
-                  <input type="submit" value="Proceed to checkout" class="primary-btn w-100">
-               </form>
+               <a id="checkout-button" href="javascript:" class="primary-btn">Proceed to checkout</a>
             </div>
          </div>
       </div>
@@ -190,8 +189,6 @@
 <script src="${pageContext.request.contextPath}/web/assets/js/shopping-cart.js"></script>
 
 <script>
-<%--   <c:url value="${pageContext.request.contextPath}/cart/update?id=${cartItems.id}&quantity=${cartItems.quantity}" var="urlchange"/>--%>
-<%--   <c:url value="${pageContext.request.contextPath}/cart/delete?id=${cartItems.id}" var="urlDelete"/>--%>
    function increment(id, quantity) {
       window.location.href = "${pageContext.request.contextPath}/cart/update?id="+id+"&quantity="+quantity+""+"&action=inc";
    }
@@ -199,21 +196,11 @@
       window.location.href = "${pageContext.request.contextPath}/cart/update?id="+id+"&quantity="+quantity+""+"&action=dec";
    }
 
-   function  deleteBtns(id){
-      if(confirm("Are you sure!") == true) {
+   function deleteBtns(id) {
+      if(confirm("Are you sure!") === true) {
          window.location.href = "${pageContext.request.contextPath}/cart/delete?id="+id;
       }
    }
-
-   <%--const deleteBtns = document.querySelectorAll(".cart__close a")--%>
-   <%--deleteBtns.forEach((button, id) => {--%>
-   <%--   button.addEventListener('click', (ev) => {--%>
-   <%--      ev.preventDefault()--%>
-   <%--      if(confirm("Are you sure!") == true){--%>
-   <%--         window.location.href = "${urlDelete}";--%>
-   <%--      }--%>
-   <%--   })--%>
-   <%--})--%>
 </script>
 </body>
 

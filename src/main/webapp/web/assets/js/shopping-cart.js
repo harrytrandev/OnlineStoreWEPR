@@ -48,27 +48,17 @@ window.addEventListener('load', () => {
     }
 
     // Checkout
-    const checkoutForm = document.getElementById('checkout')
-    const submitBtn = checkoutForm.querySelector('input[type="submit"]')
-    submitBtn.addEventListener('click', (ev) => {
-        ev.preventDefault()
+    const submitBtn = document.getElementById('checkout-button')
+    submitBtn.addEventListener('click', (e) => {
         let cartItems = []
         lineCheckboxs.forEach((checkbox) => {
             if (checkbox.checked) {
-                let trElm = checkbox.closest('tr')
-                cartItems.push({
-                    cartItemId: trElm.dataset.cartitemId,
-                    productId: trElm.dataset.productId,
-                    quantity: trElm.dataset.quantity,
-                })
+                cartItems.push(checkbox.closest('tr').dataset.cartitemId)
             }
         })
         if (cartItems.length) {
-            cartItems.forEach((item) => {
-                let inputHtml = `<input type="hidden" name="data" value="${item.cartItemId}|${item.productId}|${item.quantity}">`
-                checkoutForm.innerHTML += inputHtml;
-            })
-            checkoutForm.submit()
+            let url = location.origin + `/checkout?cart_items=${cartItems.join(',')}`
+            location.replace(url)
         } else {
             alert("There must be at least one product selected in your cart")
         }

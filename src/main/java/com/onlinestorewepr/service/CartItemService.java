@@ -29,7 +29,7 @@ public class CartItemService {
     }
 
     public void ListCartItem () throws IOException, ServletException {
-        String username = "1"; ////// Sua lai doan nay
+        String username = "quangtran"; //  Sua lai doan nay
         ProductService productService = new ProductService(request, response);
         List<CartItem> cartItems = productService.getListCartItems(username);
         int total =0;

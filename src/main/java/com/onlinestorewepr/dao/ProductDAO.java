@@ -79,9 +79,7 @@ public class ProductDAO {
    public Product get(int id) {
       Product product = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
          product = session.get(Product.class, id);
-
       } catch (Exception e) {
          e.printStackTrace();
       }

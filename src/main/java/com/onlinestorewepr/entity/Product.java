@@ -8,18 +8,28 @@ import java.util.List;
 public class Product {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column
    private int id;
+   @Column
    private String name;
-   private String image;
+   @Column
+   private String image="";
+   @Column(columnDefinition = "LONGTEXT")
    private String description;
+   @Column
    private int price;
+   @Column
    private int quantity;
+   @Column
    private int discount;
+   @Column
    private String size;
+   @Column
    private String color;
+   @Column
    private String brand;
-
-   private Boolean status;
+   @Column
+   private boolean available=false;
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "categoryId")
@@ -42,8 +52,8 @@ public class Product {
       this.size = size;
       this.color = color;
       this.brand = brand;
+      this.available = status;
       this.category = category;
-      this.status = status;
    }
 
    public Product() {
@@ -130,6 +140,14 @@ public class Product {
       this.brand = brand;
    }
 
+   public boolean isAvailable() {
+      return available;
+   }
+
+   public void setAvailable(boolean available) {
+      this.available = available;
+   }
+
    public Category getCategory() {
       return category;
    }
@@ -152,14 +170,6 @@ public class Product {
 
    public void setOrderItems(List<OrderItem> orderItems) {
       this.orderItems = orderItems;
-   }
-
-   public Boolean getStatus() {
-      return status;
-   }
-
-   public void setStatus(Boolean status) {
-      this.status = status;
    }
 
    // Validate data

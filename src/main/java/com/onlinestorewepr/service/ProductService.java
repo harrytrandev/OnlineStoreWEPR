@@ -70,6 +70,7 @@ public class ProductService {
       int categoryId = Integer.parseInt(req.getParameter("category-id"));
       CategoryDAO categoryDAO = new CategoryDAO();
       Category category = categoryDAO.get(categoryId);
+      boolean available = req.getParameter("available") == null || (req.getParameter("available").equals("1"));
       String name = req.getParameter("name");
       String image = "temp";
       String description = req.getParameter("description");
@@ -80,6 +81,7 @@ public class ProductService {
       String color = req.getParameter("color");
       String brand = req.getParameter("brand");
 
+      product.setAvailable(available);
       product.setCategory(category);
       product.setName(name);
       product.setImage(image);
@@ -144,7 +146,7 @@ public class ProductService {
           // ------------------
 
           productDAO.insert(product);
-          messageBody = "A new category was created successfully!";
+          messageBody = "A new product was created successfully!";
           messageType = "success";
         } catch (Exception ex) {
           ex.printStackTrace();
@@ -230,11 +232,16 @@ public class ProductService {
     if (id != 0) {
       Product product = productDAO.get(id);
       if (product != null) {
-        // delete image
-        CommonUtil.deleteDir(req.getServletContext().getRealPath(product.getImage()));
-        productDAO.delete(id);
-        messageBody = "Product was deleted successfully!";
-        messageType = "primary";
+        if (product.getOrderItems().isEmpty() && product.getCartItems().isEmpty()) {
+          // delete image
+          CommonUtil.deleteDir(req.getServletContext().getRealPath(product.getImage()));
+          productDAO.delete(id);
+          messageBody = "Product was deleted successfully!";
+          messageType = "primary";
+        } else {
+          messageBody = "Cannot delete this category, this product is already in some cart or order.";
+          messageType = "danger";
+        }
       }
       else {
         messageBody = "Product doesn't exist";
@@ -253,9 +260,8 @@ public class ProductService {
     req.setAttribute("action", "/admin/product");
     req.getRequestDispatcher("/admin/information.jsp").forward(req, resp);
   }
-  
 
-  public List<CartItem> getListCartItems( String username){
+  public List<CartItem> getListCartItems( String username) {
     List<Product> products = null;
     UserDAO userDAO = new UserDAO();
     User user = userDAO.get(username);
