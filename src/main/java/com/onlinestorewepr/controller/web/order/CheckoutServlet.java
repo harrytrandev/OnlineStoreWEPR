@@ -1,7 +1,6 @@
-package com.onlinestorewepr.controller.admin.product;
+package com.onlinestorewepr.controller.web.order;
 
-import com.onlinestorewepr.entity.Product;
-import com.onlinestorewepr.service.ProductService;
+import com.onlinestorewepr.service.UserOrderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,19 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/admin/edit-product")
-public class EditProductServlet extends HttpServlet {
+@WebServlet(value = {"/checkout"})
+public class CheckoutServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    ProductService productService = new ProductService(req, resp);
-    productService.ShowUpdateProduct();
+    UserOrderService userOrderService = new UserOrderService(req, resp);
+    userOrderService.viewCheckout();
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    ProductService productService = new ProductService(req, resp);
-    productService.UpdateProduct();
   }
 }
-
-
