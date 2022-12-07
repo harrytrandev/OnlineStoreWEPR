@@ -65,7 +65,7 @@ public class CartItemService {
 
     public void ListCartItem () throws IOException, ServletException {
         String username = "quangtran"; //  Sua lai doan nay
-        ProductService productService = new ProductService(request, response);
+        ProductService productService = new ProductService(req, resp);
         List<CartItem> cartItems = productService.getListCartItems(username);
         int total =0;
         for(CartItem cartItem: cartItems){
