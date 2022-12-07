@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ChangPasswordUserServlet" ,value = {"/web/change-password"})
+@WebServlet(name = "ChangPasswordUserServlet" ,value = {"/change-password","/web/change-password"})
 public class ChangePasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

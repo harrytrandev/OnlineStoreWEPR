@@ -17,6 +17,6 @@ public class AdminLogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().removeAttribute("adminLogged");
-        req.getRequestDispatcher("/admin/login-admin").forward(req,resp);
+        resp.sendRedirect("/admin/login-admin");
     }
 }

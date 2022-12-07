@@ -1730,6 +1730,23 @@ ol {
 	background: #ed1c24;
 }
 
+.product__details__option__color label.c-5 {
+	background: #57594d;
+}
+
+.product__details__option__color label.c-6 {
+	background: #e8bac4;
+}
+
+.product__details__option__color label.c-7 {
+	background: #d6c1d7;
+}
+
+.product__details__option__color label.c-8 {
+	background: #ed1c24;
+}
+
+
 .product__details__option__color label.c-9 {
 	background: #ffffff;
 }
@@ -1861,7 +1878,6 @@ ol {
 	border-bottom: 1px solid #e5e5e5;
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
-	justify-content: center;
 }
 
 .product__details__tab .nav-tabs .nav-item {
@@ -3848,4 +3864,17 @@ ol {
 	.categories__text:before {
 		height: 250px;
 	}
+}
+
+/*css nut delete filter*/
+.del-filter{
+	background: #007bff;
+	color: #fff;
+	padding: 10px 0;
+	border-radius: 6px;
+	display: flex;
+	justify-content: center;
+}
+.del-filter:hover{
+	background: red;
 }

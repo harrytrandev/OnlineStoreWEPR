@@ -17,15 +17,15 @@ public class UserLoginFilter extends HttpFilter implements Filter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) resp;
+        HttpServletRequest request =  req;
+        HttpServletResponse response = resp;
         HttpSession session = request.getSession();
         Object obj = session.getAttribute("userLogged");
         if(obj!=null){
             chain.doFilter(request,response);
         }
         else {
-            request.getRequestDispatcher("/login").forward(request,response);
+            request.getRequestDispatcher("/web/authentication.jsp").forward(request,response);
         }
     }
 

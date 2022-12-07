@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:url value="/" var="root"/>
+
 <!-- Page Preloder -->
 <div id="preloder">
    <div class="loader"></div>
@@ -68,14 +70,14 @@
       <div class="row">
          <div class="col-lg-3 col-md-3">
             <div class="header__logo">
-               <a href="./index.jsp"><img src="./assets/img/logo.png" alt=""></a>
+               <a href="${root}web"><img src="./assets/img/logo.png" alt=""></a>
             </div>
          </div>
          <div class="col-lg-6 col-md-6">
             <nav class="header__menu mobile-menu">
                <ul>
-                  <li id="menu-home"><a href="./index.jsp">Home</a></li>
-                  <li id="menu-shop"><a href="./shop.jsp">Shop</a></li>
+                  <li id="menu-home"><a href="${root}web">Home</a></li>
+                  <li id="menu-shop"><a href="${root}web/shop">Shop</a></li>
                   <li id="menu-pages"><a href="./#">Pages</a>
                      <ul class="dropdown">
                         <li><a href="./about.jsp">About Us</a></li>

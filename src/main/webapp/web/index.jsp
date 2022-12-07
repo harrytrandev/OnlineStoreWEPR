@@ -14,14 +14,14 @@
          rel="stylesheet">
 
    <!-- Css Styles -->
-   <link rel="stylesheet" href="./assets/css/bootstrap.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/font-awesome.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/elegant-icons.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/magnific-popup.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/nice-select.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/owl.carousel.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/slicknav.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/bootstrap.min.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/font-awesome.min.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/elegant-icons.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/magnific-popup.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/nice-select.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/owl.carousel.min.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/slicknav.min.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/style.css" type="text/css">
 </head>
 
 <body>
@@ -32,7 +32,7 @@
 <!-- Hero Section Begin -->
 <section class="hero">
    <div class="hero__slider owl-carousel">
-      <div class="hero__items set-bg" data-setbg="./assets/img/hero/hero-1.jpg">
+      <div class="hero__items set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/hero/hero-1.jpg">
          <div class="container">
             <div class="row">
                <div class="col-xl-5 col-lg-7 col-md-8">
@@ -53,7 +53,7 @@
             </div>
          </div>
       </div>
-      <div class="hero__items set-bg" data-setbg="./assets/img/hero/hero-2.jpg">
+      <div class="hero__items set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/hero/hero-2.jpg">
          <div class="container">
             <div class="row">
                <div class="col-xl-5 col-lg-7 col-md-8">
@@ -85,7 +85,7 @@
          <div class="col-lg-7 offset-lg-4">
             <div class="banner__item">
                <div class="banner__item__pic">
-                  <img src="./assets/img/banner/banner-1.jpg" alt="">
+                  <img src="${pageContext.request.contextPath}/web/assets/img/banner/banner-1.jpg" alt="">
                </div>
                <div class="banner__item__text">
                   <h2>Clothing Collections 2030</h2>
@@ -96,7 +96,7 @@
          <div class="col-lg-5">
             <div class="banner__item banner__item--middle">
                <div class="banner__item__pic">
-                  <img src="./assets/img/banner/banner-2.jpg" alt="">
+                  <img src="${pageContext.request.contextPath}/web/assets/img/banner/banner-2.jpg" alt="">
                </div>
                <div class="banner__item__text">
                   <h2>Accessories</h2>
@@ -107,7 +107,7 @@
          <div class="col-lg-7">
             <div class="banner__item banner__item--last">
                <div class="banner__item__pic">
-                  <img src="./assets/img/banner/banner-3.jpg" alt="">
+                  <img src="${pageContext.request.contextPath}/web/assets/img/banner/banner-3.jpg" alt="">
                </div>
                <div class="banner__item__text">
                   <h2>Shoes Spring 2030</h2>
@@ -133,14 +133,51 @@
          </div>
       </div>
       <div class="row product__filter">
+         <c:forEach items="${products}" var="p">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+               <div class="product__item">
+                  <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/product/product-1.jpg">
+                     <span class="label">New</span>
+                     <ul class="product__hover">
+                        <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a></li>
+                        <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                        <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a></li>
+                     </ul>
+                  </div>
+                  <div class="product__item__text">
+                     <h6>Piqué Biker Jacket</h6>
+                     <a href="#" class="add-cart">+ Add To Cart</a>
+                     <div class="rating">
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                     </div>
+                     <h5>$67.24</h5>
+                     <div class="product__color__select">
+                        <label for="pc-1">
+                           <input type="radio" id="pc-1">
+                        </label>
+                        <label class="active black" for="pc-2">
+                           <input type="radio" id="pc-2">
+                        </label>
+                        <label class="grey" for="pc-3">
+                           <input type="radio" id="pc-3">
+                        </label>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </c:forEach>
          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
             <div class="product__item">
-               <div class="product__item__pic set-bg" data-setbg="./assets/img/product/product-1.jpg">
+               <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/product/product-1.jpg">
                   <span class="label">New</span>
                   <ul class="product__hover">
-                     <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a></li>
                   </ul>
                </div>
                <div class="product__item__text">
@@ -170,11 +207,11 @@
          </div>
          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
             <div class="product__item">
-               <div class="product__item__pic set-bg" data-setbg="./assets/img/product/product-2.jpg">
+               <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/product/product-2.jpg">
                   <ul class="product__hover">
-                     <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a></li>
                   </ul>
                </div>
                <div class="product__item__text">
@@ -204,12 +241,12 @@
          </div>
          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
             <div class="product__item sale">
-               <div class="product__item__pic set-bg" data-setbg="./assets/img/product/product-3.jpg">
+               <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/product/product-3.jpg">
                   <span class="label">Sale</span>
                   <ul class="product__hover">
-                     <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a></li>
                   </ul>
                </div>
                <div class="product__item__text">
@@ -239,11 +276,11 @@
          </div>
          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
             <div class="product__item">
-               <div class="product__item__pic set-bg" data-setbg="./assets/img/product/product-4.jpg">
+               <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/product/product-4.jpg">
                   <ul class="product__hover">
-                     <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a></li>
                   </ul>
                </div>
                <div class="product__item__text">
@@ -273,11 +310,11 @@
          </div>
          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
             <div class="product__item">
-               <div class="product__item__pic set-bg" data-setbg="./assets/img/product/product-5.jpg">
+               <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/product/product-5.jpg">
                   <ul class="product__hover">
-                     <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a></li>
                   </ul>
                </div>
                <div class="product__item__text">
@@ -307,12 +344,12 @@
          </div>
          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
             <div class="product__item sale">
-               <div class="product__item__pic set-bg" data-setbg="./assets/img/product/product-6.jpg">
+               <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/product/product-6.jpg">
                   <span class="label">Sale</span>
                   <ul class="product__hover">
-                     <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a></li>
                   </ul>
                </div>
                <div class="product__item__text">
@@ -342,11 +379,11 @@
          </div>
          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
             <div class="product__item">
-               <div class="product__item__pic set-bg" data-setbg="./assets/img/product/product-7.jpg">
+               <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/product/product-7.jpg">
                   <ul class="product__hover">
-                     <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a></li>
                   </ul>
                </div>
                <div class="product__item__text">
@@ -376,11 +413,11 @@
          </div>
          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
             <div class="product__item">
-               <div class="product__item__pic set-bg" data-setbg="./assets/img/product/product-8.jpg">
+               <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/product/product-8.jpg">
                   <ul class="product__hover">
-                     <li><a href="#"><img src="./assets/img/icon/heart.png" alt=""></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                     <li><a href="#"><img src="./assets/img/icon/search.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/heart.png" alt=""></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                     <li><a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a></li>
                   </ul>
                </div>
                <div class="product__item__text">
@@ -424,7 +461,7 @@
          </div>
          <div class="col-lg-4">
             <div class="categories__hot__deal">
-               <img src="./assets/img/product-sale.png" alt="">
+               <img src="${pageContext.request.contextPath}/web/assets/img/product-sale.png" alt="">
                <div class="hot__deal__sticker">
                   <span>Sale Of</span>
                   <h5>$29.99</h5>
@@ -467,12 +504,12 @@
       <div class="row">
          <div class="col-lg-8">
             <div class="instagram__pic">
-               <div class="instagram__pic__item set-bg" data-setbg="./assets/img/instagram/instagram-1.jpg"></div>
-               <div class="instagram__pic__item set-bg" data-setbg="./assets/img/instagram/instagram-2.jpg"></div>
-               <div class="instagram__pic__item set-bg" data-setbg="./assets/img/instagram/instagram-3.jpg"></div>
-               <div class="instagram__pic__item set-bg" data-setbg="./assets/img/instagram/instagram-4.jpg"></div>
-               <div class="instagram__pic__item set-bg" data-setbg="./assets/img/instagram/instagram-5.jpg"></div>
-               <div class="instagram__pic__item set-bg" data-setbg="./assets/img/instagram/instagram-6.jpg"></div>
+               <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/instagram/instagram-1.jpg"></div>
+               <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/instagram/instagram-2.jpg"></div>
+               <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/instagram/instagram-3.jpg"></div>
+               <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/instagram/instagram-4.jpg"></div>
+               <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/instagram/instagram-5.jpg"></div>
+               <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/instagram/instagram-6.jpg"></div>
             </div>
          </div>
          <div class="col-lg-4">
@@ -502,9 +539,9 @@
       <div class="row">
          <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="blog__item">
-               <div class="blog__item__pic set-bg" data-setbg="./assets/img/blog/blog-1.jpg"></div>
+               <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/blog/blog-1.jpg"></div>
                <div class="blog__item__text">
-                  <span><img src="./assets/img/icon/calendar.png" alt=""> 16 February 2020</span>
+                  <span><img src="${pageContext.request.contextPath}/web/assets/img/icon/calendar.png" alt=""> 16 February 2020</span>
                   <h5>What Curling Irons Are The Best Ones</h5>
                   <a href="#">Read More</a>
                </div>
@@ -512,9 +549,9 @@
          </div>
          <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="blog__item">
-               <div class="blog__item__pic set-bg" data-setbg="./assets/img/blog/blog-2.jpg"></div>
+               <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/blog/blog-2.jpg"></div>
                <div class="blog__item__text">
-                  <span><img src="./assets/img/icon/calendar.png" alt=""> 21 February 2020</span>
+                  <span><img src="${pageContext.request.contextPath}/web/assets/img/icon/calendar.png" alt=""> 21 February 2020</span>
                   <h5>Eternity Bands Do Last Forever</h5>
                   <a href="#">Read More</a>
                </div>
@@ -522,9 +559,9 @@
          </div>
          <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="blog__item">
-               <div class="blog__item__pic set-bg" data-setbg="./assets/img/blog/blog-3.jpg"></div>
+               <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/web/assets/img/blog/blog-3.jpg"></div>
                <div class="blog__item__text">
-                  <span><img src="./assets/img/icon/calendar.png" alt=""> 28 February 2020</span>
+                  <span><img src="${pageContext.request.contextPath}/web/assets/img/icon/calendar.png" alt=""> 28 February 2020</span>
                   <h5>The Health Benefits Of Sunglasses</h5>
                   <a href="#">Read More</a>
                </div>
@@ -556,16 +593,16 @@
 </script>
 
 <!-- Js Plugins -->
-<script src="./assets/js/jquery-3.3.1.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
-<script src="./assets/js/jquery.nice-select.min.js"></script>
-<script src="./assets/js/jquery.nicescroll.min.js"></script>
-<script src="./assets/js/jquery.magnific-popup.min.js"></script>
-<script src="./assets/js/jquery.countdown.min.js"></script>
-<script src="./assets/js/jquery.slicknav.js"></script>
-<script src="./assets/js/mixitup.min.js"></script>
-<script src="./assets/js/owl.carousel.min.js"></script>
-<script src="./assets/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery-3.3.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.nice-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.nicescroll.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.countdown.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.slicknav.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/mixitup.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/main.js"></script>
 </body>
 
 </html>

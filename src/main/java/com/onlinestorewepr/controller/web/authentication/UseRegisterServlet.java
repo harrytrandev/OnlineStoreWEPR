@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RegisterServlet", value ={"/web/register"})
+@WebServlet(name = "RegisterServlet", value ={"/register"})
 public class UseRegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,6 +22,5 @@ public class UseRegisterServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         UserService userService = new UserService(req,resp);
         userService.userRegister();
-
     }
 }
