@@ -16,14 +16,14 @@
          rel="stylesheet">
 
    <!-- Css Styles -->
-   <link rel="stylesheet" href="./assets/css/bootstrap.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/font-awesome.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/elegant-icons.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/magnific-popup.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/nice-select.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/owl.carousel.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/slicknav.min.css" type="text/css">
-   <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/bootstrap.min.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/font-awesome.min.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/elegant-icons.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/magnific-popup.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/nice-select.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/owl.carousel.min.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/slicknav.min.css" type="text/css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/style.css" type="text/css">
 </head>
 
 <body>
@@ -39,7 +39,7 @@
          <div class="row">
             <div class="col-lg-12">
                <div class="product__details__breadcrumb">
-                  <a href="./index.html">Home</a>
+                  <a href="${pageContext.request.contextPath}/web/index.html">Home</a>
                   <a href="shop.jsp">Shop</a>
                   <span>Product Details</span>
                </div>
@@ -164,16 +164,16 @@
 </script>
 
 <!-- Js Plugins -->
-<script src="./assets/js/jquery-3.3.1.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
-<script src="./assets/js/jquery.nice-select.min.js"></script>
-<script src="./assets/js/jquery.nicescroll.min.js"></script>
-<script src="./assets/js/jquery.magnific-popup.min.js"></script>
-<script src="./assets/js/jquery.countdown.min.js"></script>
-<script src="./assets/js/jquery.slicknav.js"></script>
-<script src="./assets/js/mixitup.min.js"></script>
-<script src="./assets/js/owl.carousel.min.js"></script>
-<script src="./assets/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery-3.3.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.nice-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.nicescroll.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.countdown.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.slicknav.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/mixitup.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/main.js"></script>
 </body>
 
 </html>
