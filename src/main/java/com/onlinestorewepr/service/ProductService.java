@@ -18,52 +18,184 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ProductService {
   private HttpServletRequest req;
   private HttpServletResponse resp;
   private ProductDAO productDAO;
+  private CategoryDAO categoryDAO;
   private MessageUtil message;
+
+  public HttpServletRequest getReq() {
+    return req;
+  }
+  public void setReq(HttpServletRequest req) {
+    this.req = req;
+  }
+  public HttpServletResponse getResp() {
+    return resp;
+  }
+  public void setResp(HttpServletResponse resp) {
+    this.resp = resp;
+  }
+  public ProductDAO getProductDAO() {
+    return productDAO;
+  }
+  public void setProductDAO(ProductDAO productDAO) {
+    this.productDAO = productDAO;
+  }
+  public MessageUtil getMessage() {
+    return message;
+  }
+  public void setMessage(MessageUtil message) {
+    this.message = message;
+  }
 
   public ProductService(HttpServletRequest req, HttpServletResponse resp) {
     this.req = req;
     this.resp = resp;
     this.productDAO = new ProductDAO();
     this.message = new MessageUtil();
+    categoryDAO = new CategoryDAO();
   }
 
-  public HttpServletRequest getReq() {
-    return req;
+  public Product getProduct(int id) {
+    return productDAO.get(id);
+  }
+  public void getProductDetail() throws ServletException, IOException {
+    ProductDAO productdao = new ProductDAO();
+    int id = Integer.parseInt(req.getParameter("id"));
+    int categoryID = Integer.parseInt(req.getParameter("CategoryID"));
+    Product product = productdao.get(id);
+    List<Product> products = get4ProdcutbyCategory(categoryID);
+    req.setAttribute("product", product );
+    req.setAttribute("products", products);
+
+    req.getRequestDispatcher("/web/shop-details.jsp").forward(req, resp);
   }
 
-  public void setReq(HttpServletRequest req) {
-    this.req = req;
+  public List<Product> get4ProdcutbyCategory(int CategoryID) {
+    List<Product> products = null;
+    products = productDAO.getTopbyCategory(CategoryID);
+    return products;
   }
 
-  public HttpServletResponse getResp() {
-    return resp;
+/*Lấy 4 sản phẩm mới nhất*/
+  public List<Product> get8ProdcutNew() {
+    List<Product> products = null;
+    products = productDAO.getNewArrivals();
+    return products;
+  }
+  public void viewProduct() throws ServletException, IOException {
+    List<Product> products = null;
+    ProductDAO productdao = new ProductDAO();
+    CategoryService categoryService = new CategoryService(req, resp);
+
+    List<Category> categories = new CategoryDAO().getAll();
+    List<String> brands = getBrand();
+    List<String> sizes = getSize();
+
+    int CategoryID = 0;
+    int sortPrice  = 0;
+    int price  = 0;
+
+    String xpage =req.getParameter("page");
+    String brand = req.getParameter("brand");
+    String size = req.getParameter("size");
+    String txtSearch = req.getParameter("txtSearch");
+    if((req.getParameter("CategoryID")) != null){
+      CategoryID= Integer.parseInt(req.getParameter("CategoryID"));
+    }
+    if((req.getParameter("sortPrice")) != null){
+      sortPrice= Integer.parseInt(req.getParameter("sortPrice"));
+    }
+    if((req.getParameter("price")) != null){
+      price= Integer.parseInt(req.getParameter("price"));
+    }
+
+    if(txtSearch!=null){
+      products = productDAO.searchByName(txtSearch);
+    }
+    else{
+      products = productDAO.filterProduct(CategoryID,brand,price,size, sortPrice);
+    }
+    if (products != null & sortPrice==0) {
+      if (products != null) {
+        products.sort((o1, o2) -> {
+          int compareValue = o1.getName().compareTo(o2.getName());
+          return (Integer.compare(compareValue, 0));
+        });
+      }
+    }
+
+    int page,numberItem = 9,start,end;
+    int numberPage = (products.size()%numberItem==0?(products.size()/numberItem):((products.size()/numberItem)+1));
+    if(xpage == null){
+      page = 1;
+    }else {
+      page = Integer.parseInt(xpage);
+    }
+    start=(page-1)*numberItem;
+    end = Math.min(products.size(),page*numberItem);
+    products = productdao.getListByPage(products,start,end);
+
+    String slug = req.getQueryString();
+
+    if(slug!=null){
+      int x = slug.length();
+      System.out.println(x);
+      if(slug.contains("&page=")==true)
+      {
+        StringBuffer sb = new StringBuffer(slug);
+        sb.delete(x-7,x);
+        slug =sb.toString();
+      }
+    }
+
+    req.setAttribute("page",page);
+    req.setAttribute("price",price);
+    req.setAttribute("sortPrice",sortPrice);
+    req.setAttribute("CategoryID",CategoryID);
+    req.setAttribute("sortPrice",sortPrice);
+    req.setAttribute("numberPage",numberPage);
+    req.setAttribute("categories", categories);
+    req.setAttribute("products", products);
+    req.setAttribute("brands", brands);
+    req.setAttribute("brand", brand);
+    req.setAttribute("sizes", sizes);
+    req.setAttribute("size", size);
+    req.setAttribute("slug", slug);
+
+    req.getRequestDispatcher("/web/shop.jsp").forward(req, resp);
   }
 
-  public void setResp(HttpServletResponse resp) {
-    this.resp = resp;
+  public List<String> getBrand() {
+    List<String> brands = null;
+    brands = productDAO.getBrand();
+    return brands;
   }
 
-  public ProductDAO getProductDAO() {
-    return productDAO;
+  public List<String> getSize() {
+    List<String> sizes = null;
+    sizes = productDAO.getSize();
+    return sizes;
   }
 
-  public void setProductDAO(ProductDAO productDAO) {
-    this.productDAO = productDAO;
+  public void ListProducts() throws ServletException, IOException {
+    List<Product> products = productDAO.getAll();
+    if (products != null) {
+      products.sort((o1, o2) -> {
+        int compareValue = o1.getName().compareTo(o2.getName());
+        return (Integer.compare(compareValue, 0));
+      });
+    }
+    req.setAttribute("products", products);
+    req.getRequestDispatcher("/admin/products.jsp").forward(req, resp);
   }
 
-  public MessageUtil getMessage() {
-    return message;
-  }
-
-  public void setMessage(MessageUtil message) {
-    this.message = message;
-  }
 
   private void readData(Product product) {
     try {
@@ -97,18 +229,6 @@ public class ProductService {
     }
   }
 
-  public void ListProducts() throws ServletException, IOException {
-    List<Product> products = productDAO.getAll();
-    if (products != null) {
-      products.sort((o1, o2) -> {
-        int compareValue = o1.getName().compareTo(o2.getName());
-        return (Integer.compare(compareValue, 0));
-      });
-    }
-    req.setAttribute("products", products);
-    req.getRequestDispatcher("/admin/products.jsp").forward(req, resp);
-  }
-
   public void ShowAddProduct() throws ServletException, IOException {
     CategoryDAO categoryDAO = new CategoryDAO();
     List<Category> categories = categoryDAO.getAll();
@@ -122,7 +242,6 @@ public class ProductService {
     req.setAttribute("categories", categories);
     req.getRequestDispatcher("/admin/update-product.jsp").forward(req, resp);
   }
-
   public void AddProduct() throws ServletException, IOException {
     String messageBody = "", messageType = "";
     try {
@@ -268,9 +387,6 @@ public class ProductService {
     CartItemService cartItemService = new CartItemService(req,resp);
     List<CartItem> cartItems = cartItemService.getListCartItem(user.getCart().getId());
     return  cartItems;
-//    for(CartItem cartItem : cartItems){
-//      System.out.println(cartItem.getProduct().getName());
-//    }
   }
   public List<Product> getAllProducts() {
     List<Product> products = null;

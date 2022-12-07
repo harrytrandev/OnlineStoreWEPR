@@ -72,6 +72,82 @@
                         <input type="text" class="form-control" name="address" id="order-address" value="${user.address}" placeholder="Address"/>
                       </div>
                     </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="image">Images</label>
+                      <div class="col-sm-10">
+                        <input
+                            accept="image/png, image/gif, image/jpeg"
+                            class="form-control"
+                            id="image"
+                            name="image"
+                            type="file"
+                            ${action == "add" ? "required" : ""}
+                        />
+
+                          <img
+                            alt="Preview Product Image"
+                            class="img-thumbnail mt-3"
+                            id="preview-img"
+                            style="width: 200px;"
+                            src="${product != null ? product.image : "/assets/img/default-product-img.png"}"
+                          >
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="category-description">Description</label>
+                      <div class="col-sm-10">
+                            <textarea
+                                aria-label="Hi, Do you have a moment to talk Joe?"
+                                aria-describedby="basic-icon-default-message2"
+                                class="form-control"
+                                id="category-description"
+                                name="description"
+                                placeholder="Enter description"
+                                required
+                            >${product.description}</textarea>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="price">Price</label>
+                      <div class="col-sm-10">
+                        <input required type="number" name ="price" class="form-control" id="price" placeholder="Price" value="${product.price}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="discount">Discount</label>
+                      <div class="col-sm-10">
+                        <input required type="number" name ="discount" class="form-control" id="discount" placeholder="Discount" value="${product.discount}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="quantity">Quantity</label>
+                      <div class="col-sm-10">
+                        <input required type="number" name ="quantity" class="form-control" id="quantity" placeholder="Quantity" value="${product.quantity}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="size">Size</label>
+                      <div class="col-sm-10">
+                        <input required type="text" name ="size" class="form-control" id="size" placeholder="Size" value="${product.size}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="color">Color</label>
+                      <div class="col-sm-10">
+                        <input required type="text" name ="color" class="form-control" id="color" placeholder="Color" value="${product.color}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="brand">Brand</label>
+                      <div class="col-sm-10">
+                        <input required type="text" name ="brand" class="form-control" id="brand" placeholder="Brand" value="${product.brand}"/>
+                      </div>
+                      <c:if test="${message != null && !message.isEmpty()}">
+                        <div class="col-sm-12 d-flex justify-content-end my-3">
+                          <p class="text-${messageType}">${message}</p>
+                        </div>
+                      </c:if>
+                    </div>
                     <div class="row justify-content-end">
                       <div class="col-sm-10" style="text-align: end;">
                         <button type="submit" class="btn btn-primary" ><a>SAVE</a></button>
@@ -114,8 +190,8 @@
 <!-- Main JS -->
 <script src="./assets/js/main.js"></script>
 
-<!-- Active Menu Item -->
 <script>
+  // Active Menu Item
   document.getElementById('menu-managements').classList.add('active', 'open')
   document.getElementById('menu-managements-account').classList.add('active')
 </script>
