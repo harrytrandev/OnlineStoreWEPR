@@ -47,10 +47,10 @@
          </div>
          <div class="row" style="justify-content: center;">
             <div class="col-lg-6 col-md-9">
-               <div class="tab-content">
+               <div class="tab-content my-4">
                   <div class="tab-pane active" id="tabs-1" role="tabpanel">
                      <div class="product__details__pic__item">
-                        <img src="${p.image}" alt="">
+                        <img src="${pageContext.request.contextPath}/${p.image}" alt="">
                      </div>
                   </div>
                </div>
@@ -66,7 +66,13 @@
                   <div class="product__details__text">
                      <input name="ProductId" value="${p.id}" hidden>
                      <h4>${p.name}</h4>
-                     <h3>${p.price-p.discount} <span>${p.price}</span></h3>
+                     <c:if test="${p.discount != 0}">
+                        <h3>${p.discount}đ <span>${p.price}đ</span></h3>
+                     </c:if>
+                     <c:if test="${p.discount == 0}">
+                        <h3>${p.price}đ</h3>
+                     </c:if>
+
                      <div class="product__details__option">
                         <div class="product__details__option__size">
                            <span>Size:</span>
@@ -100,7 +106,7 @@
                            role="tab">Description</a>
                      </li>
                   </ul>
-                  <div class="tab-content">
+                  <div class="tab-content my-4">
                      <div class="tab-pane active" id="tabs-5" role="tabpanel">
                         ${p.description}
                      </div>
@@ -127,13 +133,18 @@
                <div class="product__item">
                   <div class="product__item__pic set-bg" <%--data-setbg="${l.image}"--%>>
                      <a href="shop-details?id=${p.id}&CategoryID=${p.category.id}">
-                        <img src="${p.image}" alt="">
+                        <img src="${pageContext.request.contextPath}/${p.image}" alt="">
                      </a>
                   </div>
                   <div class="product__item__text">
                      <h6>${p.name}</h6>
                      <a href="shop-details?id=${p.id}&CategoryID=${p.category.id}" class="add-cart">View Product Detail</a>
-                     <h5>${p.price}</h5>
+                     <c:if test="${p.discount != 0}">
+                        <h5>${p.discount}đ <span style="text-decoration: line-through; font-size: 16px; font-weight: 500; color: gray;" >${p.price}đ</span></h5>
+                     </c:if>
+                     <c:if test="${p.discount == 0}">
+                        <h5>${p.price}đ</h5>
+                     </c:if>
                   </div>
                </div>
             </div>
@@ -160,7 +171,7 @@
 
 <!-- Active menu -->
 <script>
-    document.getElementById('menu-shop').classList.add('active')
+   document.getElementById('menu-shop').classList.add('active')
 </script>
 
 <!-- Js Plugins -->
