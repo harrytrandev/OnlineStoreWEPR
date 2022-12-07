@@ -18,6 +18,10 @@ public class User {
    @Column
    private String phone;
    @Column
+   private String image;
+   @Column
+   private String email;
+   @Column
    private String gender;
    @Column
    private String address;
@@ -35,6 +39,14 @@ public class User {
 
    public void setUsername(String username) {
       this.username = username;
+   }
+
+   public String getImage() {
+      return image;
+   }
+
+   public void setImage(String username) {
+      this.image = image;
    }
 
    public String getPassword() {
@@ -68,7 +80,13 @@ public class User {
    public void setPhone(String phone) {
       this.phone = phone;
    }
+   public String getEmail() {
+      return email;
+   }
 
+   public void setEmail(String email) {
+      this.email = email;
+   }
    public String getGender() {
       return gender;
    }
@@ -100,4 +118,5 @@ public class User {
    public void setOrders(List<Order> orders) {
       this.orders = orders;
    }
+
 }
