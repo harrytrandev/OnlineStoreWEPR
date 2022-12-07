@@ -90,6 +90,8 @@ public class OrderService {
             total += row.getPrice() * row.getQuantity();
             orderItemList.add(row);
         }
+        System.out.println(order.getStatus());
+        System.out.println(order.getStatus());
         request.setAttribute("message", message);
         request.setAttribute("total", total);
         request.setAttribute("orderItemList", orderItemList);

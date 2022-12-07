@@ -30,8 +30,8 @@ public class CartItemService {
 
     public void ListCartItem () throws IOException, ServletException {
         String username = "1"; ////// Sua lai doan nay
-        ProductService productService = new ProductService();
-        List<CartItem> cartItems = productService.getListProduct(username);
+        ProductService productService = new ProductService(request, response);
+        List<CartItem> cartItems = productService.getListCartItems(username);
         int total =0;
         for(CartItem cartItem: cartItems){
             total+= cartItem.getProduct().getPrice()*cartItem.getQuantity();

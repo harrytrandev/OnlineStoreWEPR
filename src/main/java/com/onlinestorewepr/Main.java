@@ -17,8 +17,5 @@ public class Main {
 //  }
 
   public static void main(String[] args) {
-    String username = "1";
-    ProductService productService = new ProductService();
-    productService.getListProduct( username);
   }
 }

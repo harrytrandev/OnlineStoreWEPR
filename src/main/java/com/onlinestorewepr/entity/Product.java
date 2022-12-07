@@ -8,26 +8,18 @@ import java.util.List;
 public class Product {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column
    private int id;
-   @Column
    private String name;
-   @Column
    private String image;
-   @Column
    private String description;
-   @Column
    private int price;
-   @Column
    private int quantity;
-   @Column
    private int discount;
-   @Column
    private String size;
-   @Column
    private String color;
-   @Column
    private String brand;
+
+   private Boolean status;
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "categoryId")
@@ -40,16 +32,18 @@ public class Product {
    private List<OrderItem> orderItems;
 
 
-   public Product(String name, String image, String description, int price, int quantity, int discount, String size, String color, String brand, Category category) {
+   public Product(String name, String image, String description, int price, int quantity, int discount, String size, String color, String brand, boolean status, Category category) {
       this.name = name;
       this.description = description;
       this.price = price;
       this.quantity = quantity;
       this.discount = discount;
+      this.image = image;
       this.size = size;
       this.color = color;
       this.brand = brand;
       this.category = category;
+      this.status = status;
    }
 
    public Product() {
@@ -158,5 +152,27 @@ public class Product {
 
    public void setOrderItems(List<OrderItem> orderItems) {
       this.orderItems = orderItems;
+   }
+
+   public Boolean getStatus() {
+      return status;
+   }
+
+   public void setStatus(Boolean status) {
+      this.status = status;
+   }
+
+   // Validate data
+   public boolean isPropertiesValid() {
+      return (this.category != null &&
+          !this.name.isEmpty() &&
+          !this.image.isEmpty() &&
+          !this.description.isEmpty() &&
+          this.price > 0 &&
+          this.discount >= 0 &&
+          this.quantity >= 0 &&
+          !this.size.isEmpty() &&
+          !this.color.isEmpty() &&
+          !this.brand.isEmpty());
    }
 }

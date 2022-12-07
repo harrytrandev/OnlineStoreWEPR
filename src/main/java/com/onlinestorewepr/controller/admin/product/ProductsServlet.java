@@ -20,7 +20,7 @@ public class ProductsServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    ProductService productService = new ProductService();
+    ProductService productService = new ProductService(req,resp);
     List<Product> products = productService.getAllProducts();
     req.setAttribute("products", products);
     req.getRequestDispatcher("/admin/products.jsp").forward(req, resp);

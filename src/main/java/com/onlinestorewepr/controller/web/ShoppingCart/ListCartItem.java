@@ -27,8 +27,8 @@ public class ListCartItem extends HttpServlet {
             throws ServletException, IOException {
         //String username = (String) request.getSession().getAttribute("username");
         String username = "1";
-        ProductService productService = new ProductService();
-        productService.getListProduct(username);
+        ProductService productService = new ProductService(request, response);
+        productService.getListCartItems(username);
     }
 
 

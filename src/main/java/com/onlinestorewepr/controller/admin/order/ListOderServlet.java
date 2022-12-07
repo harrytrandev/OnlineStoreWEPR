@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("/admin/list_order")
+@WebServlet("/admin/order")
 public class ListOderServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
