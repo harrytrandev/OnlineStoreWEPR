@@ -1,16 +1,14 @@
 package com.onlinestorewepr.service;
 
 import com.onlinestorewepr.dao.CartDAO;
-import com.onlinestorewepr.dao.CartItemDAO;
-import com.onlinestorewepr.dao.OrderItemDAO;
 import com.onlinestorewepr.dao.UserDAO;
-import com.onlinestorewepr.entity.CartItem;
+import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.User;
 
-import javax.servlet.ServletException;
-import java.io.IOException;
-import java.util.List;
-
 public class CartService {
-
+    public Cart getCart(int id) {
+        CartDAO cartDAO = new CartDAO();
+        Cart cart = cartDAO.get(id);
+        return cart;
+    }
 }

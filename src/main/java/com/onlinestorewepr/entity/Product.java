@@ -25,6 +25,25 @@ public class Product {
    @JoinColumn(name = "categoryId")
    private Category category;
 
+   @Override
+   public String toString() {
+      return "Product{" +
+              "id=" + id +
+              ", name='" + name + '\'' +
+              ", image='" + image + '\'' +
+              ", description='" + description + '\'' +
+              ", price=" + price +
+              ", quantity=" + quantity +
+              ", discount=" + discount +
+              ", size='" + size + '\'' +
+              ", color='" + color + '\'' +
+              ", brand='" + brand + '\'' +
+              ", category=" + category +
+              ", cartItems=" + cartItems +
+              ", orderItems=" + orderItems +
+              '}';
+   }
+
    @OneToMany(mappedBy = "product")
    private List<CartItem> cartItems;
 

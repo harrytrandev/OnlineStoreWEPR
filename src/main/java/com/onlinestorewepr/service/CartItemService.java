@@ -1,26 +1,61 @@
 package com.onlinestorewepr.service;
 
 import com.onlinestorewepr.dao.CartItemDAO;
-import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.dao.CategoryDAO;
+import com.onlinestorewepr.dao.ProductDAO;
+import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.CartItem;
+import com.onlinestorewepr.entity.Product;
+import com.onlinestorewepr.dao.UserDAO;
 import com.onlinestorewepr.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.http.HttpRequest;
 import java.util.List;
 
 public class CartItemService {
-
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+    private HttpServletRequest req;
+    private HttpServletResponse resp;
+    private ProductDAO productDAO = null;
+    private ServiceResult serviceResult = null;
     CartItemDAO cartItemDAO;
-    public CartItemService(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+
+    public CartItemService(HttpServletRequest req, HttpServletResponse resp) {
+        this.req = req;
+        this.resp = resp;
+        productDAO = new ProductDAO();
+        serviceResult = new ServiceResult();
         cartItemDAO = new CartItemDAO();
+    }
+    public void addProduct() throws ServletException, IOException {
+        String userName = "Khoa";
+
+        CartItemDAO cartItemdao = new CartItemDAO();
+
+        ProductService productService = new ProductService(req, resp);
+
+        UserService userService = new UserService(req, resp);
+        CartService cartService = new CartService();
+
+        User user = new UserDAO().get(userName);
+
+        int idCart = user.getCart().getId();
+        int productID =Integer.parseInt(req.getParameter("ProductId"));
+        int quantity = Integer.parseInt(req.getParameter("quantity"));
+
+        Product product = productService.getProduct(productID);
+        Cart cart = cartService.getCart(idCart);
+
+        CartItem cartItem = new CartItem();
+        cartItem.setQuantity(quantity);
+        cartItem.setProduct(product);
+        cartItem.setCart(cart);
+
+        cartItemdao.insert(cartItem);
+
+        resp.sendRedirect("../web/shop");
     }
 
     public List<CartItem> getListCartItem(int id) {
@@ -30,26 +65,26 @@ public class CartItemService {
 
     public void ListCartItem () throws IOException, ServletException {
         String username = "1"; ////// Sua lai doan nay
-        ProductService productService = new ProductService(request, response);
+        ProductService productService = new ProductService(req, resp);
         List<CartItem> cartItems = productService.getListCartItems(username);
         int total =0;
         for(CartItem cartItem: cartItems){
             total+= cartItem.getProduct().getPrice()*cartItem.getQuantity();
         }
-        String message = request.getParameter("message");
+        String message = req.getParameter("message");
         if(message != null){
-            request.setAttribute("message", message);
+            req.setAttribute("message", message);
         }
-        request.setAttribute("total",total);
-        request.setAttribute("cartItems",cartItems);
-        request.getRequestDispatcher("/web/shopping-cart.jsp").forward(request, response);
+        req.setAttribute("total",total);
+        req.setAttribute("cartItems",cartItems);
+        req.getRequestDispatcher("/web/shopping-cart.jsp").forward(req, resp);
     }
     public void delete() throws IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(req.getParameter("id"));
         CartItemDAO cartItemDAO =new CartItemDAO();
         cartItemDAO.delete(id);
         String message = "Delete successfully";
-        response.sendRedirect("/cart?message=" + message);
+        resp.sendRedirect("/cart?message=" + message);
     }
 
     public CartItem getCartItemDAO(int id) {
@@ -57,9 +92,9 @@ public class CartItemService {
     }
 
     public void updateCartItem() throws IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String action = request.getParameter("action");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        int id = Integer.parseInt(req.getParameter("id"));
+        String action = req.getParameter("action");
+        int quantity = Integer.parseInt(req.getParameter("quantity"));
         CartItem cartItem = cartItemDAO.get(id);
         String message = null;
         int quantityProduct = cartItem.getProduct().getQuantity();
@@ -82,10 +117,10 @@ public class CartItemService {
             cartItemDAO.update(cartItem);
         }
         if (message!= null) {
-            response.sendRedirect("/cart?message="+message);
+            resp.sendRedirect("/cart?message="+message);
         }
         else {
-            response.sendRedirect("/cart");
+            resp.sendRedirect("/cart");
         }
     }
 }
