@@ -30,13 +30,12 @@ public class CartItemService {
         cartItemDAO = new CartItemDAO();
     }
     public void addProduct() throws ServletException, IOException {
-        String userName = "Khoa";
+        String userName = "quangtran";
 
         CartItemDAO cartItemdao = new CartItemDAO();
 
         ProductService productService = new ProductService(req, resp);
 
-        UserService userService = new UserService(req, resp);
         CartService cartService = new CartService();
 
         User user = new UserDAO().get(userName);
@@ -48,12 +47,22 @@ public class CartItemService {
         Product product = productService.getProduct(productID);
         Cart cart = cartService.getCart(idCart);
 
-        CartItem cartItem = new CartItem();
-        cartItem.setQuantity(quantity);
-        cartItem.setProduct(product);
-        cartItem.setCart(cart);
-
-        cartItemdao.insert(cartItem);
+        if (quantity > 0) {
+            for (CartItem c: cart.getCartItems()) {
+                if (c.getProduct().getId() == productID) {
+                    c.setQuantity(c.getQuantity() + quantity);
+                    cartItemDAO.update(c);
+                    break;
+                }
+                else {
+                    CartItem cartItem = new CartItem();
+                    cartItem.setQuantity(quantity);
+                    cartItem.setProduct(product);
+                    cartItem.setCart(cart);
+                    cartItemdao.insert(cartItem);
+                }
+            }
+        }
 
         resp.sendRedirect("../web/shop");
     }
