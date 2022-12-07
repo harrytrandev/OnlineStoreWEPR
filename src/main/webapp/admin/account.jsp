@@ -29,55 +29,36 @@
             <!-- Content wrapper -->
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Managements / </span>Orders</h4>
+                    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Managements / </span>Account</h4>
                     <div class="card">
-                        <h5 class="card-header">Orders</h5>
+                        <h5 class="card-header">Account</h5>
                         <div class="table-responsive text-nowrap">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>INDEX</th>
+                                    <th>USERNAME</th>
+                                    <th>PASSWORD</th>
                                     <th>NAME</th>
-                                    <th>PHONE</th>
+                                    <th>GENDER</th>
                                     <th>ADDRESS</th>
-                                    <th>DATE</th>
-                                    <th>PAYMENT</th>
-                                    <th>STATUS</th>
+                                    <th>PHONE</th>
+                                    <th>CARD ID</th>
                                     <th></th>
                                 </tr>
                                 </thead>
-                                <c:forEach var="order" items="${listOrder}" varStatus="status">
+                                <c:forEach var="user" items="${userList}" varStatus="status">
                                     <tr>
-                                        <form action = "update-order" method="get">
-                                            <input name="id" value="${order.id}" hidden>
-                                            <td>${order.id}</td>
-                                            <td>${order.name}</td>
-                                            <td>${order.phone}</td>
-                                            <td>${order.address}</td>
-                                            <td>${order.created}</td>
-                                            <td>${order.payment}</td>
-                                            <c:if test="${order.status == 'Cancelled'}">
-                                                <td ><span class="badge bg-label-danger me-1">${order.status}</span></td>
-                                            </c:if>
-                                            <c:if test="${order.status == 'Delivered'}">
-                                                <td ><span class="badge bg-label-success me-1">${order.status}</span></td>
-                                            </c:if>
-                                            <c:if test="${order.status == 'Delivering'}">
-                                                <td ><span class="badge bg-label-info me-1">${order.status}</span></td>
-                                            </c:if>
-                                            <c:if test="${order.status == 'Paid'}">
-                                                <td ><span class="badge bg-label-primary me-1">${order.status}</span></td>
-                                            </c:if>
-                                            <c:if test="${order.status == 'Created'}">
-                                                <td ><span class="badge bg-label-info me-1">${order.status}</span></td>
-                                            </c:if>
-
-                                            <c:if test="${order.status != 'Cancelled'}">
-                                            <td><a><button class="badge bg-label-success me-1" style="border: 2px hidden;" type="submit">Change</button></a></td>
-                                            </c:if>
-                                            <c:if test="${order.status == 'Cancelled'}">
-                                                <td><a>Not Change</a></td>
-                                            </c:if>
+                                        <form action = "UpdateOder">
+                                            <td>${status.index+1}</td>
+                                            <td >${user.username}</td>
+                                            <td>${user.password}</td>
+                                            <td>${user.name}</td>
+                                            <td>${user.gender}</td>
+                                            <td>${user.address}</td>
+                                            <td>${user.phone}</td>
+                                            <td>${user.cart.id}</td>
+                                            <td><a href="./update-account?username=${user.username}" >Change</a></td>
                                         </form>
                                     </tr>
                                 </c:forEach>
@@ -116,9 +97,7 @@
 <!-- Active Menu Item -->
 <script>
     document.getElementById('menu-managements').classList.add('active', 'open')
-    document.getElementById('menu-managements-orders').classList.add('active')
+    document.getElementById('menu-managements-account').classList.add('active')
 </script>
-
-
 </body>
 </html>

@@ -2,8 +2,11 @@ package com.onlinestorewepr.service;
 
 import com.onlinestorewepr.dao.CategoryDAO;
 import com.onlinestorewepr.dao.ProductDAO;
+import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.CartItem;
 import com.onlinestorewepr.entity.Category;
 import com.onlinestorewepr.entity.Product;
+import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.CommonUtil;
 import com.onlinestorewepr.util.MessageUtil;
 
@@ -67,7 +70,6 @@ public class ProductService {
       int categoryId = Integer.parseInt(req.getParameter("category-id"));
       CategoryDAO categoryDAO = new CategoryDAO();
       Category category = categoryDAO.get(categoryId);
-      boolean available = req.getParameter("available") == null || (req.getParameter("available").equals("1"));
       String name = req.getParameter("name");
       String image = "temp";
       String description = req.getParameter("description");
@@ -78,7 +80,6 @@ public class ProductService {
       String color = req.getParameter("color");
       String brand = req.getParameter("brand");
 
-      product.setAvailable(available);
       product.setCategory(category);
       product.setName(name);
       product.setImage(image);
@@ -251,5 +252,23 @@ public class ProductService {
     req.setAttribute("title", "Delete Information");
     req.setAttribute("action", "/admin/product");
     req.getRequestDispatcher("/admin/information.jsp").forward(req, resp);
+  }
+  
+
+  public List<CartItem> getListCartItems( String username){
+    List<Product> products = null;
+    UserDAO userDAO = new UserDAO();
+    User user = userDAO.get(username);
+    CartItemService cartItemService = new CartItemService(req,resp);
+    List<CartItem> cartItems = cartItemService.getListCartItem(user.getCart().getId());
+    return  cartItems;
+//    for(CartItem cartItem : cartItems){
+//      System.out.println(cartItem.getProduct().getName());
+//    }
+  }
+  public List<Product> getAllProducts() {
+    List<Product> products = null;
+    products = productDAO.getAll();
+    return  products;
   }
 }

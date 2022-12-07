@@ -74,7 +74,7 @@ public class UserDAO {
       return users;
    }
 
-   public User get(int id) {
+   public User get(String id) {
       User user = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
