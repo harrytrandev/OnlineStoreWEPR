@@ -9,7 +9,6 @@ public class CartService {
     public Cart getCart(int id) {
         CartDAO cartDAO = new CartDAO();
         Cart cart = cartDAO.get(id);
-
         return cart;
     }
 }
