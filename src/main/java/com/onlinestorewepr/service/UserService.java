@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -264,7 +265,7 @@ public class UserService {
 //            } else {
 //                showProfile();
 //            }
-            resp.sendRedirect("/home");
+            resp.sendRedirect("/web");
         }
     }
 
@@ -279,39 +280,35 @@ public class UserService {
     }
 
     public void editUserProfile(User user) throws ServletException, IOException {
-        try {
-            String fullName = req.getParameter("name");
-            String phone = req.getParameter("phone");
-            String email = req.getParameter("email");
-            String gender = req.getParameter("sex");
-            String address = req.getParameter("address");
-            Part part = req.getPart("image");
+        String fullName = req.getParameter("name");
+        String phone = req.getParameter("phone");
+        String email = req.getParameter("email");
+        String gender = req.getParameter("sex");
+        String address = req.getParameter("address");
+//        Part part = req.getPart("image");
+//
+//        String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+//        String now = CommonUtil.getImgDir();
+//        String realPath = req.getServletContext().getRealPath("/imagesAvt" + now);
+//        Path path = Paths.get(realPath);
+//        if (!Files.exists(path)) {
+//            Files.createDirectories(path);
+//        }
+//        part.write(realPath + "/" + imageName);
+//        String image = String.format("imagesAvt%s/%s", now, imageName);
+//        user.setImage(image);
 
-            String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-            String now = CommonUtil.getImgDir();
-            String realPath = req.getServletContext().getRealPath("/imagesAvatar" + now);
-            Path path = Paths.get(realPath);
 
-            if (!Files.exists(path)) {
-                Files.createDirectories(path);
-            }
-            part.write(realPath + "/" + imageName);
-            String image = String.format("imagesAvatar%s/%s", now, imageName);
-
-            user.setImage(image);
-            user.setName(fullName);
-            user.setEmail(email);
-            user.setPhone(phone);
-            user.setGender(gender);
-            user.setAddress(address);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        user.setName(fullName);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setGender(gender);
+        user.setAddress(address);
     }
     public void updateUserProfile() throws ServletException, IOException{
         resp.setContentType("text/html;charset=UTF-8");
         User user = (User) req.getSession().getAttribute("userLogged");
+        System.out.println(user);
         editUserProfile(user);
         userDAO.update(user);
         showProfile();
@@ -396,12 +393,11 @@ public class UserService {
                 userDAO.update(usernew);
                 messageBody = "Successful change!";
                 messageType = "success";
+                req.getRequestDispatcher("/web/authentication.jsp").forward(req, resp);
             }
         }
         message.setBody(messageBody);
         message.setType(messageType);
-
-//        req.setAttribute("action", "add");
         req.setAttribute("message", message);
         req.getRequestDispatcher("/web/change_pass.jsp").forward(req, resp);
     }
@@ -438,7 +434,6 @@ public class UserService {
                 message.setText("Your OTP is: " + otpvalue);
                 // send message
                 Transport.send(message);
-                System.out.println("Message sent successfully!");
             }
 
             catch (MessagingException e) {
@@ -531,7 +526,6 @@ public class UserService {
     }
     public void getUser(String username) throws ServletException, IOException {
         User user = userDAO.get(username);
-        System.out.println(user.getName());
         req.setAttribute("user", user);
         req.getRequestDispatcher("update-account.jsp").forward(req, resp);
     }

@@ -82,7 +82,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center" id="profile-head">
                                 <c:choose>
-                                    <c:when test="${userLogged.image!=null}"><img alt="Image Profile" src="${pageContext.request.contextPath}/${userLogged.image}" class="rounded-circle" width="150"></c:when>
+                                    <c:when test="${userLogged.image!=null}"><img alt="Image Profile" src="./${userLogged.image}" class="rounded-circle" width="150"></c:when>
                                     <c:otherwise><img src="assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>
                                 </c:choose>
                                 <div class="mt-3">
@@ -141,10 +141,10 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <a class="btn btn-info" target="" href="update-profile">Edit Profile</a>
+                                    <a class="btn btn-info" target="" href="${pageContext.request.contextPath}/web/update-profile">Edit Profile</a>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a class="btn btn-info" target="" href="change-password">Change password</a>
+                                    <a class="btn btn-info" target="" href="${pageContext.request.contextPath}/web/change-password">Change password</a>
                                 </div>
                             </div>
                         </div>

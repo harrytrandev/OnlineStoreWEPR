@@ -52,13 +52,13 @@
 <div class="container">
     <div class="spad">
       <div class="row">
-        <div class="col-md-4 mb-3">
+        <div class="col-lg-4">
           <div class="card">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center" id="profile-head">
                 <c:choose>
                   <c:when test="${userLogged.image!=null}"><img alt="Image Profile" src="${pageContext.request.contextPath}/${userLogged.image}" class="rounded-circle" width="150"></c:when>
-<%--                  <c:otherwise><img src="assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>--%>
+                  <c:otherwise><img src="assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>
                 </c:choose>
                 <div class="mt-3">
                   <h4>${userLogged.name}</h4>
@@ -70,13 +70,13 @@
           </div>
         <div class="col-md-8">
           <div class="card">
-            <form class="card-body" method="post" action="update-profile" enctype="multipart/form-data">
+            <form class="card-body" method="post" action="${pageContext.request.contextPath}/web/update-profile" enctype="multipart/form-data">
               <div class="row mb-3">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Username</h6>
+<%--                  <h6 class="mb-0">Username</h6>--%>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="user-name" name="username" disabled value="${userLogged.username}">
+                  <input type="hidden" class="form-control" id="user-name" name="username" value="${userLogged.username}">
                 </div>
               </div>
               <div class="row mb-3">
@@ -128,14 +128,14 @@
                           id="image"
                           name="image"
                           type="file"
-                  ${action == "add" ? "required" : ""}
+<%--                  ${action == "add" ? "required" : ""}--%>
                   />
                   <img
 <%--                          alt="Preview Product Image"--%>
                           class="img-thumbnail mt-3"
                           id="preview-img"
                           style="width: 200px;"
-                          src="${pageContext.request.contextPath}/${userLogged.image}"
+                          src="${userLogged.image}"
                   >
                 </div>
               </div>

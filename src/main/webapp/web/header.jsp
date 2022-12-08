@@ -50,16 +50,14 @@
             <div class="col-lg-6 col-md-5">
                <div class="header__top__right">
                   <div class="header__top__links">
-                     <a href="#">Sign in</a>
-                     <a href="#">FAQs</a>
-                  </div>
-                  <div class="header__top__hover">
-                     <span>Usd <i class="arrow_carrot-down"></i></span>
-                     <ul>
-                        <li>USD</li>
-                        <li>EUR</li>
-                        <li>USD</li>
-                     </ul>
+                     <c:choose>
+                        <c:when test="${userLogged!=null}">
+                           <a href="logout">Logout</a>
+                        </c:when>
+                        <c:otherwise>
+                           <a href="login">Sign/Sign Up</a>
+                        </c:otherwise>
+                     </c:choose>
                   </div>
                </div>
             </div>
@@ -92,10 +90,24 @@
          </div>
          <div class="col-lg-3 col-md-3">
             <div class="header__nav__option">
-               <a href="#" class="search-switch"><img src="./assets/img/icon/search.png" alt=""></a>
-               <a href="#"><img src="./assets/img/icon/heart.png" alt=""></a>
-               <a href="#"><img src="./assets/img/icon/cart.png" alt=""> <span>0</span></a>
-               <div class="price">$0.00</div>
+               <c:choose>
+                  <c:when test="${userLogged!=null}">
+                     <div class="header__nav-avatar">
+                        <c:choose>
+                           <c:when test="${userLogged.image!=null}"> <a href="./profile"><img src="${userLogged.image}" alt=""></a></c:when>
+                           <c:otherwise><a href="./profile"><img src="./assets/img/profile/no-avartar.png" alt=""></a></c:otherwise>
+                        </c:choose>
+                     </div>
+                     <div class="header__nav-username"><b>${userLogged.username}</b></div>
+<%--                     <a href="#" class="search-switch"><img--%>
+<%--                             src="${pageContext.request.contextPath}/web/assets/img/icon/search.png" alt=""></a>--%>
+                     <a href="#"><img src="${pageContext.request.contextPath}/web/assets/img/icon/cart.png"
+                                      alt=""> <span>0</span></a>
+                     <%-- <a href="cartdetail?username=${userLogged.username}&type=" view""><img
+                           src="assets/img/icon/cart.png" alt=""> <span></span></a>--%>
+                     <div class="price">$0.00</div>
+                  </c:when>
+               </c:choose>
             </div>
          </div>
       </div>

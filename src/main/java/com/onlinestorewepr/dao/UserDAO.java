@@ -126,10 +126,14 @@ public class UserDAO {
       }
       return user;
    }
-
 //   public static void main(String[] args) {
 //      UserDAO userDAO =new UserDAO();
-//      User user = userDAO.findByEmail("phand613@gmail.com");
-//      System.out.println(user);
+//      User user = userDAO.get("pttk123");
+//      if("Pttk1411*".equals(user.getPassword())){
+//         System.out.println(user);
+//      }
+//      else {
+//         System.out.println("err");
+//      }
 //   }
 }
