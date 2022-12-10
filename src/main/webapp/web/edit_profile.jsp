@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -139,6 +140,11 @@
                   >
                 </div>
               </div>
+                <c:if test="${message != null}">
+                    <div class="col-sm-12 d-flex justify-content-end my-3">
+                        <p class="text-${message.type}">${message.body}</p>
+                    </div>
+                </c:if>
               <div class="row">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9 text-secondary">

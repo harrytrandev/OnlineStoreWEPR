@@ -128,12 +128,7 @@ public class UserDAO {
    }
 //   public static void main(String[] args) {
 //      UserDAO userDAO =new UserDAO();
-//      User user = userDAO.get("pttk123");
-//      if("Pttk1411*".equals(user.getPassword())){
-//         System.out.println(user);
-//      }
-//      else {
-//         System.out.println("err");
-//      }
+//      User user = userDAO.findUserByEmail("20110246@student.hcmute.edu.vn");
+//      System.out.println(user);
 //   }
 }

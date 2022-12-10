@@ -47,6 +47,13 @@ public class UserService {
         }
         return null;
     }
+    public boolean checkEmail(String email) {
+        User user = userDAO.findUserByEmail(email);
+        if (user != null) {
+           return true;
+        }
+        return false;
+    }
 
     public void userRegister() throws IOException,ServletException{
         String name = req.getParameter("fullName");
@@ -117,7 +124,13 @@ public class UserService {
                 req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
             }
         }
-
+        //Check Email Valid?
+        if(checkEmail(email)){
+            message= "Email has been used to register! Please enter other email!";
+            req.setAttribute("action","signup");
+            req.setAttribute("messageRegisterFail",message);
+            req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
+        }
         // Check Password length
         if (password.length() < 8)
         {
@@ -285,8 +298,9 @@ public class UserService {
         String email = req.getParameter("email");
         String gender = req.getParameter("sex");
         String address = req.getParameter("address");
-//        Part part = req.getPart("image");
-//
+        Part part = req.getPart("image");
+        String messageBody, messageType = "";
+
 //        String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
 //        String now = CommonUtil.getImgDir();
 //        String realPath = req.getServletContext().getRealPath("/imagesAvt" + now);
@@ -295,12 +309,21 @@ public class UserService {
 //            Files.createDirectories(path);
 //        }
 //        part.write(realPath + "/" + imageName);
+//
 //        String image = String.format("imagesAvt%s/%s", now, imageName);
 //        user.setImage(image);
-
-
         user.setName(fullName);
-        user.setEmail(email);
+       if(checkEmail(email)){
+           messageBody = "Email has been used!";
+           messageType = "danger";
+           message.setBody(messageBody);
+           message.setType(messageType);
+           req.setAttribute("message", message);
+           req.getRequestDispatcher("/web/edit_profile.jsp").forward(req, resp);
+       }
+       else {
+           user.setEmail(email);
+       }
         user.setPhone(phone);
         user.setGender(gender);
         user.setAddress(address);
@@ -308,15 +331,9 @@ public class UserService {
     public void updateUserProfile() throws ServletException, IOException{
         resp.setContentType("text/html;charset=UTF-8");
         User user = (User) req.getSession().getAttribute("userLogged");
-        System.out.println(user);
         editUserProfile(user);
         userDAO.update(user);
         showProfile();
-    }
-    public void ListUser()throws ServletException, IOException{
-        List<User> accounts = userDAO.getAll();
-        req.setAttribute("accounts", accounts);
-        req.getRequestDispatcher("/admin/accounts.jsp").forward(req, resp);
     }
     public void ShowEditUser()throws ServletException, IOException{
         String username = req.getParameter("username");
@@ -368,32 +385,75 @@ public class UserService {
         String oldPass = req.getParameter("password-old");
         String newPass = req.getParameter("password-new");
         String passRetype = req.getParameter("password-retype");
-        System.out.println(username+oldPass);
+        int len = newPass.length();
 
         User user = authenticate(username,oldPass);
-        String messageBody, messageType;
+        String messageBody = "", messageType = "";
 
-        if(user == null){
+        if(oldPass == null || newPass == null || passRetype == null)
+        {
+            messageBody = "Please enter information!";
+            messageType = "danger";
+        }
+        else if(user == null){
             messageBody = "Old password is incorrect, please re-enter!";
             messageType = "danger";
         }
-        else {
-            if(Objects.equals(oldPass, newPass)){
-                messageBody = "The new password cannot be the same as the old password!";
-                messageType = "danger";
+        else if(!newPass.equals("")){
+            boolean number = false, lowercase = false, uppercase = false, special = false;
+            for (int i = 0; i < newPass.length(); i++)
+            {
+                char x = newPass.charAt(i);
+                if (x <= '9' && x >= '0') number = true;
+                else if (x <= 'z' && x >= 'a') lowercase = true;
+                else if (x <= 'Z' && x >= 'A') uppercase = true;
+                else special = true;
             }
-            else if (!Objects.equals(newPass, passRetype)){
-                messageBody = "Password re-entered is incorrect!";
-                messageType = "danger";
+            //Inform error on Form
+            if (!number || !lowercase|| !uppercase || !special)
+            {
+                if (!number)
+                {
+                    messageBody = "Password must include numbers! Please re-enter!";
+                    messageType = "danger";
+
+                }
+                else if (!lowercase)
+                {
+                    messageBody = "Password must include lowercase characters! Please re-enter!";
+                    messageType = "danger";
+                }
+                else if (!uppercase)
+                {
+                    messageBody = "Password must include uppercase characters! Please re-enter!";
+                    messageType = "danger";
+                }
+                else
+                {
+                    messageBody = "Password must include special characters! Please re-enter!";
+                    messageType = "danger";
+                }
             }
             else {
-                resp.setContentType("text/html;charset=UTF-8");
-                User usernew = (User) req.getSession().getAttribute("userLogged");
-                usernew.setPassword(newPass);
-                userDAO.update(usernew);
-                messageBody = "Successful change!";
-                messageType = "success";
-                req.getRequestDispatcher("/web/authentication.jsp").forward(req, resp);
+                if(Objects.equals(oldPass, newPass)){
+                    messageBody = "The new password cannot be the same as the old password!";
+                    messageType = "danger";
+                } else if (len < 8) {
+                    messageBody = "The new password must be more than 8 characters!";
+                    messageType = "danger";
+                } else if (!Objects.equals(newPass, passRetype)){
+                    messageBody = "Password re-entered is incorrect!";
+                    messageType = "danger";
+                }
+                else {
+                    resp.setContentType("text/html;charset=UTF-8");
+                    User usernew = (User) req.getSession().getAttribute("userLogged");
+                    usernew.setPassword(newPass);
+                    userDAO.update(usernew);
+                    messageBody = "Successful change!";
+                    messageType = "success";
+                    req.getRequestDispatcher("/web/authentication.jsp").forward(req, resp);
+                }
             }
         }
         message.setBody(messageBody);
@@ -401,13 +461,15 @@ public class UserService {
         req.setAttribute("message", message);
         req.getRequestDispatcher("/web/change_pass.jsp").forward(req, resp);
     }
+
     public void sendEmail() throws ServletException,IOException{
         String email = req.getParameter("email");
+        String messageBody,messageType;
         RequestDispatcher dispatcher = null;
         int otpvalue = 0;
         HttpSession mySession = req.getSession();
-
-        if(email!=null || !email.equals("")) {
+        User user = userDAO.findUserByEmail(email);
+        if(email!=null && user!=null) {
             // sending otp
             Random rand = new Random();
             otpvalue = rand.nextInt(1255650);
@@ -447,6 +509,14 @@ public class UserService {
             dispatcher.forward(req, resp);
             //request.setAttribute("status", "success");
         }
+        else {
+            messageBody = "Email does not register before!";
+            messageType = "danger";
+            message.setBody(messageBody);
+            message.setType(messageType);
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/web/forgetpass.jsp").forward(req, resp);
+        }
     }
 
     public void changePassForgot() throws ServletException,IOException{
@@ -459,22 +529,62 @@ public class UserService {
 
         User user = userDAO.findUserByEmail(userEmail);
 
-        if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
-            try {
-                user.setPassword(newPassword);
-                userDAO.update(user);
-                req.setAttribute("status", "resetSuccess");
-                req.getRequestDispatcher("/web/authentication.jsp").forward(req,resp);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (newPassword == null || confPassword == null){
+            message = "Please enter password!";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/web/newPassword.jsp").forward(req, resp);
         }
         else {
-            message = "Please re-enter the same password!";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/web/newPassword.jsp").forward(req,resp);
+            boolean number = false, lowercase = false, uppercase = false, special = false;
+            for (int i = 0; i < newPassword.length(); i++)
+            {
+                char x = newPassword.charAt(i);
+                if (x <= '9' && x >= '0') number = true;
+                else if (x <= 'z' && x >= 'a') lowercase = true;
+                else if (x <= 'Z' && x >= 'A') uppercase = true;
+                else special = true;
+            }
+            //Inform error on Form
+            if (!number || !lowercase|| !uppercase || !special)
+            {
+                if (!number)
+                {
+                    message = "Password must include numbers! Please re-enter!";
+                }
+                else if (!lowercase)
+                {
+                    message = "Password must include lowercase characters! Please re-enter!";
+                }
+                else if (!uppercase)
+                {
+                    message = "Password must include uppercase characters! Please re-enter!";
+                }
+                else
+                {
+                    message = "Password must include special characters! Please re-enter!";
+                }
+                req.setAttribute("message", message);
+                req.getRequestDispatcher("/web/newPassword.jsp").forward(req, resp);
+            }
+            else {
+                int len = newPassword.length();
+                if (len < 8) {
+                    message = "The new password must be more than 8 characters!";
+                } else if (!Objects.equals(newPassword, confPassword)){
+                    message = "Password re-entered is incorrect!";
+                }
+                else {
+                    resp.setContentType("text/html;charset=UTF-8");
+                    user.setPassword(newPassword);
+                    userDAO.update(user);
+                    message = "Successful change";
+                }
+                req.setAttribute("message", message);
+                req.getRequestDispatcher("/web/newPassword.jsp").forward(req, resp);
+            }
         }
     }
+
     public void validateOTP() throws ServletException, IOException {
         RequestDispatcher dispatcher=null;
         String optGet = req.getParameter("otp");
