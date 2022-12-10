@@ -11,21 +11,21 @@
   <meta name="keywords" content="Male_Fashion, unica, creative, html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Male-Fashion | Template</title>
+  <title>Male-Fashion | Shop</title>
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
         rel="stylesheet">
 
   <!-- Css Styles -->
-  <link rel="stylesheet" href="./assets/css/bootstrap.min.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/elegant-icons.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/magnific-popup.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/nice-select.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/owl.carousel.min.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/slicknav.min.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/elegant-icons.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/magnific-popup.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/nice-select.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/slicknav.min.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/style.css" type="text/css">
 </head>
 
 <body>
@@ -41,7 +41,7 @@
         <div class="breadcrumb__text">
           <h4>Shop</h4>
           <div class="breadcrumb__links">
-            <a href="./index.html">Home</a>
+            <a href="${pageContext.request.contextPath}/home">Home</a>
             <span>Shop</span>
           </div>
         </div>
@@ -55,125 +55,6 @@
 <section class="shop spad">
   <div class="container">
     <div class="row">
-      <%--<div class="col-lg-3">
-         <div class="shop__sidebar">
-            <div class="shop__sidebar__search">
-               <form action="" method="get">
-                  <input name="txtSearch" type="text" placeholder="Search...">
-                  <button type="submit"><span class="icon_search"></span></button>
-               </form>
-            </div>
-            <div class="shop__sidebar__accordion">
-               <div class="accordion" id="accordionExample">
-                  <div class="card">
-                     <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
-                     </div>
-                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
-                        <div class="card-body">
-                           <div class="shop__sidebar__categories">
-                              <ul class="nice-scroll">
-                                 <c:forEach items="${categories}" var="c">
-                                    <li><a href="?CategoryID=${c.id}">${c.name}</a></li>
-                                 </c:forEach>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="card">
-                     <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
-                     </div>
-                     <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
-                        <div class="card-body">
-                           <div class="shop__sidebar__brand">
-                              <ul>
-                                 <c:forEach items="${brands}" var="b">
-                                    <li><a href="?brand=${b}">${b}</a></li>
-                                 </c:forEach>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="card">
-                     <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
-                     </div>
-                     <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
-                        <div class="card-body">
-                           <div class="shop__sidebar__price">
-                              <ul>
-                                 <li><a href="#">$0.00 - $50.00</a></li>
-                                 <li><a href="#">$50.00 - $100.00</a></li>
-                                 <li><a href="#">$100.00 - $150.00</a></li>
-                                 <li><a href="#">$150.00 - $200.00</a></li>
-                                 <li><a href="#">$200.00 - $250.00</a></li>
-                                 <li><a href="#">250.00+</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="card">
-                     <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseFour">Size</a>
-                     </div>
-                     <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                        <div class="card-body">
-                           <div class="shop__sidebar__size">
-                              <c:forEach items="${sizes}" var="s">
-                                 <label for="${s}">${s}
-                                    <input type="radio" id="${s}">
-                                 </label>
-                              </c:forEach>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="card">
-                     <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
-                     </div>
-                     <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                        <div class="card-body">
-                           <div class="shop__sidebar__color">
-                              <label class="c-1" for="sp-1">
-                                 <input type="radio" id="sp-1">
-                              </label>
-                              <label class="c-2" for="sp-2">
-                                 <input type="radio" id="sp-2">
-                              </label>
-                              <label class="c-3" for="sp-3">
-                                 <input type="radio" id="sp-3">
-                              </label>
-                              <label class="c-4" for="sp-4">
-                                 <input type="radio" id="sp-4">
-                              </label>
-                              <label class="c-5" for="sp-5">
-                                 <input type="radio" id="sp-5">
-                              </label>
-                              <label class="c-6" for="sp-6">
-                                 <input type="radio" id="sp-6">
-                              </label>
-                              <label class="c-7" for="sp-7">
-                                 <input type="radio" id="sp-7">
-                              </label>
-                              <label class="c-8" for="sp-8">
-                                 <input type="radio" id="sp-8">
-                              </label>
-                              <label class="c-9" for="sp-9">
-                                 <input type="radio" id="sp-9">
-                              </label>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>--%>
       <div class="col-lg-3">
         <div class="shop__sidebar">
           <div class="shop__sidebar__search">
@@ -187,9 +68,9 @@
               <form action="" id="myForm">
                 <div class="card">
                   <div class="card-heading">
-                    <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
+                    <a data-toggle="collapse" data-target="#collapseZero">Sort Price</a>
                   </div>
-                  <div id="collapsezero" class="collapse show" data-parent="#accordionExample">
+                  <div id="collapseZero" class="collapse show" data-parent="#accordionExample">
                     <div class="card-body">
                       <div class="shop__sidebar__price">
                         <ul>
@@ -273,7 +154,7 @@
                     </div>
                   </div>
                 </div>
-                <a href="${root}web/shop" class="del-filter">Delete Filter</a>
+                <a href="${pageContext.request.contextPath}/shop" class="primary-btn">Delete Filter</a>
               </form>
             </div>
           </div>
@@ -282,10 +163,15 @@
       <div class="col-lg-9">
         <div class="shop__product__option">
           <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-              <div class="shop__product__option__left">
-                <p>Showing 1–12 of 126 results</p>
-              </div>
+            <div class="shop__product__option__left">
+              <c:if test="${not empty message}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <div class="text-${messageType}">${message}</div>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </c:if>
             </div>
           </div>
         </div>
@@ -300,10 +186,14 @@
                 </div>
                 <div class="product__item__text">
                   <h6>${l.name}</h6>
-
                   <a href="shop-details?id=${l.id}&CategoryID=${l.category.id}" class="add-cart">View Product Detail</a>
-
-                  <h5>${l.price}</h5>
+                  <c:if test="${l.discount != 0}">
+                    <span style="font-size: 18px; font-weight: 700;">$${l.discount}</span>
+                    <span style="text-decoration: line-through; color: gray; font-size: 14px;">$${l.price}</span>
+                  </c:if>
+                  <c:if test="${l.discount == 0}">
+                    <h5>$ ${l.price}</h5>
+                  </c:if>
                 </div>
               </div>
             </div>
@@ -353,16 +243,16 @@
 </script>
 
 <!-- Js Plugins -->
-<script src="./assets/js/jquery-3.3.1.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
-<script src="./assets/js/jquery.nice-select.min.js"></script>
-<script src="./assets/js/jquery.nicescroll.min.js"></script>
-<script src="./assets/js/jquery.magnific-popup.min.js"></script>
-<script src="./assets/js/jquery.countdown.min.js"></script>
-<script src="./assets/js/jquery.slicknav.js"></script>
-<script src="./assets/js/mixitup.min.js"></script>
-<script src="./assets/js/owl.carousel.min.js"></script>
-<script src="./assets/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery-3.3.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.nice-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.nicescroll.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.countdown.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.slicknav.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/mixitup.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/main.js"></script>
 </body>
 
 </html>

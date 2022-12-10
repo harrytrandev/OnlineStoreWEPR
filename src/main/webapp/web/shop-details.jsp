@@ -39,8 +39,8 @@
          <div class="row">
             <div class="col-lg-12">
                <div class="product__details__breadcrumb">
-                  <a href="${pageContext.request.contextPath}/web/index.html">Home</a>
-                  <a href="shop.jsp">Shop</a>
+                  <a href="${pageContext.request.contextPath}/home">Home</a>
+                  <a href="${pageContext.request.contextPath}/shop">Shop</a>
                   <span>Product Details</span>
                </div>
             </div>
@@ -67,10 +67,10 @@
                      <input name="ProductId" value="${p.id}" hidden>
                      <h4>${p.name}</h4>
                      <c:if test="${p.discount != 0}">
-                        <h3>${p.discount}đ <span>${p.price}đ</span></h3>
+                        <h3>$${p.discount} <span>$${p.price}</span></h3>
                      </c:if>
                      <c:if test="${p.discount == 0}">
-                        <h3>${p.price}đ</h3>
+                        <h3>$${p.price}</h3>
                      </c:if>
 
                      <div class="product__details__option">
@@ -82,7 +82,13 @@
 
                         </div>
                         <div class="product__details__option__color">
-                           <span>Color: ${p.color}</span>
+                           <span>Color: <strong>${p.color}</strong></span>
+                        </div>
+                        <div style="display: inline-block; margin-left: 50px;">
+                           <c:if test="${p.quantity > 0}">In stock: <strong>${p.quantity}</strong></c:if>
+                           <c:if test="${p.quantity == 0}">
+                           <span>Status: <strong>${p.quantity != 0 ? '<span class="text-success">Stocking</span>' : '<span class="text-danger">Out of stock</span>'}</strong></span>
+                           </c:if>
                         </div>
                      </div>
                      <div class="product__details__cart__option">
@@ -140,10 +146,10 @@
                      <h6>${p.name}</h6>
                      <a href="shop-details?id=${p.id}&CategoryID=${p.category.id}" class="add-cart">View Product Detail</a>
                      <c:if test="${p.discount != 0}">
-                        <h5>${p.discount}đ <span style="text-decoration: line-through; font-size: 16px; font-weight: 500; color: gray;" >${p.price}đ</span></h5>
+                        <h5>$${p.discount} <span style="text-decoration: line-through; font-size: 16px; font-weight: 500; color: gray;" >$${p.price}</span></h5>
                      </c:if>
                      <c:if test="${p.discount == 0}">
-                        <h5>${p.price}đ</h5>
+                        <h5>$${p.price}</h5>
                      </c:if>
                   </div>
                </div>

@@ -92,7 +92,6 @@ public class ProductService {
   public void viewProduct() throws ServletException, IOException {
     List<Product> products = null;
     ProductDAO productdao = new ProductDAO();
-    CategoryService categoryService = new CategoryService(req, resp);
 
     List<Category> categories = new CategoryDAO().getAll();
     List<String> brands = getBrand();
@@ -100,7 +99,7 @@ public class ProductService {
 
     int CategoryID = 0;
     int sortPrice  = 0;
-    int price  = 0;
+    double price  = 0;
 
     String xpage =req.getParameter("page");
     String brand = req.getParameter("brand");
@@ -155,6 +154,11 @@ public class ProductService {
       }
     }
 
+    String message = req.getParameter("message");
+    if (message != null) req.setAttribute("message", message);
+    String messageType = req.getParameter("messageType");
+    if (messageType != null) req.setAttribute("messageType", messageType);
+
     req.setAttribute("page",page);
     req.setAttribute("price",price);
     req.setAttribute("sortPrice",sortPrice);
@@ -206,8 +210,8 @@ public class ProductService {
       String name = req.getParameter("name");
       String image = "temp";
       String description = req.getParameter("description");
-      int price = Integer.parseInt(req.getParameter("price"));
-      int discount = Integer.parseInt(req.getParameter("discount"));
+      double price = Double.parseDouble(req.getParameter("price"));
+      double discount = Double.parseDouble(req.getParameter("discount"));
       int quantity = Integer.parseInt(req.getParameter("quantity"));
       String size = req.getParameter("size");
       String color = req.getParameter("color");

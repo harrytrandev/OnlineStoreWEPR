@@ -145,7 +145,7 @@ public class UserService {
         }
 
         //Inform error on Form
-        if (number == false || lowercase == false || uppercase == false || special == false)
+        if (!number || !lowercase || !uppercase || !special)
         {
             if (number == false)
             {
@@ -269,16 +269,21 @@ public class UserService {
     }
 
     public void showProfile() throws ServletException, IOException {
+        User userLogged = (User)req.getSession().getAttribute("userLogged");
+        User user = new UserDAO().get(userLogged.getUsername());
+        req.setAttribute("user", user);
         resp.setContentType("text/html;charset=UTF-8");
         req.getRequestDispatcher("/web/profile.jsp").forward(req,resp);
     }
 
     public void showEditUserProfile() throws ServletException, IOException{
-        resp.setContentType("text/html;charset=UTF-8");
+        User userLogged = (User)req.getSession().getAttribute("userLogged");
+        User user = new UserDAO().get(userLogged.getUsername());
+        req.setAttribute("user", user);
         req.getRequestDispatcher("/web/edit-profile.jsp").forward(req,resp);
     }
 
-    public void editUserProfile(User user) throws ServletException, IOException {
+    public void editUserProfile(User user) {
         try {
             String fullName = req.getParameter("name");
             String phone = req.getParameter("phone");
@@ -297,6 +302,8 @@ public class UserService {
             }
             part.write(realPath + "/" + imageName);
             String image = String.format("imagesAvatar%s/%s", now, imageName);
+
+            System.out.println(image);
 
             user.setImage(image);
             user.setName(fullName);
@@ -367,21 +374,20 @@ public class UserService {
 //        }
 //    }
     public void changeUserPassword() throws ServletException,IOException{
+        String messageBody, messageType;
         String username = req.getParameter("username");
         String oldPass = req.getParameter("password-old");
         String newPass = req.getParameter("password-new");
         String passRetype = req.getParameter("password-retype");
-        System.out.println(username+oldPass);
 
-        User user = authenticate(username,oldPass);
-        String messageBody, messageType;
+        User user = userDAO.get(username);
 
-        if(user == null){
+        if (!oldPass.trim().equals(user.getPassword())) {
             messageBody = "Old password is incorrect, please re-enter!";
             messageType = "danger";
         }
         else {
-            if(Objects.equals(oldPass, newPass)){
+            if (Objects.equals(oldPass, newPass)) {
                 messageBody = "The new password cannot be the same as the old password!";
                 messageType = "danger";
             }
@@ -394,6 +400,9 @@ public class UserService {
                 User usernew = (User) req.getSession().getAttribute("userLogged");
                 usernew.setPassword(newPass);
                 userDAO.update(usernew);
+//                req.getSession().removeAttribute("userLogged");
+//                HttpSession session = req.getSession();
+//                session.setAttribute("userLogged",usernew);
                 messageBody = "Successful change!";
                 messageType = "success";
             }
@@ -401,7 +410,8 @@ public class UserService {
         message.setBody(messageBody);
         message.setType(messageType);
 
-//        req.setAttribute("action", "add");
+        req.setAttribute("user", user);
+
         req.setAttribute("message", message);
         req.getRequestDispatcher("/web/change_pass.jsp").forward(req, resp);
     }

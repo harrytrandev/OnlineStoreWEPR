@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -15,14 +16,14 @@
         rel="stylesheet">
 
   <!-- Css Styles -->
-  <link rel="stylesheet" href="./assets/css/bootstrap.min.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/elegant-icons.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/magnific-popup.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/nice-select.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/owl.carousel.min.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/slicknav.min.css" type="text/css">
-  <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/elegant-icons.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/magnific-popup.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/nice-select.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/slicknav.min.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/style.css" type="text/css">
 </head>
 
 <body>
@@ -57,8 +58,10 @@
           <div class="card-body">
             <div class="d-flex flex-column align-items-center text-center" id="profile-head">
               <c:choose>
-                <c:when test="${userLogged.image!=null}"><img alt="Image Profile" src="${pageContext.request.contextPath}/${userLogged.image}" class="rounded-circle" width="150"></c:when>
-                <c:otherwise><img src="assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>
+                <c:when test="${user.image != null}">
+                  <img alt="Image Profile" src="${pageContext.request.contextPath}/${user.image}" class="rounded-circle" style="width: 150px; height: 150px;">
+                </c:when>
+                <c:otherwise><img src="${pageContext.request.contextPath}/web/assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>
               </c:choose>
               <div class="mt-3">
                 <h4>${userLogged.name}</h4>
@@ -73,10 +76,10 @@
         <form class="card-body" method="post" action="change-password">
           <div class="row mb-3">
             <div class="col-sm-3">
-              <h6 class="mb-0">Username</h6>
+<%--              <h6 class="mb-0">Username</h6>--%>
             </div>
             <div class="col-sm-9 text-secondary">
-              <input type="text" class="form-control" id="username" name="username" disabled value="${userLogged.username}">
+              <input type="hidden" class="form-control" id="username" name="username" value="${userLogged.username}">
             </div>
           </div>
           <div class="row mb-3">
@@ -84,7 +87,7 @@
               <h6 class="mb-0">Old password</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <input type="text" class="form-control" id="password-old" name="password-old">
+              <input type="password" class="form-control" id="password-old" name="password-old">
             </div>
           </div>
           <div class="row mb-3">
@@ -92,7 +95,7 @@
               <h6 class="mb-0">New password</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <input type="text" class="form-control" id="password-new" name="password-new">
+              <input type="password" class="form-control" id="password-new" name="password-new">
             </div>
           </div>
           <div class="row mb-3">
@@ -100,7 +103,7 @@
               <h6 class="mb-0">Re-enter new password</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              <input type="text" class="form-control" id="password-retype" name="password-retype">
+              <input type="password" class="form-control" id="password-retype" name="password-retype">
             </div>
           </div>
           <div class="row">
@@ -144,16 +147,16 @@
 </script>
 
 <!-- Js Plugins -->
-<script src="./assets/js/jquery-3.3.1.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
-<script src="./assets/js/jquery.nice-select.min.js"></script>
-<script src="./assets/js/jquery.nicescroll.min.js"></script>
-<script src="./assets/js/jquery.magnific-popup.min.js"></script>
-<script src="./assets/js/jquery.countdown.min.js"></script>
-<script src="./assets/js/jquery.slicknav.js"></script>
-<script src="./assets/js/mixitup.min.js"></script>
-<script src="./assets/js/owl.carousel.min.js"></script>
-<script src="./assets/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery-3.3.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.nice-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.nicescroll.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.countdown.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/jquery.slicknav.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/mixitup.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/web/assets/js/main.js"></script>
 </body>
 
 </html>

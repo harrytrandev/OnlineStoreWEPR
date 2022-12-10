@@ -1,5 +1,7 @@
 package com.onlinestorewepr.controller.web.user;
 
+import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.service.UserService;
 
 import javax.servlet.ServletException;
@@ -13,7 +15,9 @@ import java.io.IOException;
 public class ChangePasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html;charset=UTF-8");
+        User userLogged = (User)req.getSession().getAttribute("userLogged");
+        User user = new UserDAO().get(userLogged.getUsername());
+        req.setAttribute("user", user);
         req.getRequestDispatcher("/web/change_pass.jsp").forward(req,resp);
     }
 
