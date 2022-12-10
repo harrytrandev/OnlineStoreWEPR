@@ -452,12 +452,12 @@ public class UserService {
                     userDAO.update(usernew);
                     messageBody = "Successful change!";
                     messageType = "success";
-                    req.getRequestDispatcher("/web/authentication.jsp").forward(req, resp);
                 }
             }
         }
         message.setBody(messageBody);
         message.setType(messageType);
+        req.setAttribute("user", user);
         req.setAttribute("message", message);
         req.getRequestDispatcher("/web/change_pass.jsp").forward(req, resp);
     }
