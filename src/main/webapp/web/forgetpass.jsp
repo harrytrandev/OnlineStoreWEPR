@@ -17,7 +17,7 @@
       background-color: #eee;
       background-repeat: no-repeat;
       background-size: cover;
-      color: #505050;
+       background: #e0d2b0;
       font-family: "Rubik", Helvetica, Arial, sans-serif;
       font-size: 14px;
       font-weight: normal;
@@ -76,8 +76,8 @@
         <div class="card-footer">
           <button class="btn btn-success" type="submit">Get New
             Password</button>
-          <button href="./login" class="btn btn-danger">Back to
-            Login</button>
+          <a href="${pageContext.request.contextPath}/login" class="btn btn-danger">Back to
+            Login</a>
         </div>
       </form>
     </div>

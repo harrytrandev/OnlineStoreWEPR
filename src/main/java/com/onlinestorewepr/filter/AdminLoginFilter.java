@@ -25,7 +25,7 @@ public class AdminLoginFilter extends HttpFilter implements Filter {
             chain.doFilter(request,response);
         }
         else {
-            request.getRequestDispatcher("/login-admin").forward(request,response);
+            resp.sendRedirect("/login-admin");
         }
     }
 

@@ -7,9 +7,7 @@ import javax.persistence.*;
 public class CartItem {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column
    private int id;
-   @Column
    private int quantity;
 
    @ManyToOne(fetch = FetchType.LAZY)
@@ -23,32 +21,31 @@ public class CartItem {
    public int getId() {
       return id;
    }
-
    public void setId(int id) {
       this.id = id;
    }
-
    public int getQuantity() {
       return quantity;
    }
-
    public void setQuantity(int quantity) {
       this.quantity = quantity;
    }
-
    public Product getProduct() {
       return product;
    }
-
    public void setProduct(Product product) {
       this.product = product;
    }
-
    public Cart getCart() {
       return cart;
    }
-
    public void setCart(Cart cart) {
       this.cart = cart;
+   }
+   public CartItem() {}
+   public CartItem(Cart cart, Product product, int quantity) {
+      this.cart = cart;
+      this.product = product;
+      this.quantity = quantity;
    }
 }

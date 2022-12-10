@@ -8,11 +8,7 @@ import java.util.List;
 public class Cart {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column
    private int id;
-   @Column
-   private int total;
-
    @OneToOne(mappedBy = "cart")
    private User user;
 
@@ -25,14 +21,6 @@ public class Cart {
 
    public void setId(int id) {
       this.id = id;
-   }
-
-   public int getTotal() {
-      return total;
-   }
-
-   public void setTotal(int total) {
-      this.total = total;
    }
 
    public User getUser() {

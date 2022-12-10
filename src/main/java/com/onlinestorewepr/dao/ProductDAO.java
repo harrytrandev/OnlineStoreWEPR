@@ -121,7 +121,7 @@ public class ProductDAO {
       return products;
    }
 
-   public List<Product> filterProduct(int CategoryID, String brand,int price, String size, int sortPrice) {
+   public List<Product> filterProduct(int CategoryID, String brand,double price, String size, int sortPrice) {
       List<Product> products = null;
 
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
