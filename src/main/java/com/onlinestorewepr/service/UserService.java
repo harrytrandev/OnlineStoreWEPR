@@ -159,7 +159,7 @@ public class UserService {
         }
 
         //Inform error on Form
-        if (number == false || lowercase == false || uppercase == false || special == false)
+        if (!number || !lowercase || !uppercase || !special)
         {
             if (number == false)
             {
@@ -283,15 +283,21 @@ public class UserService {
     }
 
     public void showProfile() throws ServletException, IOException {
+        User userLogged = (User)req.getSession().getAttribute("userLogged");
+        User user = new UserDAO().get(userLogged.getUsername());
+        req.setAttribute("user", user);
         resp.setContentType("text/html;charset=UTF-8");
         req.getRequestDispatcher("/web/profile.jsp").forward(req,resp);
     }
 
     public void showEditUserProfile() throws ServletException, IOException{
-        resp.setContentType("text/html;charset=UTF-8");
+        User userLogged = (User)req.getSession().getAttribute("userLogged");
+        User user = new UserDAO().get(userLogged.getUsername());
+        req.setAttribute("user", user);
         req.getRequestDispatcher("/web/edit-profile.jsp").forward(req,resp);
     }
 
+<<<<<<< HEAD
     public void editUserProfile(User user) throws ServletException, IOException {
         String fullName = req.getParameter("name");
         String phone = req.getParameter("phone");
@@ -327,6 +333,40 @@ public class UserService {
         user.setPhone(phone);
         user.setGender(gender);
         user.setAddress(address);
+=======
+    public void editUserProfile(User user) {
+        try {
+            String fullName = req.getParameter("name");
+            String phone = req.getParameter("phone");
+            String email = req.getParameter("email");
+            String gender = req.getParameter("sex");
+            String address = req.getParameter("address");
+            Part part = req.getPart("image");
+
+            String imageName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            String now = CommonUtil.getImgDir();
+            String realPath = req.getServletContext().getRealPath("/imagesAvatar" + now);
+            Path path = Paths.get(realPath);
+
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
+            }
+            part.write(realPath + "/" + imageName);
+            String image = String.format("imagesAvatar%s/%s", now, imageName);
+
+            System.out.println(image);
+
+            user.setImage(image);
+            user.setName(fullName);
+            user.setEmail(email);
+            user.setPhone(phone);
+            user.setGender(gender);
+            user.setAddress(address);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
     }
     public void updateUserProfile() throws ServletException, IOException{
         resp.setContentType("text/html;charset=UTF-8");
@@ -381,10 +421,12 @@ public class UserService {
 //        }
 //    }
     public void changeUserPassword() throws ServletException,IOException{
+        String messageBody, messageType;
         String username = req.getParameter("username");
         String oldPass = req.getParameter("password-old");
         String newPass = req.getParameter("password-new");
         String passRetype = req.getParameter("password-retype");
+<<<<<<< HEAD
         int len = newPass.length();
 
         User user = authenticate(username,oldPass);
@@ -408,6 +450,19 @@ public class UserService {
                 else if (x <= 'z' && x >= 'a') lowercase = true;
                 else if (x <= 'Z' && x >= 'A') uppercase = true;
                 else special = true;
+=======
+
+        User user = userDAO.get(username);
+
+        if (!oldPass.trim().equals(user.getPassword())) {
+            messageBody = "Old password is incorrect, please re-enter!";
+            messageType = "danger";
+        }
+        else {
+            if (Objects.equals(oldPass, newPass)) {
+                messageBody = "The new password cannot be the same as the old password!";
+                messageType = "danger";
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
             }
             //Inform error on Form
             if (!number || !lowercase|| !uppercase || !special)
@@ -435,6 +490,7 @@ public class UserService {
                 }
             }
             else {
+<<<<<<< HEAD
                 if(Objects.equals(oldPass, newPass)){
                     messageBody = "The new password cannot be the same as the old password!";
                     messageType = "danger";
@@ -453,11 +509,28 @@ public class UserService {
                     messageBody = "Successful change!";
                     messageType = "success";
                 }
+=======
+                resp.setContentType("text/html;charset=UTF-8");
+                User usernew = (User) req.getSession().getAttribute("userLogged");
+                usernew.setPassword(newPass);
+                userDAO.update(usernew);
+//                req.getSession().removeAttribute("userLogged");
+//                HttpSession session = req.getSession();
+//                session.setAttribute("userLogged",usernew);
+                messageBody = "Successful change!";
+                messageType = "success";
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
             }
         }
         message.setBody(messageBody);
         message.setType(messageType);
+<<<<<<< HEAD
         req.setAttribute("user", user);
+=======
+
+        req.setAttribute("user", user);
+
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
         req.setAttribute("message", message);
         req.getRequestDispatcher("/web/change_pass.jsp").forward(req, resp);
     }

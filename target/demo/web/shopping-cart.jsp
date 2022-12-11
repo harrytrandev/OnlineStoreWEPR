@@ -59,8 +59,8 @@
             <div class="breadcrumb__text">
                <h4>Shopping Cart</h4>
                <div class="breadcrumb__links">
-                  <a href="${pageContext.request.contextPath}/index.html">Home</a>
-                  <a href="shop.jsp">Shop</a>
+                  <a href="${pageContext.request.contextPath}/home">Home</a>
+                  <a href="${pageContext.request.contextPath}/shop">Shop</a>
                   <span>Shopping Cart</span>
                </div>
             </div>
@@ -86,56 +86,61 @@
 <section class="shopping-cart spad">
    <div class="container">
       <div class="row">
-         <div class="col-lg-8">
+         <div class="col-lg-8" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <c:if test="${empty cartItems}">
+               <div style="flex: 1; display: flex; justify-content: center; align-items: center;">Your cart is empty</div>
+            </c:if>
+            <c:if test="${not empty cartItems}">
             <div class="shopping__cart__table">
-               <table>
-                  <thead>
-                  <tr>
-                     <th></th>
-                     <th>Product</th>
-                     <th>Quantity</th>
-                     <th>Total</th>
-                     <th></th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <c:forEach items="${cartItems}" var="cartItem">
-                     <tr data-cartitem-id="${cartItem.id}" data-product-id="${cartItem.product.id}" data-max-quantity="${cartItem.product.quantity}" data-price="${cartItem.product.price}" data-discount="${cartItem.product.discount}" data-quantity="${cartItem.quantity}">
-                     <td class="mr-4"><input type="checkbox" class="line-choose" id=""></td>
-                     <td class="product__cart__item">
-                        <div class="product__cart__item__pic">
-                           <img width="105px" src="${cartItem.product.image}" alt="cartItemPicture">
-                        </div>
-                        <div class="product__cart__item__text">
-                           <h6>${cartItem.product.name}</h6>
-                           <h6>${cartItem.product.color} ${cartItem.product.size}</h6>
-                           <c:if test="${cartItem.product.discount != 0}">
-                              <span style="font-size: 18px; font-weight: 700;">${cartItem.product.discount}đ</span>
-                              <span style="text-decoration: line-through; color: gray;">${cartItem.product.price}đ</span>
-                           </c:if>
-                           <c:if test="${cartItem.product.discount == 0}">
-                              <h5>${cartItem.product.price}đ</h5>
-                           </c:if>
-<%--                           <h5>${cartItem.product.price}</h5>--%>
-                        </div>
-                     </td>
+                  <table>
+                     <thead>
+                     <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th></th>
+                     </tr>
+                     </thead>
+                     <tbody>
 
-                     <td class="quantity__item">
-                        <div class="quantity">
-                           <div > <%--pro-qty-2--%>
-                              <span style="cursor: pointer;" class="fa fa-angle-left dec qtybtn" onclick="decrement(${cartItem.id},${cartItem.quantity})" ></span>
-                              <input class="line-quantity" value="${cartItem.quantity}" name="quantity" readonly style="width: 50px;border: none;text-align: center;color: #111111;font-size: 16px;">
-                              <span style="cursor: pointer;" class="fa fa-angle-right inc qtybtn" onclick="increment(${cartItem.id},${cartItem.quantity})"></span>
-                           </div>
-                        </div>
-                     </td>
-                     <td class="cart__price">${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity} đ</td>
-                     <td class="cart__close "><a onclick="deleteBtns(${cartItem.id})"><i class="fa fa-close"></i></a></td>
-                  </tr>
-                  </c:forEach>
-                  </tbody>
-               </table>
+                     <c:forEach items="${cartItems}" var="cartItem">
+                        <tr data-cartitem-id="${cartItem.id}" data-product-id="${cartItem.product.id}" data-max-quantity="${cartItem.product.quantity}" data-price="${cartItem.product.price}" data-discount="${cartItem.product.discount}" data-quantity="${cartItem.quantity}">
+                           <td class="mr-4"><input type="checkbox" class="line-choose" id=""></td>
+                           <td class="product__cart__item">
+                              <div class="product__cart__item__pic">
+                                 <img width="105px" src="${cartItem.product.image}" alt="cartItemPicture">
+                              </div>
+                              <div class="product__cart__item__text">
+                                 <h6>${cartItem.product.name}</h6>
+                                 <h6>${cartItem.product.color} ${cartItem.product.size}</h6>
+                                 <c:if test="${cartItem.product.discount != 0}">
+                                    <span style="font-size: 18px; font-weight: 700;">$ ${cartItem.product.discount}</span>
+                                    <span style="text-decoration: line-through; color: gray;">$ ${cartItem.product.price}</span>
+                                 </c:if>
+                                 <c:if test="${cartItem.product.discount == 0}">
+                                    <h5>$ ${cartItem.product.price}</h5>
+                                 </c:if>
+                              </div>
+                           </td>
+
+                           <td class="quantity__item">
+                              <div class="quantity">
+                                 <div>
+                                    <span style="cursor: pointer;" class="fa fa-angle-left dec qtybtn" onclick="decrement(${cartItem.id},${cartItem.quantity})" ></span>
+                                    <input class="line-quantity" value="${cartItem.quantity}" name="quantity" readonly style="width: 50px;border: none;text-align: center;color: #111111;font-size: 16px;">
+                                    <span style="cursor: pointer;" class="fa fa-angle-right inc qtybtn" onclick="increment(${cartItem.id},${cartItem.quantity})"></span>
+                                 </div>
+                              </div>
+                           </td>
+                           <td class="cart__price">$ ${cartItem.product.discount == 0 ? cartItem.product.price * cartItem.quantity : cartItem.product.discount * cartItem.quantity}</td>
+                           <td class="cart__close "><a onclick="deleteBtns(${cartItem.id})"><i class="fa fa-close"></i></a></td>
+                        </tr>
+                     </c:forEach>
+                     </tbody>
+                  </table>
             </div>
+            </c:if>
             <div class="row">
                <div class="col-lg-6 col-md-6 col-sm-6">
                   <div class="continue__btn">

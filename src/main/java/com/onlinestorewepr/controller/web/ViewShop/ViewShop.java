@@ -9,16 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/web/shop")
+@WebServlet("/shop")
 public class ViewShop extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     ProductService productService = new ProductService(req, resp);
     productService.viewProduct();
-  }
-
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    super.doPost(req, resp);
   }
 }

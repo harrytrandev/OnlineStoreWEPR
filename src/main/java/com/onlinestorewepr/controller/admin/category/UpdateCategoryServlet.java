@@ -13,13 +13,14 @@ import java.io.IOException;
 public class UpdateCategoryServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    CategoryService categoryBUS = new CategoryService(req, resp);
-    categoryBUS.ShowUpdateCategory();
+    CategoryService categoryService = new CategoryService(req, resp);
+    categoryService.ShowUpdateCategory();
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    CategoryService categoryBUS = new CategoryService(req, resp);
-    categoryBUS.UpdateCategory();
+    req.setCharacterEncoding("UTF-8");
+    CategoryService categoryService = new CategoryService(req, resp);
+    categoryService.UpdateCategory();
   }
 }

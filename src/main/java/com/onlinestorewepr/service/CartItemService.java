@@ -1,12 +1,9 @@
 package com.onlinestorewepr.service;
 
-import com.onlinestorewepr.dao.CartItemDAO;
-import com.onlinestorewepr.dao.CategoryDAO;
-import com.onlinestorewepr.dao.ProductDAO;
+import com.onlinestorewepr.dao.*;
 import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.CartItem;
 import com.onlinestorewepr.entity.Product;
-import com.onlinestorewepr.dao.UserDAO;
 import com.onlinestorewepr.entity.User;
 
 import javax.servlet.ServletException;
@@ -18,66 +15,85 @@ import java.util.List;
 public class CartItemService {
     private HttpServletRequest req;
     private HttpServletResponse resp;
-    private ProductDAO productDAO = null;
-    private ServiceResult serviceResult = null;
     CartItemDAO cartItemDAO;
-
+    public List<CartItem> getListCartItem(int id) {
+        return cartItemDAO.getList(id);
+    }
     public CartItemService(HttpServletRequest req, HttpServletResponse resp) {
         this.req = req;
         this.resp = resp;
-        productDAO = new ProductDAO();
-        serviceResult = new ServiceResult();
         cartItemDAO = new CartItemDAO();
     }
-    public void addProduct() throws ServletException, IOException {
-        String userName = "Khoa";
 
-        CartItemDAO cartItemdao = new CartItemDAO();
+    public void addProduct() throws IOException {
+        User loggedUser = (User) req.getSession().getAttribute("userLogged");
+        if (loggedUser != null) {
+            User user = new UserDAO().get(loggedUser.getUsername());
+            ProductService productService = new ProductService(req, resp);
+            CartItemDAO cartItemdao = new CartItemDAO();
 
-        ProductService productService = new ProductService(req, resp);
+            int productID =Integer.parseInt(req.getParameter("ProductId"));
+            int quantity = Integer.parseInt(req.getParameter("quantity"));
 
-        UserService userService = new UserService(req, resp);
-        CartService cartService = new CartService();
+            Product product = productService.getProduct(productID);
+            Cart cart = user.getCart();
+            if (cart == null) {
+                CartDAO cartDAO = new CartDAO();
+                Cart newCart = new Cart();
+                newCart.setUser(user);
+                cartDAO.insert(newCart);
+                cart = cartDAO.getAll().get(cartDAO.getAll().size() - 1);
+            }
 
-        User user = new UserDAO().get(userName);
-
-        int idCart = user.getCart().getId();
-        int productID =Integer.parseInt(req.getParameter("ProductId"));
-        int quantity = Integer.parseInt(req.getParameter("quantity"));
-
-        Product product = productService.getProduct(productID);
-        Cart cart = cartService.getCart(idCart);
-
-        CartItem cartItem = new CartItem();
-        cartItem.setQuantity(quantity);
-        cartItem.setProduct(product);
-        cartItem.setCart(cart);
-
-        cartItemdao.insert(cartItem);
-
-        resp.sendRedirect("../web/shop");
-    }
-
-    public List<CartItem> getListCartItem(int id) {
-        List<CartItem> cartItems = cartItemDAO.getList(id);
-        return cartItems;
+            if (quantity > 0 && quantity <= product.getQuantity()) {
+                if (cart.getCartItems().size() > 0) {
+                    for (CartItem c : cart.getCartItems()) {
+                        if (c.getProduct().getId() == productID) {
+                            c.setQuantity(c.getQuantity() + quantity);
+                            cartItemDAO.update(c);
+                            break;
+                        } else {
+                            CartItem cartItem = new CartItem(cart, product, quantity);
+                            cartItemdao.insert(cartItem);
+                        }
+                    }
+                }
+                else {
+                    CartItem cartItem = new CartItem(cart, product, quantity);
+                    cartItemdao.insert(cartItem);
+                }
+                resp.sendRedirect(req.getContextPath() + "/shop?message=The%20product%20has%20been%20successfully%20added%20to%20your%20cart&messageType=success");
+                return;
+            }
+            resp.sendRedirect(req.getContextPath() + "/shop?message=An%20error%20occurred,%20the%20product%20has%20not%20been%20added%20to%20your%20cart&messageType=danger");
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
     }
 
     public void ListCartItem () throws IOException, ServletException {
-        String username = "quangtran"; //  Sua lai doan nay
-        ProductService productService = new ProductService(req, resp);
-        List<CartItem> cartItems = productService.getListCartItems(username);
-        int total =0;
-        for(CartItem cartItem: cartItems){
-            total+= cartItem.getProduct().getPrice()*cartItem.getQuantity();
+        User loggedUser = (User)req.getSession().getAttribute("userLogged");
+        if (loggedUser != null) {
+            User user = new UserDAO().get(loggedUser.getUsername());
+            Cart cart = user.getCart();
+            if (cart == null) {
+                CartDAO cartDAO = new CartDAO();
+                Cart newCart = new Cart();
+                newCart.setUser(user);
+                cartDAO.insert(newCart);
+                cart = cartDAO.getAll().get(cartDAO.getAll().size() - 1);
+            }
+
+            List<CartItem> cartItems = cart.getCartItems();
+            String message = req.getParameter("message");
+            if (message != null){
+                req.setAttribute("message", message);
+            }
+            req.setAttribute("cartItems", cartItems);
+            req.getRequestDispatcher("/web/shopping-cart.jsp").forward(req, resp);
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/login");
         }
-        String message = req.getParameter("message");
-        if(message != null){
-            req.setAttribute("message", message);
-        }
-        req.setAttribute("total",total);
-        req.setAttribute("cartItems",cartItems);
-        req.getRequestDispatcher("/web/shopping-cart.jsp").forward(req, resp);
     }
     public void delete() throws IOException {
         int id = Integer.parseInt(req.getParameter("id"));
@@ -85,10 +101,6 @@ public class CartItemService {
         cartItemDAO.delete(id);
         String message = "Delete successfully";
         resp.sendRedirect("/cart?message=" + message);
-    }
-
-    public CartItem getCartItemDAO(int id) {
-        return cartItemDAO.get(id);
     }
 
     public void updateCartItem() throws IOException {
@@ -102,7 +114,7 @@ public class CartItemService {
         if (action.equals("inc") && quantity == quantityProduct){
             message = "Out of stock";
         }
-        else if(action.equals("dec") && quantity == 0){
+        else if (action.equals("dec") && quantity == 0){
             message = "Can't reduce the quantity";
         } else if (action.equals("inc")) {
             quantity = quantity + 1;

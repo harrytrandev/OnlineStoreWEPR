@@ -8,27 +8,17 @@ import java.util.List;
 public class Product {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column
    private int id;
-   @Column
    private String name;
-   @Column
    private String image="";
    @Column(columnDefinition = "LONGTEXT")
    private String description;
-   @Column
-   private int price;
-   @Column
+   private Double price;
    private int quantity;
-   @Column
-   private int discount;
-   @Column
+   private Double discount;
    private String size;
-   @Column
    private String color;
-   @Column
    private String brand;
-   @Column
    private boolean available=false;
 
    @ManyToOne(fetch = FetchType.LAZY)
@@ -61,7 +51,7 @@ public class Product {
    private List<OrderItem> orderItems;
 
 
-   public Product(String name, String image, String description, int price, int quantity, int discount, String size, String color, String brand, boolean status, Category category) {
+   public Product(String name, String image, String description, Double price, int quantity, Double discount, String size, String color, String brand, boolean status, Category category) {
       this.name = name;
       this.description = description;
       this.price = price;
@@ -111,11 +101,11 @@ public class Product {
       this.description = description;
    }
 
-   public int getPrice() {
+   public Double getPrice() {
       return price;
    }
 
-   public void setPrice(int price) {
+   public void setPrice(Double price) {
       this.price = price;
    }
 
@@ -127,11 +117,11 @@ public class Product {
       this.quantity = quantity;
    }
 
-   public int getDiscount() {
+   public Double getDiscount() {
       return discount;
    }
 
-   public void setDiscount(int discount) {
+   public void setDiscount(Double discount) {
       this.discount = discount;
    }
 

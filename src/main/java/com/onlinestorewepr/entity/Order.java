@@ -7,143 +7,127 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int id;
-   private String name;
-   private String phone;
-   private String address;
-   private Date created;
-   private int subTotal;
-   private int shippingFee;
-   private int total;
-   private String note;
-   private String payment;
-   private String status;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
+  private String name;
+  private String phone;
+  private String address;
+  private Date created;
+  private Double total;
+  private String note;
+  private String payment;
+  private String status;
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "username", referencedColumnName = "username")
-   private User user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "username", referencedColumnName = "username")
+  private User user;
 
-   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-   private List<OrderItem> orderItems;
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+  private List<OrderItem> orderItems;
 
-   public int getId() {
-      return id;
-   }
+  public Order() {
 
-   public void setId(int id) {
-      this.id = id;
-   }
+  }
 
-   public String getName() {
-      return name;
-   }
+  public int getId() {
+    return id;
+  }
 
-   public void setName(String name) {
-      this.name = name;
-   }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-   public String getPhone() {
-      return phone;
-   }
+  public String getName() {
+    return name;
+  }
 
-   public void setPhone(String phone) {
-      this.phone = phone;
-   }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-   public String getAddress() {
-      return address;
-   }
+  public String getPhone() {
+    return phone;
+  }
 
-   public void setAddress(String address) {
-      this.address = address;
-   }
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
-   public Date getCreated() {
-      return created;
-   }
+  public String getAddress() {
+    return address;
+  }
 
-   public void setCreated(Date created) {
-      this.created = created;
-   }
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
-   public int getTotal() {
-      return total;
-   }
+  public Date getCreated() {
+    return created;
+  }
 
-   public void setTotal(int total) {
-      this.total = total;
-   }
+  public void setCreated(Date created) {
+    this.created = created;
+  }
 
-   public String getNote() {
-      return note;
-   }
+  public Double getTotal() {
+    return total;
+  }
 
-   public void setNote(String note) {
-      this.note = note;
-   }
+  public void setTotal(Double total) {
+    this.total = total;
+  }
 
-   public String getPayment() {
-      return payment;
-   }
+  public String getNote() {
+    return note;
+  }
 
-   public void setPayment(String payment) {
-      this.payment = payment;
-   }
+  public void setNote(String note) {
+    this.note = note;
+  }
 
-   public String getStatus() {
-      return status;
-   }
+  public String getPayment() {
+    return payment;
+  }
 
-   public void setStatus(String status) {
-      this.status = status;
-   }
+  public void setPayment(String payment) {
+    this.payment = payment;
+  }
 
-   public User getUser() {
-      return user;
-   }
+  public String getStatus() {
+    return status;
+  }
 
-   public void setUser(User user) {
-      this.user = user;
-   }
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
-   public List<OrderItem> getOrderItems() {
-      return orderItems;
-   }
+  public User getUser() {
+    return user;
+  }
 
-   public void setOrderItems(List<OrderItem> orderItems) {
-      this.orderItems = orderItems;
-   }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-   public int getSubTotal() {
-      return subTotal;
-   }
+  public List<OrderItem> getOrderItems() {
+    return orderItems;
+  }
 
-   public void setSubTotal(int subTotal) {
-      this.subTotal = subTotal;
-   }
+  public void setOrderItems(List<OrderItem> orderItems) {
+    this.orderItems = orderItems;
+  }
 
-   public int getShippingFee() {
-      return shippingFee;
-   }
-
-   public void setShippingFee(int shippingFee) {
-      this.shippingFee = shippingFee;
-   }
-
-   public Order(String name, String phone, String address, Date created, int subTotal, int shippingFee, int total, String note, String payment, String status, User user, List<OrderItem> orderItems) {
-      this.name = name;
-      this.phone = phone;
-      this.address = address;
-      this.created = created;
-      this.subTotal = subTotal;
-      this.shippingFee = shippingFee;
-      this.total = total;
-      this.note = note;
-      this.payment = payment;
-      this.status = status;
-      this.user = user;
-      this.orderItems = orderItems;
-   }
+  public Order(String name, String phone, String address, Date created, Double total, String note, String payment, String status, User user, List<OrderItem> orderItems) {
+    this.name = name;
+    this.phone = phone;
+    this.address = address;
+    this.created = created;
+    this.total = total;
+    this.note = note;
+    this.payment = payment;
+    this.status = status;
+    this.user = user;
+    this.orderItems = orderItems;
+  }
 }
