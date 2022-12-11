@@ -74,6 +74,7 @@
 <!-- Contact Section Begin -->
 <div class="container">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div class="spad">
             <div class="row">
                 <div class="col-md-4 mb-3">
@@ -269,6 +270,8 @@
                     </div>
                 </div>
 =======
+=======
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
   <div class="spad">
     <div class="row">
       <div class="col-md-4 mb-3">
@@ -285,6 +288,9 @@
                 <h4>${userLogged.name}</h4>
                 <p class="text-muted font-size-sm">${userLogged.address}</p>
               </div>
+<<<<<<< HEAD
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
+=======
 >>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
             </div>
           </div>

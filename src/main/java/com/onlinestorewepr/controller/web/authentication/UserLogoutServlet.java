@@ -18,7 +18,11 @@ public class UserLogoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().removeAttribute("userLogged");
 <<<<<<< HEAD
+<<<<<<< HEAD
         resp.sendRedirect("/login");
+=======
+        resp.sendRedirect(req.getContextPath() + "/login");
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
 =======
         resp.sendRedirect(req.getContextPath() + "/login");
 >>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7

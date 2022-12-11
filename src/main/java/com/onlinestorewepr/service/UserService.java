@@ -298,6 +298,7 @@ public class UserService {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public void editUserProfile(User user) throws ServletException, IOException {
         String fullName = req.getParameter("name");
         String phone = req.getParameter("phone");
@@ -334,6 +335,8 @@ public class UserService {
         user.setGender(gender);
         user.setAddress(address);
 =======
+=======
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
     public void editUserProfile(User user) {
         try {
             String fullName = req.getParameter("name");
@@ -427,6 +430,7 @@ public class UserService {
         String newPass = req.getParameter("password-new");
         String passRetype = req.getParameter("password-retype");
 <<<<<<< HEAD
+<<<<<<< HEAD
         int len = newPass.length();
 
         User user = authenticate(username,oldPass);
@@ -454,6 +458,11 @@ public class UserService {
 
         User user = userDAO.get(username);
 
+=======
+
+        User user = userDAO.get(username);
+
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
         if (!oldPass.trim().equals(user.getPassword())) {
             messageBody = "Old password is incorrect, please re-enter!";
             messageType = "danger";
@@ -530,6 +539,9 @@ public class UserService {
 
         req.setAttribute("user", user);
 
+<<<<<<< HEAD
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
+=======
 >>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
         req.setAttribute("message", message);
         req.getRequestDispatcher("/web/change_pass.jsp").forward(req, resp);

@@ -12,7 +12,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 @WebFilter(urlPatterns = {"/web/profile","/web/update-profile","/web/change-password"})
+=======
+@WebFilter(urlPatterns = {"/profile","/update-profile","/change-password"})
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
 =======
 @WebFilter(urlPatterns = {"/profile","/update-profile","/change-password"})
 >>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7

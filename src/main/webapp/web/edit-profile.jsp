@@ -59,6 +59,7 @@
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center" id="profile-head">
                 <c:choose>
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/webapp/web/edit_profile.jsp
                   <c:when test="${userLogged.image!=null}"><img alt="Image Profile" src="${pageContext.request.contextPath}/${userLogged.image}" class="rounded-circle" width="150"></c:when>
                   <c:otherwise><img src="assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>
@@ -67,6 +68,11 @@
                   </c:when>
                   <c:otherwise><img src="${pageContext.request.contextPath}/web/assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>
 >>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7:src/main/webapp/web/edit-profile.jsp
+=======
+                  <c:when test="${user.image != null}"><img alt="Image Profile" src="${pageContext.request.contextPath}/${userLogged.image}" class="rounded-circle" style="width: 150px; height: 150px;">
+                  </c:when>
+                  <c:otherwise><img src="${pageContext.request.contextPath}/web/assets/img/profile/no-avartar.png" alt="Admin" class="rounded-circle" width="150"></c:otherwise>
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
                 </c:choose>
                 <div class="mt-3">
                   <h4>${userLogged.name}</h4>
@@ -136,6 +142,7 @@
                           id="image"
                           name="image"
                           type="file"
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/webapp/web/edit_profile.jsp
 <%--                  ${action == "add" ? "required" : ""}--%>
                   />
@@ -148,12 +155,19 @@
 =======
                   />
                   <img
+=======
+                  />
+                  <img
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
   <%--              alt="Preview Product Image"--%>
                     class="img-thumbnail mt-3"
                     id="preview-img"
                     style="width: 200px;"
                     src="${pageContext.request.contextPath}/${userLogged.image}"
+<<<<<<< HEAD
 >>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7:src/main/webapp/web/edit-profile.jsp
+=======
+>>>>>>> c00c268839d42f556c7ca13dc9fbabaf8d2a42f7
                   >
                 </div>
               </div>
