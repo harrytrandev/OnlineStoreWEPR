@@ -64,7 +64,7 @@
             </div>
             <div class="input-control radio">
                   <span>
-                     <input type="radio" name="gender" id="gender-male" value="Name">
+                     <input type="radio" name="gender" id="gender-male" value="Nam">
                      <label for="gender-male">Male</label>
                   </span>
                <span>

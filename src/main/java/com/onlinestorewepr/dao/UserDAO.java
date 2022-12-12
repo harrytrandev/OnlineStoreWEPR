@@ -126,10 +126,9 @@ public class UserDAO {
       }
       return user;
    }
-
 //   public static void main(String[] args) {
 //      UserDAO userDAO =new UserDAO();
-//      User user = userDAO.findByEmail("phand613@gmail.com");
+//      User user = userDAO.findUserByEmail("20110246@student.hcmute.edu.vn");
 //      System.out.println(user);
 //   }
 }

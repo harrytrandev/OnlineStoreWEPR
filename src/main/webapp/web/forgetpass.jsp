@@ -73,6 +73,11 @@
                   class="form-text text-muted" style="color:#e51b65 !important;">Enter the registered email address . Then we'll email a OTP to this address.</small>
           </div>
         </div>
+        <c:if test="${message != null}">
+          <div class="col-sm-12 d-flex justify-content-end">
+            <p class="text-${message.type}">${message.body}</p>
+          </div>
+        </c:if>
         <div class="card-footer">
           <button class="btn btn-success" type="submit">Get New
             Password</button>
